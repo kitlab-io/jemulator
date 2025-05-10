@@ -1348,12 +1348,20 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -3910990755373119420, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.6612
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 7.4896884
+      objectReference: {fileID: 0}
+    - target: {fileID: -3910990755373119420, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3910990755373119420, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.000000048429
       objectReference: {fileID: 0}
     - target: {fileID: -3910990755373119420, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1405,6 +1413,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8771091787928289351, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
       insertIndex: -1
       addedObject: {fileID: 608534422}
+    - targetCorrespondingSourceObject: {fileID: 8771091787928289351, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 608534423}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
 --- !u!4 &608534419 stripped
 Transform:
@@ -1442,6 +1453,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberToPrint: 50
+--- !u!64 &608534423
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608534420}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4485361048494804184, guid: acb013f31cad638439273ba3bcca8c39, type: 3}
 --- !u!1 &680909965
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,7 +1625,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.05818904, y: -0.889058, z: 0.11798185, w: 0.43848634}
   m_LocalPosition: {x: 9.75, y: 3.84, z: 7.48}
-  m_LocalScale: {x: 1.0000036, y: 1, z: 1.0000017}
+  m_LocalScale: {x: 1.0000043, y: 1, z: 1.0000017}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1874,7 +1907,15 @@ MonoBehaviour:
   RemoteUrl: 
   AutoExport: 1
   AutoCompress: 1
-  Dependencies: []
+  Dependencies:
+  - Name: needle.samples.carphysics
+    Version: 1.0.0
+    Path: Packages/com.needle.engine-samples/Runtime/CarPhysics/Scripts/Needle.Samples.CarPhysics.npmdef
+    Guid: d9d1a892532ae054bb692ed2c0b913d8
+  - Name: '@needle-tools/car-physics'
+    Version: 1.0.0-alpha.19
+    Path: Packages/com.needle.car-physics/needle-car-physics.npmdef
+    Guid: 90f7bc220431db04bb0b3ecef43a068e
   CloudName: CollaborativeSandbox
   CloudTeam: org_nvujg59dvud6
 --- !u!4 &784234924
@@ -2400,6 +2441,86 @@ MonoBehaviour:
   m_EditorClassIdentifier: Needle.Engine.Components.ObjectRaycaster, Needle.Engine
     $ GlobalObjectId_V1-2-d541a43e59ef6e94b8483da1bfc954ea-969208507-0
   IgnoreSkinnedMeshes: 0
+--- !u!1001 &994707634
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8059923458228747, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_Name
+      value: SoapCar
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466875983541094920, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8059923458228747, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 994707636}
+  m_SourcePrefab: {fileID: 100100000, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+--- !u!1 &994707635 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8059923458228747, guid: efd22e3ea6ca36949a20dd25ed7e4416, type: 3}
+  m_PrefabInstance: {fileID: 994707634}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &994707636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994707635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9102762a34112d49349748e9d3215767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  motorSpeed: 0
+  label: RCCarController
 --- !u!1001 &1072282929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4880,3 +5001,4 @@ SceneRoots:
   - {fileID: 1459212022}
   - {fileID: 1139443096}
   - {fileID: 969208505}
+  - {fileID: 994707634}

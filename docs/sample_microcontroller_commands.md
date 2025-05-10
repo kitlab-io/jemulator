@@ -1,3 +1,20 @@
+electron-vue/node_modules/@needle-tools/car-physics/src/CarPhysics.ts
+electron-vue/node_modules/@needle-tools/car-physics/src/CarController.ts
+```javascript
+steer *= Math.max(.2, Math.min(1, 2 * Math.abs(this.carPhysics.currentSteer)));
+this._currentSteer = Mathf.lerp(this._currentSteer, steer, this.context.time.deltaTime / .12);
+this.carPhysics.steerImpulse(this._currentSteer);
+this.carPhysics.breakImpulse(breakVal);
+this.carPhysics.accelerationImpulse(accel);
+
+
+
+let go = setInterval(() => {
+    Needle.Context.Current.scripts[123].carPhysics.accelerationImpulse(1)
+}, 100);
+
+clearInterval(go);
+```
 ```python
 # Control the motor
 motor.forward(50)  # Run forward at 50% speed

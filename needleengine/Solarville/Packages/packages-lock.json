@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.needle.car-physics": {
+      "version": "file:com.needle.car-physics-1.0.0-alpha.19.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {}
+    },
     "com.needle.engine-exporter": {
       "version": "4.4.3",
       "depth": 0,
