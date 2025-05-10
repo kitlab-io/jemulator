@@ -309,174 +309,388 @@
         };
         term.ready = Promise.resolve();
         
-        // Configure MicroPython environment
+        // Configure MicroPython environment with IoT device components
         try {
           await pyodide.runPythonAsync(`
-            import sys
-            sys.path.append('/lib')
+import sys
+import time
+import random
+import math
+from pyodide.ffi import create_proxy, to_js
+from js import window, Object
+import js
+
+# Event emitter for component state changes
+def emit_event(event_type, component, data):
+    # Use JavaScript's window.electronAPI to send events to the main process
+    print("Emitting event:", event_type, component, data)
+    js_event = {
+        'type': 'component-event',
+        'event': {
+            'type': event_type,
+            'component': component,
+            'data': data,
+            'timestamp': time.time(),
+            'deviceId': '${deviceId}'
+        }
+    }
+    js_event = to_js(js_event, depth=4, dict_converter=Object.fromEntries)
+    js.electronAPI.sendToMain(js_event)
+    print(f"Event emitted: {event_type} from {component} with data {data}")
+
+# Create a proxy for the emit_event function to be callable from JavaScript
+# emit_event_proxy = create_proxy(emit_event)
+
+# Register the emit_event function in the global JavaScript scope
+# window.pyodideEmitEvent = emit_event_proxy
+
+# Battery component simulation
+class Battery:
+    def __init__(self, capacity=100.0, discharge_rate=0.05, charge_rate=0.1):
+        self.capacity = capacity  # Maximum capacity in percentage
+        self.current_level = 100.0  # Current level in percentage
+        self.discharge_rate = discharge_rate  # Discharge rate per minute
+        self.charge_rate = charge_rate  # Charge rate per minute when charging
+        self.is_charging = False
+        self.last_update = time.time()
+        self.voltage = 3.7  # Battery voltage in volts
+        
+        # Emit initial state
+        self._emit_state()
+    
+    def update(self):
+        now = time.time()
+        elapsed_minutes = (now - self.last_update) / 60.0
+        
+        if self.is_charging:
+            self.current_level += self.charge_rate * elapsed_minutes
+            if self.current_level > self.capacity:
+                self.current_level = self.capacity
+        else:
+            self.current_level -= self.discharge_rate * elapsed_minutes
+            if self.current_level < 0:
+                self.current_level = 0
+        
+        self.last_update = now
+        self._emit_state()
+        return self.current_level
+    
+    def start_charging(self):
+        self.is_charging = True
+        self._emit_state()
+        print("Battery charging started")
+    
+    def stop_charging(self):
+        self.is_charging = False
+        self._emit_state()
+        print("Battery charging stopped")
+    
+    def get_level(self):
+        self.update()
+        return self.current_level
+    
+    def get_voltage(self):
+        # Simulate voltage drop as battery depletes
+        level_factor = self.current_level / 100.0
+        min_voltage = 3.2
+        max_voltage = 4.2
+        return min_voltage + level_factor * (max_voltage - min_voltage)
+    
+    def _emit_state(self):
+        emit_event('battery_update', 'battery', {
+            'level': self.current_level,
+            'voltage': self.get_voltage(),
+            'is_charging': self.is_charging
+        })
+
+# Motor component simulation
+class Motor:
+    def __init__(self, pin_pwm=None, pin_dir1=None, pin_dir2=None):
+        self.pin_pwm = pin_pwm    # PWM control pin
+        self.pin_dir1 = pin_dir1  # Direction control pin 1
+        self.pin_dir2 = pin_dir2  # Direction control pin 2
+        self.speed = 0            # Current speed (0-100%)
+        self.direction = 0         # Direction: 0=stopped, 1=forward, -1=reverse
+        self.is_running = False
+        self.power_consumption = 0.0  # Power consumption in watts
+        
+        # Emit initial state
+        self._emit_state()
+    
+    def set_speed(self, speed):
+        # Clamp speed between 0-100
+        self.speed = max(0, min(100, speed))
+        
+        if self.speed == 0:
+            self.stop()
+        else:
+            self.is_running = True
+            self._calculate_power_consumption()
+            self._emit_state()
+        
+        print(f"Motor speed set to {self.speed}%")
+        return self.speed
+    
+    def forward(self, speed=None):
+        if speed is not None:
+            self.set_speed(speed)
+        self.direction = 1
+        self.is_running = True
+        self._calculate_power_consumption()
+        self._emit_state()
+        print(f"Motor running forward at {self.speed}%")
+    
+    def reverse(self, speed=None):
+        if speed is not None:
+            self.set_speed(speed)
+        self.direction = -1
+        self.is_running = True
+        self._calculate_power_consumption()
+        self._emit_state()
+        print(f"Motor running in reverse at {self.speed}%")
+    
+    def stop(self):
+        self.speed = 0
+        self.direction = 0
+        self.is_running = False
+        self.power_consumption = 0
+        self._emit_state()
+        print("Motor stopped")
+    
+    def _calculate_power_consumption(self):
+        # Simulate power consumption based on speed
+        # Base consumption + variable consumption based on speed
+        base_consumption = 0.5  # Watts
+        max_consumption = 5.0   # Watts at 100% speed
+        
+        if self.is_running:
+            speed_factor = self.speed / 100.0
+            self.power_consumption = base_consumption + (speed_factor * (max_consumption - base_consumption))
+        else:
+            self.power_consumption = 0
+        
+        return self.power_consumption
+    
+    def _emit_state(self):
+        emit_event('motor_update', 'motor', {
+            'speed': self.speed,
+            'direction': self.direction,
+            'is_running': self.is_running,
+            'power_consumption': self.power_consumption
+        })
+
+# Temperature sensor component simulation
+class TemperatureSensor:
+    def __init__(self, pin=None, ambient_temp=25.0, noise_level=0.5):
+        self.pin = pin  # Analog pin for temperature reading
+        self.ambient_temp = ambient_temp  # Ambient temperature in Celsius
+        self.current_temp = ambient_temp  # Current temperature in Celsius
+        self.noise_level = noise_level  # Random noise level for readings
+        self.last_read_time = time.time()
+        self.update_interval = 1.0  # Seconds between automatic updates
+        self.heat_factor = 0.0  # Additional heat from motor operation
+        
+        # Emit initial state
+        self._emit_state()
+    
+    def read_temperature(self):
+        now = time.time()
+        
+        # Add some random noise to the reading
+        noise = (random.random() * 2 - 1) * self.noise_level
+        
+        # Calculate temperature with noise and heat factor
+        self.current_temp = self.ambient_temp + noise + self.heat_factor
+        
+        # Round to one decimal place
+        self.current_temp = round(self.current_temp * 10) / 10
+        
+        self.last_read_time = now
+        self._emit_state()
+        return self.current_temp
+    
+    def set_ambient_temperature(self, temp):
+        self.ambient_temp = temp
+        self._emit_state()
+        print(f"Ambient temperature set to {temp}°C")
+    
+    def update_heat_factor(self, motor_speed, motor_running):
+        # Motor generates heat when running
+        if motor_running:
+            # Heat increases with motor speed
+            speed_factor = motor_speed / 100.0
+            self.heat_factor = 5.0 * speed_factor  # Up to 5 degrees of additional heat
+        else:
+            # Heat dissipates when motor is off
+            self.heat_factor = max(0, self.heat_factor - 0.5)  # Cool down gradually
+        
+        # Update temperature reading with new heat factor
+        self.read_temperature()
+    
+    def _emit_state(self):
+        emit_event('temperature_update', 'temperature_sensor', {
+            'temperature': self.current_temp,
+            'ambient': self.ambient_temp,
+            'heat_factor': self.heat_factor
+        })
+
+# Microcontroller that connects and manages all components
+class Microcontroller:
+    def __init__(self):
+        # Initialize components
+        self.battery = Battery()
+        self.motor = Motor(pin_pwm=25, pin_dir1=26, pin_dir2=27)
+        self.temp_sensor = TemperatureSensor(pin=32)
+        
+        # System state
+        self.is_running = False
+        self.update_interval = 1.0  # seconds
+        self.last_update_time = time.time()
+        
+        # Start the update loop
+        # self.start_updates()
+        
+        print("Microcontroller initialized with battery, motor, and temperature sensor")
+    
+    def start_updates(self):
+        self.is_running = True
+        self._schedule_update()
+        print("Started periodic updates")
+    
+    def stop_updates(self):
+        self.is_running = False
+        print("Stopped periodic updates")
+    
+    def _schedule_update(self):
+        if not self.is_running:
+            return
             
-            # Create MicroPython simulation environment
-            class Pin:
-                IN = 0
-                OUT = 1
-                PULL_UP = 2
-                PULL_DOWN = 3
-                
-                def __init__(self, pin, mode=None, pull=None):
-                    self.pin = pin
-                    self.mode = mode
-                    self.pull = pull
-                    self._value = 0
-                
-                def on(self):
-                    self._value = 1
-                    print(f"PIN {self.pin} set to ON")
-                
-                def off(self):
-                    self._value = 0
-                    print(f"PIN {self.pin} set to OFF")
-                
-                def value(self, val=None):
-                    if val is not None:
-                        self._value = 1 if val else 0
-                        print(f"PIN {self.pin} set to {self._value}")
-                    return self._value
+        # Use JavaScript's setTimeout to schedule the next update
+        update_proxy = create_proxy(self._update)
+        window.setTimeout(update_proxy, int(self.update_interval * 1000))
+    
+    def _update(self):
+        if not self.is_running:
+            return
             
-            class ADC:
-                def __init__(self, pin):
-                    self.pin = pin
-                    
-                def read(self):
-                    # Simulate a random analog reading
-                    import random
-                    return random.randint(0, 4095)
-            
-            class UART:
-                def __init__(self, id, baudrate=9600, tx=None, rx=None):
-                    self.id = id
-                    self.baudrate = baudrate
-                    self.tx = tx
-                    self.rx = rx
-                    self.buffer = bytearray()
-                    print(f"UART{id} initialized with baudrate {baudrate}")
-                
-                def write(self, data):
-                    if isinstance(data, str):
-                        data = data.encode('utf-8')
-                    print(f"UART{self.id} write: {data}")
-                    return len(data)
-                
-                def read(self, nbytes=None):
-                    # Simulate reading data
-                    import random
-                    if nbytes is None:
-                        nbytes = len(self.buffer)
-                    if not self.buffer:
-                        return b''
-                    data = self.buffer[:nbytes]
-                    self.buffer = self.buffer[nbytes:]
-                    return data
-                
-                def any(self):
-                    return len(self.buffer)
-            
-            class I2C:
-                def __init__(self, id, scl=None, sda=None, freq=400000):
-                    self.id = id
-                    self.scl = scl
-                    self.sda = sda
-                    self.freq = freq
-                    print(f"I2C{id} initialized with freq {freq}")
-                
-                def scan(self):
-                    # Simulate finding some I2C devices
-                    return [0x3C, 0x68]  # Example: OLED display and RTC
-                
-                def readfrom_mem(self, addr, memaddr, nbytes, addrsize=8):
-                    # Simulate reading from I2C device memory
-                    import random
-                    return bytes([random.randint(0, 255) for _ in range(nbytes)])
-                
-                def writeto_mem(self, addr, memaddr, buf, addrsize=8):
-                    # Simulate writing to I2C device memory
-                    print(f"I2C write to device 0x{addr:02X}, addr 0x{memaddr:02X}, data: {buf}")
-                    return len(buf)
-            
-            # Add to global namespace
-            import builtins
-            builtins.Pin = Pin
-            builtins.ADC = ADC
-            builtins.UART = UART
-            builtins.I2C = I2C
-            
-            # Create machine module
-            class MachineModule:
-                def __init__(self):
-                    self.Pin = Pin
-                    self.ADC = ADC
-                    self.UART = UART
-                    self.I2C = I2C
-                    
-                def reset(self):
-                    print("Machine reset simulated")
-                    
-                def freq(self, freq=None):
-                    if freq is not None:
-                        print(f"CPU frequency set to {freq} Hz")
-                    return 240000000  # ESP32 default frequency
-            
-            machine = MachineModule()
-            sys.modules['machine'] = machine
-            
-            # Create network module
-            class WLAN:
-                STA_IF = 0
-                AP_IF = 1
-                
-                def __init__(self, interface_id):
-                    self.interface_id = interface_id
-                    self._active = False
-                    self._connected = False
-                    self._ssid = None
-                    self._password = None
-                    self._ip = None
-                    
-                def active(self, is_active=None):
-                    if is_active is not None:
-                        self._active = is_active
-                        print(f"WLAN {'activated' if is_active else 'deactivated'}")
-                    return self._active
-                
-                def connect(self, ssid, password):
-                    if not self._active:
-                        print("Cannot connect: WLAN not active")
-                        return
-                    self._ssid = ssid
-                    self._password = password
-                    self._connected = True
-                    self._ip = "192.168.1.100"
-                    print(f"Connected to WiFi network '{ssid}'")
-                
-                def disconnect(self):
-                    self._connected = False
-                    print("Disconnected from WiFi network")
-                
-                def isconnected(self):
-                    return self._connected
-                
-                def ifconfig(self):
-                    return (self._ip, "255.255.255.0", "192.168.1.1", "8.8.8.8")
-            
-            class NetworkModule:
-                def __init__(self):
-                    self.WLAN = WLAN
-                    self.STA_IF = WLAN.STA_IF
-                    self.AP_IF = WLAN.AP_IF
-            
-            network = NetworkModule()
-            sys.modules['network'] = network
-            
-            print("MicroPython environment initialized")
+        # Update battery state
+        self.battery.update()
+        
+        # Update temperature based on motor state
+        self.temp_sensor.update_heat_factor(
+            self.motor.speed, 
+            self.motor.is_running
+        )
+        
+        # Check if battery is too low to run motor
+        if self.battery.current_level < 5 and self.motor.is_running:
+            print("Battery too low, stopping motor")
+            self.motor.stop()
+        
+        # Emit overall system state
+        self._emit_system_state()
+        
+        # Schedule next update
+        self._schedule_update()
+    
+    def _emit_system_state(self):
+        emit_event('system_update', 'microcontroller', {
+            'battery_level': self.battery.current_level,
+            'motor_running': self.motor.is_running,
+            'temperature': self.temp_sensor.current_temp,
+            'timestamp': time.time()
+        })
+
+# Create the microcontroller instance and make it globally available
+microcontroller = Microcontroller()
+
+# Add to global namespace
+import builtins
+builtins.microcontroller = microcontroller
+builtins.battery = microcontroller.battery
+builtins.motor = microcontroller.motor
+builtins.temp_sensor = microcontroller.temp_sensor
+
+# Create standard MicroPython classes
+class Pin:
+    IN = 0
+    OUT = 1
+    PULL_UP = 2
+    PULL_DOWN = 3
+    
+    def __init__(self, pin, mode=None, pull=None):
+        self.pin = pin
+        self.mode = mode
+        self.pull = pull
+        self._value = 0
+    
+    def on(self):
+        self._value = 1
+        print(f"PIN {self.pin} set to ON")
+        emit_event('pin_change', 'pin', {'pin': self.pin, 'value': 1})
+    
+    def off(self):
+        self._value = 0
+        print(f"PIN {self.pin} set to OFF")
+        emit_event('pin_change', 'pin', {'pin': self.pin, 'value': 0})
+    
+    def value(self, val=None):
+        if val is not None:
+            self._value = 1 if val else 0
+            print(f"PIN {self.pin} set to {self._value}")
+            emit_event('pin_change', 'pin', {'pin': self.pin, 'value': self._value})
+        return self._value
+
+# Add to global namespace
+builtins.Pin = Pin
+
+# Create machine module
+class MachineModule:
+    def __init__(self):
+        self.Pin = Pin
+        
+    def reset(self):
+        print("Machine reset simulated")
+        emit_event('machine_reset', 'machine', {})
+        
+    def freq(self, freq=None):
+        if freq is not None:
+            print(f"CPU frequency set to {freq} Hz")
+            emit_event('freq_change', 'machine', {'freq': freq})
+        return 240000000  # ESP32 default frequency
+
+machine = MachineModule()
+sys.modules['machine'] = machine
+
+print("IoT device simulation environment initialized with battery, motor, and temperature sensor")
+print("Type 'help(microcontroller)' for usage information")
+
+# Helper function to demonstrate the device
+def demo():
+    print("Running IoT device demo...")
+    print("Battery level:", battery.get_level(), "%")
+    print("Temperature:", temp_sensor.read_temperature(), "°C")
+    
+    print("Starting motor at 50% speed...")
+    motor.forward(50)
+    time.sleep(1)
+    print("Current temperature:", temp_sensor.read_temperature(), "°C")
+    
+    print("Increasing motor speed to 100%...")
+    motor.set_speed(100)
+    time.sleep(1)
+    print("Current temperature:", temp_sensor.read_temperature(), "°C")
+    
+    print("Stopping motor...")
+    motor.stop()
+    time.sleep(1)
+    print("Current temperature:", temp_sensor.read_temperature(), "°C")
+    
+    print("Battery level after operations:", battery.get_level(), "%")
+    print("Demo completed!")
+
+# Add demo to global namespace
+builtins.demo = demo
           `);
           
           // Notify main process that device is ready

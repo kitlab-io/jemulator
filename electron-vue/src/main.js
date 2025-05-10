@@ -307,6 +307,25 @@ const deviceManager = {
         }));
       }
     });
+  },
+  
+  broadcastComponentEvent(deviceId, event) {
+    // Add deviceId to the event if not already present
+    if (!event.deviceId) {
+      event.deviceId = deviceId;
+    }
+    
+    console.log(`Component event from device ${deviceId}:`, event);
+    
+    this.wsServer.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({
+          type: 'component-event',
+          deviceId,
+          event
+        }));
+      }
+    });
   }
 };
 
@@ -344,6 +363,9 @@ app.whenReady().then(async () => {
         break;
       case 'repl-output':
         deviceManager.broadcastReplOutput(deviceId, message.result);
+        break;
+      case 'component-event':
+        deviceManager.broadcastComponentEvent(deviceId, message.event);
         break;
       case 'code-loaded':
       case 'code-executed':
