@@ -1,0 +1,1 @@
+open -n /Users/michael.garrido/Documents/GitHub/solarpunk-sim/electron-vue/node_modules/electron/dist/Electron.app

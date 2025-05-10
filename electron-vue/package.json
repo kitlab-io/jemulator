@@ -1,0 +1,55 @@
+{
+  "name": "electron-vue",
+  "productName": "electron-vue",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": ".vite/build/main.js",
+  "scripts": {
+    "start:needle": "vite --host",
+    "build:dev": "vite build",
+    "build:production": "vite build -- --production",
+    "gltf:transform": "npm run transform --prefix node_modules/@needle-tools/gltf-build-pipeline",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "keywords": [],
+  "author": {
+    "name": "Michael Garrido",
+    "email": "michael.a.garrido@gmail.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.8.0",
+    "@electron-forge/maker-deb": "^7.8.0",
+    "@electron-forge/maker-rpm": "^7.8.0",
+    "@electron-forge/maker-squirrel": "^7.8.0",
+    "@electron-forge/maker-zip": "^7.8.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.8.0",
+    "@electron-forge/plugin-fuses": "^7.8.0",
+    "@electron-forge/plugin-vite": "^7.8.0",
+    "@electron/fuses": "^1.8.0",
+    "@needle-tools/editor-sync": "^3.0.0-beta",
+    "@needle-tools/helper": "1.11.3",
+    "@types/three": "0.169.0",
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "electron": "36.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.4",
+    "vite": "^5.4.19",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-static-copy": "^2.3.1"
+  },
+  "dependencies": {
+    "@needle-tools/engine": "^4.4.6",
+    "bufferutil": "^4.0.9",
+    "electron-squirrel-startup": "^1.0.1",
+    "pyodide": "^0.27.5",
+    "three": "npm:@needle-tools/three@^0.169.5",
+    "utf-8-validate": "^5.0.10",
+    "vue": "^3.5.13"
+  }
+}
