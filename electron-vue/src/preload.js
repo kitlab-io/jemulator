@@ -13,5 +13,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
     return () => {
       ipcRenderer.removeAllListeners('device-message');
     };
+  },
+  
+  // Receive component events from main process
+  onComponentEvent: (callback) => {
+    ipcRenderer.on('component-event', (_, message) => callback(message));
+    return () => {
+      ipcRenderer.removeAllListeners('component-event');
+    };
   }
 });

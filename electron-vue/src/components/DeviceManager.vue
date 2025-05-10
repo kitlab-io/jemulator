@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useWebSocket } from '../composables/useWebSocket';
 
 export default {
@@ -33,6 +33,7 @@ export default {
     const devices = ref([]);
     const selectedDevice = ref(null);
     const { ws, sendCommand } = useWebSocket();
+    let componentEventListener = null;
 
     const addDevice = (withConsole = false) => {
       const newDeviceId = `device${devices.value.length + 1}`;
@@ -74,6 +75,76 @@ export default {
     const selectDevice = (deviceId) => {
       selectedDevice.value = deviceId;
     };
+    
+    // Handle component events from devices
+    const handleComponentEvent = (message) => {
+      console.log('Received component event:', message);
+      
+      if (message.type === 'component-event' && message.event) {
+        const { deviceId, event } = message;
+        
+        // Update 3D environment based on the component event
+        updateGameObject(deviceId, event);
+      }
+    };
+    
+    // Update the corresponding game object in the 3D environment
+    const updateGameObject = (deviceId, event) => {
+      const { type, component, data } = event;
+      
+      // Check if we have the appropriate controller in the window object
+      if (window.RCCarController) {
+        switch (type) {
+          case 'motor_update':
+            if (component === 'motor') {
+              // Update motor state in the 3D environment
+              const motorSpeed = data.speed * data.direction;
+              console.log(`Setting motor speed to ${motorSpeed} for device ${deviceId}`);
+              window.RCCarController.setConstantMotorSpeed(motorSpeed);
+            }
+            break;
+            
+          case 'battery_update':
+            if (component === 'battery') {
+              // Update battery state in the 3D environment if needed
+              console.log(`Battery level: ${data.level}% for device ${deviceId}`);
+              if (window.RCCarController.setBatteryLevel) {
+                window.RCCarController.setBatteryLevel(data.level);
+              }
+            }
+            break;
+            
+          case 'temperature_update':
+            if (component === 'temperature_sensor') {
+              // Update temperature visualization if needed
+              console.log(`Temperature: ${data.temperature}°C for device ${deviceId}`);
+              if (window.RCCarController.setTemperature) {
+                window.RCCarController.setTemperature(data.temperature);
+              }
+            }
+            break;
+            
+          default:
+            console.log(`Unhandled event type: ${type}`);
+        }
+      } else {
+        console.warn('RCCarController not found in window object');
+      }
+    };
+    
+    onMounted(() => {
+      // Set up listener for component events from the main process
+      if (window.electronAPI && window.electronAPI.onComponentEvent) {
+        componentEventListener = window.electronAPI.onComponentEvent(handleComponentEvent);
+      }
+    });
+    
+    onUnmounted(() => {
+      // Clean up event listener
+      if (componentEventListener) {
+        componentEventListener();
+      }
+    });
 
     return {
       devices,

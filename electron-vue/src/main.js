@@ -28,6 +28,7 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
+      webSecurity: false, // Allow loading local resources
     },
   });
 
@@ -317,6 +318,16 @@ const deviceManager = {
     
     console.log(`Component event from device ${deviceId}:`, event);
     
+    // Forward component event to the renderer process
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('component-event', {
+        type: 'component-event',
+        deviceId,
+        event
+      });
+    }
+    
+    // Also broadcast to WebSocket clients
     this.wsServer.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify({
