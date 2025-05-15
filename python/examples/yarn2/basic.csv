@@ -1,0 +1,5 @@
+id,text,file,node,lineNumber
+line:b40ad9f0,This is the first node.,/Users/michael.garrido/Documents/GitHub/jemulator/python/examples/yarn2/basic.yarn,Start,3
+line:223ade87,Choice 1,/Users/michael.garrido/Documents/GitHub/jemulator/python/examples/yarn2/basic.yarn,Start,5
+line:986bd71e,Choice 2,/Users/michael.garrido/Documents/GitHub/jemulator/python/examples/yarn2/basic.yarn,Start,7
+line:4cdb8334,"Here is the node visited as a **result** of the __first__ ""choice"", with a comma.",/Users/michael.garrido/Documents/GitHub/jemulator/python/examples/yarn2/basic.yarn,choice_1,13

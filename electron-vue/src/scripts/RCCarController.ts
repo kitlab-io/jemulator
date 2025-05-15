@@ -25,6 +25,10 @@ export class RCCarController extends Behaviour {
         }
     }
 
+    public setSteering(angle: number) {
+        // this.carController.carPhysics?.steeringAngle = angle;
+    }
+
     public setConstantMotorSpeed(speed: number) {
         if (this.actionInterval) {
             clearInterval(this.actionInterval);

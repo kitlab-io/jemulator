@@ -1,0 +1,2 @@
+protobuf==3.20.0
+yarnrunner-python @ git+https://github.com/relaypro-open/YarnRunner-Python@106207307fec64f61ba96268ac2ec5fd2cd46d47

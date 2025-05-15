@@ -1,0 +1,28 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.react-flow__node.highlight {
+  background-color: #918fbe;
+  color: white;
+}
+ 
+.intersection-flow .react-flow__handle {
+  display: none;
+}
+
+.flow-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}

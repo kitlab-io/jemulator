@@ -21,6 +21,9 @@ MonoBehaviour:
     Projects:
     - ProjectPath: Library/Needle/vuejs-sample
     BuilderScene: 
+  - Path: Assets/Plugins/Pixel Crushers/Quest Machine/Demo/Demo.unity
+    Projects: []
+    BuilderScene: 
   Projects:
   - ProjectPath: Needle/sandbox
   - ProjectPath: ../../electron-vue

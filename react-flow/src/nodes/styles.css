@@ -1,0 +1,149 @@
+.node {
+  padding: 10px;
+  border-radius: 5px;
+  width: 150px;
+  font-size: 12px;
+  color: #222;
+  text-align: center;
+  border: 1px solid #1a192b;
+}
+
+.node-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.node-label {
+  font-weight: bold;
+}
+
+/* LED Node Styles */
+.led-node {
+  background-color: #f5f5f5;
+  transition: all 0.3s ease;
+}
+
+.led-node.led-on {
+  background-color: #fffacd; /* Light yellow glow */
+  box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
+}
+
+.led-icon {
+  font-size: 24px;
+}
+
+.led-status {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* Battery Node Styles */
+.battery-node {
+  background-color: #e6f7ff;
+}
+
+.battery-icon {
+  font-size: 24px;
+}
+
+/* Rocker Switch Styles */
+.rocker-switch-node {
+  background-color: #f0f0f0;
+}
+
+.switch-icon {
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.switch-on {
+  color: #ff9900;
+}
+
+.switch-off {
+  color: #999;
+}
+
+/* Wire Node Styles */
+.wire-node {
+  background-color: #f8f8f8;
+}
+
+.wire-icon {
+  font-size: 20px;
+  color: #666;
+}
+
+/* Validation Panel Styles */
+.flow-container {
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+.validation-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 250px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.status-indicator {
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.status-indicator.valid {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-indicator.invalid {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.error-list {
+  margin-top: 10px;
+}
+
+.error-list ul {
+  padding-left: 20px;
+  margin: 5px 0;
+}
+
+.led-indicator {
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.led-indicator.on {
+  background-color: #fffacd;
+  color: #856404;
+  box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+}
+
+.led-indicator.off {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+/* Highlight style for intersecting nodes */
+.highlight {
+  border: 1px solid #ff0072;
+}
