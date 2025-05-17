@@ -28,8 +28,13 @@ MonoBehaviour:
     Projects:
     - ProjectPath: ../Exports/Sidescroller
     BuilderScene: 
+  - Path: Assets/Scenes/CarPhysics.unity
+    Projects:
+    - ProjectPath: ../Exports/CarPhysics
+    BuilderScene: 
   Projects:
   - ProjectPath: Needle/sandbox
   - ProjectPath: ../../electron-vue
   - ProjectPath: Library/Needle/vuejs-sample
   - ProjectPath: ../Exports/Sidescroller
+  - ProjectPath: ../Exports/CarPhysics
