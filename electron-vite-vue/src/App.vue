@@ -6,18 +6,25 @@ import DatabaseDemo from './components/DatabaseDemo.vue'
 // Function to open the React app window
 const openReactWindow = () => {
   // Send IPC message to main process to open React window
-  window.ipcRenderer.send('open-react-window')
+  window.ipcRenderer.invoke('open-react-window')
 }
 
 // Function to open the Needle JS app window
 const openNeedleWindow = () => {
   // Send IPC message to main process to open Needle JS window
-  window.ipcRenderer.send('open-needle-window')
+  window.ipcRenderer.invoke('open-needle-window')
+}
+
+// Function to open the Threlte app window
+const openThrelteWindow = () => {
+  // Send IPC message to main process to open Threlte window
+  window.ipcRenderer.invoke('open-threlte-window')
 }
 
 // Status messages
 const reactWindowStatus = ref('')
 const needleWindowStatus = ref('')
+const threlteWindowStatus = ref('')
 
 // Listen for status updates from main process
 window.ipcRenderer.on('react-window-status', (_event, status) => {
@@ -26,6 +33,10 @@ window.ipcRenderer.on('react-window-status', (_event, status) => {
 
 window.ipcRenderer.on('needle-window-status', (_event, status) => {
   needleWindowStatus.value = status
+})
+
+window.ipcRenderer.on('threlte-window-status', (_event, status) => {
+  threlteWindowStatus.value = status
 })
 </script>
 
@@ -59,6 +70,15 @@ window.ipcRenderer.on('needle-window-status', (_event, status) => {
       Launch Needle JS App Window
     </button>
     <p v-if="needleWindowStatus" class="status-message">{{ needleWindowStatus }}</p>
+  </div>
+  
+  <!-- Threlte Window Button Section -->
+  <div class="threlte-window-section">
+    <h2>Open Threlte App Window</h2>
+    <button @click="openThrelteWindow" class="open-threlte-button">
+      Launch Threlte App Window
+    </button>
+    <p v-if="threlteWindowStatus" class="status-message">{{ threlteWindowStatus }}</p>
   </div>
   
   <div class="flex-center">

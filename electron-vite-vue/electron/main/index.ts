@@ -69,11 +69,13 @@ let dbManager: DatabaseManager | null = null
 // Store references to our windows
 let reactWin: BrowserWindow | null = null
 let needleWin: BrowserWindow | null = null
+let threlteWin: BrowserWindow | null = null
 
 // Define paths for Vue, React, and Needle JS apps
 let vueAppPath: string
 let reactAppPath: string
 let needleAppPath: string
+let threlteAppPath: string
 
 // In development mode, use the dev server URLs
 if (!app.isPackaged) {
@@ -81,6 +83,9 @@ if (!app.isPackaged) {
   reactAppPath = path.join(RENDERER_DIST, 'react')
   // needleAppPath = path.join(process.env.APP_ROOT, 'needleengine/Exports/Sidescroller/dist')
   needleAppPath = path.join(RENDERER_DIST, 'needle')
+  // threlteAppPath = path.join(process.env.APP_ROOT, 'vite-threlte/dist')
+  threlteAppPath = path.join(RENDERER_DIST, 'threlte')
+
 
 } else {
   // In production, use the packaged app paths
@@ -90,16 +95,18 @@ if (!app.isPackaged) {
   const resourcesPath = process.resourcesPath
   reactAppPath = path.join(resourcesPath, 'app/dist/react')
   needleAppPath = path.join(resourcesPath, 'app/dist/needle')
+  threlteAppPath = path.join(resourcesPath, 'app/dist/threlte')
   
   console.log('Vue app path:', vueAppPath)
   console.log('React app path:', reactAppPath)
   console.log('Needle app path:', needleAppPath)
+  console.log('Threlte app path:', threlteAppPath)
 }
 
 async function createWindow() {
   // Initialize the HTTP server if it's not already running
   if (!appServer) {
-    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, serverPort);
+    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, serverPort);
     try {
       serverPort = await appServer.start();
       console.log(`HTTP server started on port ${serverPort}`);
@@ -299,6 +306,65 @@ async function createNeedleWindow() {
   })
 }
 
+/**
+ * Create a new window for the Threlte app
+ */
+async function createThrelteWindow() {
+  // If Threlte window already exists, focus it and return
+  if (threlteWin && !threlteWin.isDestroyed()) {
+    threlteWin.focus()
+    win?.webContents.send('threlte-window-status', 'Threlte window is already open')
+    return
+  }
+
+  // Initialize the HTTP server if it's not already running
+  if (!appServer) {
+    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, serverPort)
+    try {
+      serverPort = await appServer.start()
+      console.log(`HTTP server started on port ${serverPort}`)
+    } catch (err) {
+      console.error('Failed to start HTTP server:', err)
+      win?.webContents.send('threlte-window-status', 'Failed to start HTTP server')
+      return
+    }
+  }
+
+  // Create a new browser window for the Threlte app
+  threlteWin = new BrowserWindow({
+    title: 'Threlte App',
+    width: 1200,
+    height: 800,
+    webPreferences: {
+      preload,
+      // For security in production, avoid nodeIntegration
+      nodeIntegration: false,
+      contextIsolation: true,
+      // Enable webSecurity in production
+      webSecurity: app.isPackaged,
+      // Allow scripts to access remote content
+      allowRunningInsecureContent: !app.isPackaged,
+    },
+  })
+
+  // Load the Threlte app
+  await threlteWin.loadURL(appServer.getAppUrl('threlte'))
+
+  // Open DevTools in development mode
+  if (process.env.NODE_ENV === 'development') {
+    threlteWin.webContents.openDevTools()
+  }
+
+  // Notify the main window that the Threlte window is ready
+  win?.webContents.send('threlte-window-status', 'Threlte window opened successfully')
+
+  // Handle window close event
+  threlteWin.on('closed', () => {
+    threlteWin = null
+    win?.webContents.send('threlte-window-status', 'Threlte window was closed')
+  })
+}
+
 app.whenReady().then(() => {
   // Register custom protocol handler for loading React app in production
   if (app.isPackaged) {
@@ -390,4 +456,19 @@ ipcMain.handle('open-win', (_, arg) => {
   } else {
     childWindow.loadFile(indexHtml, { hash: arg })
   }
+})
+
+// Handle opening the React window
+ipcMain.handle('open-react-window', () => {
+  createReactWindow()
+})
+
+// Handle opening the Needle window
+ipcMain.handle('open-needle-window', () => {
+  createNeedleWindow()
+})
+
+// Handle opening the Threlte window
+ipcMain.handle('open-threlte-window', () => {
+  createThrelteWindow()
 })

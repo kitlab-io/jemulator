@@ -20,11 +20,13 @@ export class AppServer {
   private rootDir: string;
   private reactDir: string;
   private needleDir: string;
+  private threlteDir: string;
 
-  constructor(rootDir: string, reactDir: string, needleDir: string, port: number = DEFAULT_PORT) {
+  constructor(rootDir: string, reactDir: string, needleDir: string, threlteDir: string, port: number = DEFAULT_PORT) {
     this.rootDir = rootDir;
     this.reactDir = reactDir;
     this.needleDir = needleDir;
+    this.threlteDir = threlteDir;
     this.port = port;
   }
 
@@ -57,6 +59,10 @@ export class AppServer {
             // Needle JS app request
             const relativePath = pathname.substring('/needle/'.length) || 'index.html';
             filePath = path.join(this.needleDir, relativePath);
+          } else if (pathname.startsWith('/threlte/')) {
+            // Threlte app request
+            const relativePath = pathname.substring('/threlte/'.length) || 'index.html';
+            filePath = path.join(this.threlteDir, relativePath);
           } else {
             // Vue app request (default)
             const relativePath = pathname === '/' ? 'index.html' : pathname;
@@ -133,14 +139,16 @@ export class AppServer {
 
   /**
    * Get the URL for a specific app
-   * @param {string} app - The app to get the URL for ('vue', 'react', or 'needle')
+   * @param {string} app - The app to get the URL for ('vue', 'react', 'needle', or 'threlte')
    * @returns {string} The URL for the app
    */
-  getAppUrl(app: 'vue' | 'react' | 'needle'): string {
+  getAppUrl(app: 'vue' | 'react' | 'needle' | 'threlte'): string {
     if (app === 'react') {
       return `http://localhost:${this.port}/react/`;
     } else if (app === 'needle') {
       return `http://localhost:${this.port}/needle/`;
+    } else if (app === 'threlte') {
+      return `http://localhost:${this.port}/threlte/`;
     }
     return `http://localhost:${this.port}/`;
   }
