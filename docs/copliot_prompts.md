@@ -63,3 +63,6 @@ with each web app potentially having its own vite build process, how can we orga
 
 #
 let's implement a persistent data store as sqlite db saved in the application support directory via Electron. the main electron process connects to this db and exposes a real-time proxy db connection over websocket server. any of the browser windows' web apps can connect to this websocket server via shared websocket client implementation. create a sample sqlite db and all necessary files to implement this across the electron app, vue app in main window, and react and needle apps in seccondary windows.
+
+#
+referencing the threejs example of a vechicle controller at vite-threlte/src/examples/physics_rapier_vehicle_controller.html, implement a rapier vehicle controller (see https://rapier.rs/javascript3d/classes/DynamicRayCastVehicleController.html) in a threlte scene at vite-threlte/src/scenes/PhysicsVehicleController.svelte

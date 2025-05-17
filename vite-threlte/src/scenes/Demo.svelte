@@ -34,6 +34,7 @@
         scale.target = 1;
     }}
     castShadow
+    position={[ 0, 5, 0 ]}
 >
     <T.BoxGeometry args={[1, 2, 1]} />
     <T.MeshStandardMaterial color="hotpink" />
