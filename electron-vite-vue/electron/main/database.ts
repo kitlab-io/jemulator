@@ -232,6 +232,50 @@ export class DatabaseManager {
   }
   
   /**
+   * Execute a database operation
+   * @param operation Database operation to execute
+   * @returns Operation result
+   */
+  public async executeOperation(operation: DbOperation): Promise<any> {
+    console.log(`Executing operation: ${JSON.stringify(operation)}`);
+    
+    try {
+      let result: any;
+      
+      switch (operation.type) {
+        case 'query':
+          result = this.db.prepare(operation.sql).run(...(operation.params || []));
+          break;
+        case 'exec':
+          result = this.db.exec(operation.sql);
+          break;
+        case 'get':
+          result = this.db.prepare(operation.sql).get(...(operation.params || []));
+          break;
+        case 'all':
+          result = this.db.prepare(operation.sql).all(...(operation.params || []));
+          break;
+        default:
+          throw new Error(`Unknown operation type: ${(operation as any).type}`);
+      }
+      
+      return {
+        success: true,
+        data: result,
+        requestId: operation.requestId
+      };
+    } catch (error) {
+      console.error('Database operation error:', error);
+      
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+        requestId: operation.requestId
+      };
+    }
+  }
+  
+  /**
    * Close the database connection
    */
   public close(): void {

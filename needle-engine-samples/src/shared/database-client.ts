@@ -165,25 +165,25 @@ class DatabaseClient {
     this.changeListeners.delete(id);
   }
   
-  // /**
-  //  * Initialize the database client
-  //  * This is a no-op in the IPC implementation since there's no connection to establish
-  //  */
-  // public async connect(): Promise<void> {
-  //   if (!this.isAvailable()) {
-  //     throw new Error('IPC is not available. Cannot connect to database.');
-  //   }
-  //   // No connection needed for IPC
-  //   return Promise.resolve();
-  // }
+  /**
+   * Initialize the database client
+   * This is a no-op in the IPC implementation since there's no connection to establish
+   */
+  public async connect(): Promise<void> {
+    if (!this.isAvailable()) {
+      throw new Error('IPC is not available. Cannot connect to database.');
+    }
+    // No connection needed for IPC
+    return Promise.resolve();
+  }
   
-  // /**
-  //  * Cleanup the database client
-  //  * This is a no-op in the IPC implementation since there's no connection to close
-  //  */
-  // public disconnect(): void {
-  //   // No disconnection needed for IPC
-  // }
+  /**
+   * Cleanup the database client
+   * This is a no-op in the IPC implementation since there's no connection to close
+   */
+  public disconnect(): void {
+    // No disconnection needed for IPC
+  }
 }
 
 // Create a singleton instance

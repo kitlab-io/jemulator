@@ -5,6 +5,7 @@ import path from 'node:path'
 import os from 'node:os'
 import { AppServer } from './server'
 import { DatabaseManager } from './database'
+import { WebSocketServer } from './websocket-server'
 
 // Use CommonJS require for Electron to ensure compatibility
 const require = createRequire(import.meta.url)
@@ -60,24 +61,22 @@ let win: BrowserWindow | null = null
 const preload = path.join(__dirname, '../preload/index.mjs')
 
 // Create HTTP server instance
-let appServer: AppServer | null = null
-let serverPort = 3333
-
-// Create database manager instance
-let dbManager: DatabaseManager | null = null
-
-// Store references to our windows
 let reactWin: BrowserWindow | null = null
 let needleWin: BrowserWindow | null = null
 let threlteWin: BrowserWindow | null = null
 let renjsWin: BrowserWindow | null = null
-
-// Define paths for Vue, React, and Needle JS apps
-let vueAppPath: string
+let appServer: AppServer | null = null
+let dbManager: DatabaseManager | null = null
+let wsServer: WebSocketServer | null = null
+let serverPort: number = 3000
+let wsPort: number = 8080
 let reactAppPath: string
 let needleAppPath: string
 let threlteAppPath: string
 let renjsAppPath: string
+
+// Define paths for Vue, React, and Needle JS apps
+let vueAppPath: string
 
 // In development mode, use the dev server URLs
 if (!app.isPackaged) {
@@ -229,13 +228,14 @@ async function createReactWindow() {
   })
 
   // Load the React app
-  if (!app.isPackaged && process.env.NODE_ENV === 'development' && REACT_DEV_SERVER_URL) {
-    // Development mode - load from external dev server
-    await reactWin.loadURL(REACT_DEV_SERVER_URL)
-  } else {
-    // Production mode or local development - load from our HTTP server
-    await reactWin.loadURL(appServer.getAppUrl('react'))
-  }
+  // if (!app.isPackaged && process.env.NODE_ENV === 'development' && REACT_DEV_SERVER_URL) {
+  //   // Development mode - load from external dev server
+  //   await reactWin.loadURL(REACT_DEV_SERVER_URL)
+  // } else {
+  //   // Production mode or local development - load from our HTTP server
+  //   await reactWin.loadURL(appServer.getAppUrl('react'))
+  // }
+  await reactWin.loadURL(appServer.getAppUrl('react'))
 
   // Open DevTools in development mode
   if (process.env.NODE_ENV === 'development') {
@@ -254,10 +254,12 @@ async function createReactWindow() {
 
 /**
  * Create a new window for the Needle JS app
+ * @param {string} appPath - Optional path for the app variant (e.g., 'carphysics')
+ * @param {object} context - Optional context data to pass to the app
  */
-async function createNeedleWindow() {
-  // If Needle window already exists, focus it and return
-  if (needleWin && !needleWin.isDestroyed()) {
+async function createNeedleWindow(appPath?: string, context?: any) {
+  // If Needle window already exists and no specific variant is requested, focus it and return
+  if (needleWin && !needleWin.isDestroyed() && !appPath) {
     needleWin.focus()
     win?.webContents.send('needle-window-status', 'Needle window is already open')
     return
@@ -277,8 +279,9 @@ async function createNeedleWindow() {
   }
 
   // Create a new browser window for the Needle JS app
+  const windowTitle = appPath ? `Needle JS App - ${appPath}` : 'Needle JS App'
   needleWin = new BrowserWindow({
-    title: 'Needle JS App',
+    title: windowTitle,
     width: 1200,
     height: 800,
     webPreferences: {
@@ -293,8 +296,15 @@ async function createNeedleWindow() {
     },
   })
 
-  // Load the Needle JS app
-  await needleWin.loadURL(appServer.getAppUrl('needle'))
+  // Load the Needle JS app with the specified variant path
+  await needleWin.loadURL(appServer.getAppUrl('needle', appPath))
+
+  // If context data is provided, send it to the renderer process
+  if (context) {
+    needleWin.webContents.on('did-finish-load', () => {
+      needleWin?.webContents.send('app-context', context)
+    })
+  }
 
   // Open DevTools in development mode
   if (process.env.NODE_ENV === 'development') {
@@ -302,7 +312,10 @@ async function createNeedleWindow() {
   }
 
   // Notify the main window that the Needle window is ready
-  win?.webContents.send('needle-window-status', 'Needle window opened successfully')
+  const statusMessage = appPath 
+    ? `Needle window (${appPath}) opened successfully` 
+    : 'Needle window opened successfully'
+  win?.webContents.send('needle-window-status', statusMessage)
 
   // Handle window close event
   needleWin.on('closed', () => {
@@ -313,10 +326,12 @@ async function createNeedleWindow() {
 
 /**
  * Create a new window for the Threlte app
+ * @param {string} appPath - Optional path for the app variant
+ * @param {object} context - Optional context data to pass to the app
  */
-async function createThrelteWindow() {
-  // If Threlte window already exists, focus it and return
-  if (threlteWin && !threlteWin.isDestroyed()) {
+async function createThrelteWindow(appPath?: string, context?: any) {
+  // If Threlte window already exists and no specific variant is requested, focus it and return
+  if (threlteWin && !threlteWin.isDestroyed() && !appPath) {
     threlteWin.focus()
     win?.webContents.send('threlte-window-status', 'Threlte window is already open')
     return
@@ -336,8 +351,9 @@ async function createThrelteWindow() {
   }
 
   // Create a new browser window for the Threlte app
+  const windowTitle = appPath ? `Threlte App - ${appPath}` : 'Threlte App'
   threlteWin = new BrowserWindow({
-    title: 'Threlte App',
+    title: windowTitle,
     width: 1200,
     height: 800,
     webPreferences: {
@@ -352,8 +368,15 @@ async function createThrelteWindow() {
     },
   })
 
-  // Load the Threlte app
-  await threlteWin.loadURL(appServer.getAppUrl('threlte'))
+  // Load the Threlte app with the specified variant path
+  await threlteWin.loadURL(appServer.getAppUrl('threlte', appPath))
+
+  // If context data is provided, send it to the renderer process
+  if (context) {
+    threlteWin.webContents.on('did-finish-load', () => {
+      threlteWin?.webContents.send('app-context', context)
+    })
+  }
 
   // Open DevTools in development mode
   if (process.env.NODE_ENV === 'development') {
@@ -361,7 +384,10 @@ async function createThrelteWindow() {
   }
 
   // Notify the main window that the Threlte window is ready
-  win?.webContents.send('threlte-window-status', 'Threlte window opened successfully')
+  const statusMessage = appPath 
+    ? `Threlte window (${appPath}) opened successfully` 
+    : 'Threlte window opened successfully'
+  win?.webContents.send('threlte-window-status', statusMessage)
 
   // Handle window close event
   threlteWin.on('closed', () => {
@@ -372,10 +398,12 @@ async function createThrelteWindow() {
 
 /**
  * Create a new window for the RenJS demo
+ * @param {string} appPath - Optional path for the app variant
+ * @param {object} context - Optional context data to pass to the app
  */
-async function createRenjsWindow() {
-  // If RenJS window already exists, focus it and return
-  if (renjsWin && !renjsWin.isDestroyed()) {
+async function createRenjsWindow(appPath?: string, context?: any) {
+  // If RenJS window already exists and no specific variant is requested, focus it and return
+  if (renjsWin && !renjsWin.isDestroyed() && !appPath) {
     renjsWin.focus()
     win?.webContents.send('renjs-window-status', 'RenJS window is already open')
     return
@@ -395,8 +423,9 @@ async function createRenjsWindow() {
   }
 
   // Create a new browser window for the RenJS demo
+  const windowTitle = appPath ? `RenJS Demo - ${appPath}` : 'RenJS Demo'
   renjsWin = new BrowserWindow({
-    title: 'RenJS Demo',
+    title: windowTitle,
     width: 1200,
     height: 800,
     webPreferences: {
@@ -411,8 +440,15 @@ async function createRenjsWindow() {
     },
   })
 
-  // Load the RenJS demo
-  await renjsWin.loadURL(appServer.getAppUrl('renjs'))
+  // Load the RenJS demo with the specified variant path
+  await renjsWin.loadURL(appServer.getAppUrl('renjs', appPath))
+
+  // If context data is provided, send it to the renderer process
+  if (context) {
+    renjsWin.webContents.on('did-finish-load', () => {
+      renjsWin?.webContents.send('app-context', context)
+    })
+  }
 
   // Open DevTools in development mode
   if (process.env.NODE_ENV === 'development') {
@@ -420,7 +456,10 @@ async function createRenjsWindow() {
   }
 
   // Notify the main window that the RenJS window is ready
-  win?.webContents.send('renjs-window-status', 'RenJS window opened successfully')
+  const statusMessage = appPath 
+    ? `RenJS window (${appPath}) opened successfully` 
+    : 'RenJS window opened successfully'
+  win?.webContents.send('renjs-window-status', statusMessage)
 
   // Handle window close event
   renjsWin.on('closed', () => {
@@ -429,7 +468,7 @@ async function createRenjsWindow() {
   })
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   // Register custom protocol handler for loading React app in production
   if (app.isPackaged) {
     // Register secure custom protocol
@@ -446,6 +485,15 @@ app.whenReady().then(() => {
   // Initialize the database manager
   dbManager = new DatabaseManager();
   console.log('Database manager initialized');
+  
+  // Initialize the WebSocket server
+  wsServer = new WebSocketServer(dbManager, wsPort);
+  try {
+    wsPort = await wsServer.start();
+    console.log(`WebSocket server started on port ${wsPort}`);
+  } catch (err) {
+    console.error('Failed to start WebSocket server:', err);
+  }
   
   // Set up IPC handlers
   ipcMain.on('open-react-window', () => {
@@ -479,6 +527,12 @@ app.on('quit', async () => {
     console.log('Shutting down HTTP server...')
     await appServer.stop()
     appServer = null
+  }
+  
+  if (wsServer) {
+    console.log('Shutting down WebSocket server...')
+    await wsServer.stop()
+    wsServer = null
   }
   
   if (dbManager) {
@@ -527,17 +581,40 @@ ipcMain.handle('open-react-window', () => {
   createReactWindow()
 })
 
-// Handle opening the Needle window
+// Handle opening app windows with variants
+ipcMain.handle('open-app-window', (event, payload) => {
+  console.log('Opening app window with payload:', payload)
+  
+  const { appType, appPath, context } = payload
+  
+  switch (appType) {
+    case 'needle':
+      createNeedleWindow(appPath, context)
+      break
+    case 'threlte':
+      createThrelteWindow(appPath, context)
+      break
+    case 'renjs':
+      createRenjsWindow(appPath, context)
+      break
+    case 'react':
+      // For backward compatibility
+      createReactWindow()
+      break
+    default:
+      console.error(`Unknown app type: ${appType}`)
+  }
+})
+
+// Legacy handlers for backward compatibility
 ipcMain.handle('open-needle-window', () => {
   createNeedleWindow()
 })
 
-// Handle opening the Threlte window
 ipcMain.handle('open-threlte-window', () => {
   createThrelteWindow()
 })
 
-// Handle opening the RenJS window
 ipcMain.handle('open-renjs-window', () => {
   createRenjsWindow()
 })

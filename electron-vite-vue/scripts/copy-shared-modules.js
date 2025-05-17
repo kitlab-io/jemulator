@@ -1,8 +1,8 @@
 /**
  * Copy Shared Modules
  * 
- * This script copies the shared modules to the React and Needle apps
- * to ensure they can all access the same database client.
+ * This script copies the shared modules to all web app variants
+ * to ensure they can all access the same database client and WebSocket client.
  */
 
 import fs from 'fs-extra';
@@ -10,25 +10,46 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, '../..');
 
 // Source directory for shared modules
-const sharedDir = path.resolve(rootDir, 'src', 'shared');
+const sharedDir = path.resolve(rootDir, 'electron-vite-vue/src/shared');
 
 // Target directories
-const reactSharedDir = path.resolve(rootDir, 'react-app', 'src', 'shared');
-const needleSharedDir = path.resolve(rootDir, 'needle-app', 'src', 'shared');
+const targetDirs = [
+  // React app
+  path.resolve(rootDir, 'vite-react/src/shared'),
+  // Threlte app
+  path.resolve(rootDir, 'vite-threlte/src/shared'),
+  // Needle app variants
+  path.resolve(rootDir, 'needle-engine-samples/src/shared'),
+  // RenJS app variants
+  path.resolve(rootDir, 'renjs-samples/src/shared')
+];
 
-// Create the target directories if they don't exist
-fs.ensureDirSync(reactSharedDir);
-fs.ensureDirSync(needleSharedDir);
+// Files to copy
+const filesToCopy = [
+  'database-client.ts',
+  'websocket-client.ts'
+];
 
-// Copy the shared modules to the React app
-console.log('📦 Copying shared modules to React app...');
-fs.copySync(sharedDir, reactSharedDir, { overwrite: true });
-
-// Copy the shared modules to the Needle app
-console.log('📦 Copying shared modules to Needle app...');
-fs.copySync(sharedDir, needleSharedDir, { overwrite: true });
+// Create the target directories and copy files
+targetDirs.forEach(targetDir => {
+  // Create the target directory if it doesn't exist
+  fs.ensureDirSync(targetDir);
+  
+  // Copy each file
+  filesToCopy.forEach(file => {
+    const sourceFile = path.join(sharedDir, file);
+    const targetFile = path.join(targetDir, file);
+    
+    if (fs.existsSync(sourceFile)) {
+      fs.copySync(sourceFile, targetFile, { overwrite: true });
+      console.log(`📦 Copied ${file} to ${targetDir}`);
+    } else {
+      console.warn(`⚠️ Source file not found: ${sourceFile}`);
+    }
+  });
+});
 
 console.log('✅ Shared modules copied successfully');

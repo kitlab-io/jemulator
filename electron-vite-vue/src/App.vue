@@ -6,13 +6,31 @@ import DatabaseDemo from './components/DatabaseDemo.vue'
 // Function to open the React app window
 const openReactWindow = () => {
   // Send IPC message to main process to open React window
-  window.ipcRenderer.invoke('open-react-window')
+  window.ipcRenderer.invoke('open-app-window', {
+    appType: 'react',
+    appPath: '',
+    context: {}
+  })
 }
 
 // Function to open the Needle JS app window
 const openNeedleWindow = () => {
   // Send IPC message to main process to open Needle JS window
-  window.ipcRenderer.invoke('open-needle-window')
+  window.ipcRenderer.invoke('open-app-window', {
+    appType: 'needle',
+    appPath: '',
+    context: {}
+  })
+}
+
+// Function to open specific Needle app variant with context
+const openNeedleVariant = (variant: string, context: any = {}) => {
+  // Send IPC message to main process with app variant and context
+  window.ipcRenderer.invoke('open-app-window', {
+    appType: 'needle',
+    appPath: variant,
+    context
+  })
 }
 
 // Function to open the Threlte app window
@@ -21,10 +39,30 @@ const openThrelteWindow = () => {
   window.ipcRenderer.invoke('open-threlte-window')
 }
 
+// Function to open specific Threlte app variant with context
+const openThrelteVariant = (variant: string, context: any = {}) => {
+  // Send IPC message to main process with app variant and context
+  window.ipcRenderer.invoke('open-app-window', {
+    appType: 'threlte',
+    appPath: variant,
+    context
+  })
+}
+
 // Function to open the RenJS demo window
 const openRenjsWindow = () => {
   // Send IPC message to main process to open RenJS window
   window.ipcRenderer.invoke('open-renjs-window')
+}
+
+// Function to open specific RenJS app variant with context
+const openRenjsVariant = (variant: string, context: any = {}) => {
+  // Send IPC message to main process with app variant and context
+  window.ipcRenderer.invoke('open-app-window', {
+    appType: 'renjs',
+    appPath: variant,
+    context
+  })
 }
 
 // Status messages
@@ -49,6 +87,22 @@ window.ipcRenderer.on('threlte-window-status', (_event, status) => {
 window.ipcRenderer.on('renjs-window-status', (_event, status) => {
   renjsWindowStatus.value = status
 })
+
+// Sample context data for vehicle controller
+const vehicleControllerContext = {
+  physics: {
+    gravity: -9.81,
+    friction: 0.5,
+    restitution: 0.2
+  },
+  vehicle: {
+    mass: 1200,
+    wheelBase: 2.5,
+    trackWidth: 1.8,
+    maxSpeed: 150,
+    acceleration: 5.0
+  }
+}
 </script>
 
 <template>
@@ -89,7 +143,32 @@ window.ipcRenderer.on('renjs-window-status', (_event, status) => {
     <button @click="openThrelteWindow" class="open-threlte-button">
       Launch Threlte App Window
     </button>
+    <div class="variant-buttons">
+      <button @click="openThrelteVariant('vehicle-controller', vehicleControllerContext)" class="variant-button">
+        Launch Vehicle Controller
+      </button>
+      <button @click="openThrelteVariant('physics-demo')" class="variant-button">
+        Launch Physics Demo
+      </button>
+    </div>
     <p v-if="threlteWindowStatus" class="status-message">{{ threlteWindowStatus }}</p>
+  </div>
+  
+  <!-- Needle Window Button Section -->
+  <div class="needle-window-section">
+    <h2>Open Needle JS App Window</h2>
+    <button @click="openNeedleWindow" class="open-needle-button">
+      Launch Needle JS App Window
+    </button>
+    <div class="variant-buttons">
+      <button @click="openNeedleVariant('carphysics', vehicleControllerContext)" class="variant-button">
+        Launch Car Physics Demo
+      </button>
+      <button @click="openNeedleVariant('sidescroller')" class="variant-button">
+        Launch Side Scroller Demo
+      </button>
+    </div>
+    <p v-if="needleWindowStatus" class="status-message">{{ needleWindowStatus }}</p>
   </div>
   
   <!-- RenJS Window Button Section -->
@@ -98,6 +177,14 @@ window.ipcRenderer.on('renjs-window-status', (_event, status) => {
     <button @click="openRenjsWindow" class="open-renjs-button">
       Launch RenJS Demo Window
     </button>
+    <div class="variant-buttons">
+      <button @click="openRenjsVariant('visual-novel')" class="variant-button">
+        Launch Visual Novel Demo
+      </button>
+      <button @click="openRenjsVariant('adventure-game')" class="variant-button">
+        Launch Adventure Game Demo
+      </button>
+    </div>
     <p v-if="renjsWindowStatus" class="status-message">{{ renjsWindowStatus }}</p>
   </div>
   
@@ -126,10 +213,6 @@ window.ipcRenderer.on('renjs-window-status', (_event, status) => {
   transition: filter 300ms;
 }
 
-.logo.electron:hover {
-  filter: drop-shadow(0 0 2em #9FEAF9);
-}
-
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
@@ -138,38 +221,67 @@ window.ipcRenderer.on('renjs-window-status', (_event, status) => {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
 
-/* Window Section Styles */
+.logo.electron:hover {
+  filter: drop-shadow(0 0 2em #9feaf9);
+}
+
 .react-window-section,
-.needle-window-section {
-  margin: 30px auto;
-  max-width: 600px;
-  padding: 20px;
-  border: 1px solid #eaeaea;
+.needle-window-section,
+.threlte-window-section,
+.renjs-window-section {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
-  text-align: center;
 }
 
 .open-react-button,
-.open-needle-button {
+.open-needle-button,
+.open-threlte-button,
+.open-renjs-button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
   border: none;
   border-radius: 4px;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  margin: 15px 0;
+  font-size: 16px;
+  margin: 10px 0;
 }
 
-.open-react-button {
-  background-color: #61dafb; /* React blue */
-  color: #282c34; /* React dark */
+.open-react-button:hover,
+.open-needle-button:hover,
+.open-threlte-button:hover,
+.open-renjs-button:hover {
+  background-color: #45a049;
 }
 
-.open-react-button:hover {
-  background-color: #4fa8c7;
+.variant-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.variant-button {
+  padding: 8px 12px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.variant-button:hover {
+  background-color: #0b7dda;
   transform: translateY(-2px);
+}
+
+.variant-button:active {
+  transform: translateY(0);
 }
 
 .open-needle-button {

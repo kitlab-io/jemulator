@@ -66,3 +66,12 @@ let's implement a persistent data store as sqlite db saved in the application su
 
 #
 referencing the threejs example of a vechicle controller at vite-threlte/src/examples/physics_rapier_vehicle_controller.html, implement a rapier vehicle controller (see https://rapier.rs/javascript3d/classes/DynamicRayCastVehicleController.html) in a threlte scene at vite-threlte/src/scenes/PhysicsVehicleController.svelte
+
+
+# 
+update the electron-vite-vue src/App.vue and electron/main/index.ts and electron/main/server.ts as needed to open a browser window with variants of webapps. for example, variants of the needle engine exports in the 'dist/needle' folder would be at paths like "dist/needle/carphysics" or "dist/needle/sidescroller". for example, the ipc message to launch a needle app browser window should have a payload like this: 
+{
+    "appType": "needle",
+    "appPath": "needle/carphysics",
+    "context": {}
+}

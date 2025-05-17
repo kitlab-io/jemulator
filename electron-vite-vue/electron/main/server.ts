@@ -58,17 +58,56 @@ export class AppServer {
             const relativePath = pathname.substring('/react/'.length) || 'index.html';
             filePath = path.join(this.reactDir, relativePath);
           } else if (pathname.startsWith('/needle/')) {
-            // Needle JS app request
-            const relativePath = pathname.substring('/needle/'.length) || 'index.html';
-            filePath = path.join(this.needleDir, relativePath);
+            // Needle JS app request with possible variants
+            const needlePath = pathname.substring('/needle/'.length);
+            
+            // Check if this is a variant path (e.g., /needle/carphysics/...)
+            const parts = needlePath.split('/');
+            if (parts.length > 0 && parts[0]) {
+              // This is a variant path
+              const variant = parts[0];
+              const remainingPath = parts.slice(1).join('/') || 'index.html';
+              console.log(`[AppServer] Needle variant: ${variant}, path: ${remainingPath}`);
+              filePath = path.join(this.needleDir, variant, remainingPath);
+            } else {
+              // Default needle path
+              const relativePath = needlePath || 'index.html';
+              filePath = path.join(this.needleDir, relativePath);
+            }
           } else if (pathname.startsWith('/threlte/')) {
-            // Threlte app request
-            const relativePath = pathname.substring('/threlte/'.length) || 'index.html';
-            filePath = path.join(this.threlteDir, relativePath);
+            // Threlte app request with possible variants
+            const threltePath = pathname.substring('/threlte/'.length);
+            
+            // Check if this is a variant path
+            const parts = threltePath.split('/');
+            if (parts.length > 0 && parts[0]) {
+              // This is a variant path
+              const variant = parts[0];
+              const remainingPath = parts.slice(1).join('/') || 'index.html';
+              console.log(`[AppServer] Threlte variant: ${variant}, path: ${remainingPath}`);
+              filePath = path.join(this.threlteDir, variant, remainingPath);
+            } else {
+              // Default threlte path
+              const relativePath = threltePath || 'index.html';
+              filePath = path.join(this.threlteDir, relativePath);
+            }
           } else if (pathname.startsWith('/renjs/')) {
-            // RenJS app request
-            const relativePath = pathname.substring('/renjs/'.length) || 'index.html';
-            filePath = path.join(this.renjsDir, relativePath);
+            // RenJS app request with possible variants
+            const renjsPath = pathname.substring('/renjs/'.length);
+            
+            // Check if this is a variant path
+            const parts = renjsPath.split('/');
+            if (parts.length > 0 && parts[0]) {
+              // This is a variant path
+              const variant = parts[0];
+              const remainingPath = parts.slice(1).join('/') || 'index.html';
+              console.log(`[AppServer] RenJS variant: ${variant}, path: ${remainingPath}`);
+              filePath = path.join(this.renjsDir, variant, remainingPath);
+            } else {
+              // Default renjs path
+              const relativePath = renjsPath || 'index.html';
+              filePath = path.join(this.renjsDir, relativePath);
+            }
           } else {
             // Vue app request (default)
             const relativePath = pathname === '/' ? 'index.html' : pathname;
@@ -146,18 +185,21 @@ export class AppServer {
   /**
    * Get the URL for a specific app
    * @param {string} app - The app to get the URL for ('vue', 'react', 'needle', 'threlte', or 'renjs')
+   * @param {string} appPath - Optional path for the app variant (e.g., 'carphysics' for needle)
    * @returns {string} The URL for the app
    */
-  getAppUrl(app: 'vue' | 'react' | 'needle' | 'threlte' | 'renjs'): string {
+  getAppUrl(app: 'vue' | 'react' | 'needle' | 'threlte' | 'renjs', appPath?: string): string {
+    console.log(`[AppServer] Getting URL for app: ${app}, path: ${appPath}`);
+    let url = `http://localhost:${this.port}`;
     if (app === 'react') {
-      return `http://localhost:${this.port}/react/`;
+      url += `/react/${appPath ? appPath + '/' : ''}`;
     } else if (app === 'needle') {
-      return `http://localhost:${this.port}/needle/`;
+      url += `/needle/${appPath ? appPath + '/' : ''}`;
     } else if (app === 'threlte') {
-      return `http://localhost:${this.port}/threlte/`;
+      url += `/threlte/${appPath ? appPath + '/' : ''}`;
     } else if (app === 'renjs') {
-      return `http://localhost:${this.port}/renjs/`;
+      url += `/renjs/${appPath ? appPath + '/' : ''}`;
     }
-    return `http://localhost:${this.port}/`;
+    return url;
   }
 }
