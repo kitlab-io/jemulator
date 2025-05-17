@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "target": "es5",
+    "sourceMap": true,
+//    "allowJs": true,
+    "outDir": "dist/types",
+    "declaration": true,
+//    "emitDeclarationOnly": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "ES2019",
+      "ES2017",
+      "ES2018",
+      "ES2016",
+      "ES2015",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "dev-only"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
+}

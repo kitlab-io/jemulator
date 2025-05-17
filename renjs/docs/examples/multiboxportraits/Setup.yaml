@@ -1,0 +1,31 @@
+backgrounds:
+  room: assets/backgrounds/room_day.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    color: "#FFFFFF"
+    nameBox: pink
+    messageBox: pink
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+  liz:
+    displayName: Liz
+    color: "#d5e6e7"
+    looks:
+      normal: assets/characters/Char2NormalSchool.png
+      happy: assets/characters/Char2HappySchool.png
+      angry: assets/characters/Char2AngrySchool.png
+  marco:
+    displayName: Marco
+    color: "#FFFFFF"
+    nameBox: pink
+    messageBox: pinkWithPortrait
+    portraits:
+      normal: assets/characters/portraits/p1.png
+      happy: assets/characters/portraits/p2.png
+
+music:
+  morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3

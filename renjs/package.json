@@ -1,0 +1,95 @@
+{
+  "name": "renjs",
+  "version": "2.9.4",
+  "description": "RenJS is a videogame library for making Visual Novels that run directly in the web browser",
+  "author": "lunafromthemoon",
+  "contributors": [
+    "RockDaFox",
+    "Sean S. LeBlanc"
+  ],
+  "license": "CC-BY-SA-4.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lunafromthemoon/RenJS-V2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lunafromthemoon/RenJS-V2/issues"
+  },
+  "homepage": "https://renjs.net",
+  "keywords": [
+    "engine",
+    "visual",
+    "novel",
+    "phaser"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "dist/renjs.js",
+  "types": "dist/types/src/index.d.ts",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.dev.js --hot --progress",
+    "build": "webpack --config webpack.prod.js",
+    "build:docs": "./scripts/build-docs.sh",
+    "build:demo": "./scripts/build-demo.sh",
+    "lint": "eslint \"./src/**/*.{j,t}s\"",
+    "postversion": "npm run build && npm run build:docs"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/github",
+        {
+          "assets": "dist/renjs.js"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "docs/**/*",
+            "dist/**/*",
+            "CHANGELOG.md",
+            "package.json",
+            "package-lock.json"
+          ]
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "fontfaceobserver": "^2.1.0",
+    "js-yaml": "^4.1.0",
+    "object-hash": "^2.0.3",
+    "phaser-ce": "^2.16.0"
+  },
+  "devDependencies": {
+    "@types/fontfaceobserver": "^2.1.0",
+    "@types/js-yaml": "^4.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.45.1",
+    "@typescript-eslint/parser": "^5.45.1",
+    "bestzip": "^2.2.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^10.0.0",
+    "eslint": "^8.29.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "expose-loader": "^3.1.0",
+    "terser-webpack-plugin": "^5.2.5",
+    "ts-loader": "^9.2.6",
+    "typescript": "^3.9.7",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0",
+    "webpack-merge": "^5.8.0"
+  }
+}

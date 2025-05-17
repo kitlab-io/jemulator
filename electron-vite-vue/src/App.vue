@@ -21,10 +21,17 @@ const openThrelteWindow = () => {
   window.ipcRenderer.invoke('open-threlte-window')
 }
 
+// Function to open the RenJS demo window
+const openRenjsWindow = () => {
+  // Send IPC message to main process to open RenJS window
+  window.ipcRenderer.invoke('open-renjs-window')
+}
+
 // Status messages
 const reactWindowStatus = ref('')
 const needleWindowStatus = ref('')
 const threlteWindowStatus = ref('')
+const renjsWindowStatus = ref('')
 
 // Listen for status updates from main process
 window.ipcRenderer.on('react-window-status', (_event, status) => {
@@ -37,6 +44,10 @@ window.ipcRenderer.on('needle-window-status', (_event, status) => {
 
 window.ipcRenderer.on('threlte-window-status', (_event, status) => {
   threlteWindowStatus.value = status
+})
+
+window.ipcRenderer.on('renjs-window-status', (_event, status) => {
+  renjsWindowStatus.value = status
 })
 </script>
 
@@ -79,6 +90,15 @@ window.ipcRenderer.on('threlte-window-status', (_event, status) => {
       Launch Threlte App Window
     </button>
     <p v-if="threlteWindowStatus" class="status-message">{{ threlteWindowStatus }}</p>
+  </div>
+  
+  <!-- RenJS Window Button Section -->
+  <div class="renjs-window-section">
+    <h2>Open RenJS Demo Window</h2>
+    <button @click="openRenjsWindow" class="open-renjs-button">
+      Launch RenJS Demo Window
+    </button>
+    <p v-if="renjsWindowStatus" class="status-message">{{ renjsWindowStatus }}</p>
   </div>
   
   <div class="flex-center">

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title> RenJS </title>
+		<script type="text/javascript" src="renjs.js"></script>
+		<script src="story/test/boot.js"></script>
+		<script src="plugins/MyAction.js"></script>
+		<script src="plugins/MyTransition.js"></script>
+		<script src="plugins/ShowTitleAction.js"></script>
+		<script src="plugins/HeavyRainAmbient.js"></script>
+		<script src="plugins/AttackEffect.js"></script>
+		<script src="plugins/TestText.js"></script>
+		<script
+			type="text/javascript"
+			src="https://unpkg.com/tone@latest/build/Tone.js"
+		></script>
+		<script
+			type="text/javascript"
+			src="https://unpkg.com/@tonejs/midi"
+		></script>
+
+		<script src="plugins/MidiPlayer.js"></script>
+		<!-- <script src="plugins/ChangeCTC.js"></script> -->
+		<!-- <script src="plugins/ToggleButton.js"></script> -->
+	</head>
+	<style type="text/css">
+		#game-canvas {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  height: 100%;
+		  width: 100%;
+		}
+	</style>
+	<body style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;margin-right: 0px;">
+		<div id="game-canvas"></div>
+	</body>
+
+</html>

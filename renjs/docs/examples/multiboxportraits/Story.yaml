@@ -1,0 +1,17 @@
+start:
+  - play morningBGM:
+  - show room: WITH FADE CONTINUE
+  - show deuzi: AT RIGHT WITH FADE CONTINUE
+  - show liz: AT LEFT WITH FADE FLIP
+  - text: Your GUI can have many different message and name boxes.
+  - liz says: I'm using the usual message and name box, called 'default', but you can change this per character in the Setup file.
+  - deuzi says happy: My character is configured with the 'pink' message and name boxes.
+  - text IN pink: Normal text can be displayed in any message box with the reserved word IN.
+  - choice:
+    - You can have different choices boxes too:
+  - choice IN pink:
+    - Like this:
+  - deuzi says normal: But there's another feature related to message boxes.
+  - marco says normal: Message boxes can now display character portraits.
+  - marco says happy: Isn't it great?
+  - endgame:

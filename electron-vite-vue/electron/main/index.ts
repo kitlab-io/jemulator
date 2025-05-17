@@ -70,12 +70,14 @@ let dbManager: DatabaseManager | null = null
 let reactWin: BrowserWindow | null = null
 let needleWin: BrowserWindow | null = null
 let threlteWin: BrowserWindow | null = null
+let renjsWin: BrowserWindow | null = null
 
 // Define paths for Vue, React, and Needle JS apps
 let vueAppPath: string
 let reactAppPath: string
 let needleAppPath: string
 let threlteAppPath: string
+let renjsAppPath: string
 
 // In development mode, use the dev server URLs
 if (!app.isPackaged) {
@@ -83,8 +85,9 @@ if (!app.isPackaged) {
   reactAppPath = path.join(RENDERER_DIST, 'react')
   // needleAppPath = path.join(process.env.APP_ROOT, 'needleengine/Exports/Sidescroller/dist')
   needleAppPath = path.join(RENDERER_DIST, 'needle')
-  // threlteAppPath = path.join(process.env.APP_ROOT, 'vite-threlte/dist')
   threlteAppPath = path.join(RENDERER_DIST, 'threlte')
+  // renjsAppPath = path.join(process.env.APP_ROOT, 'renjs/.demo')
+  renjsAppPath = path.join(RENDERER_DIST, 'renjs')
 
 
 } else {
@@ -96,17 +99,19 @@ if (!app.isPackaged) {
   reactAppPath = path.join(resourcesPath, 'app/dist/react')
   needleAppPath = path.join(resourcesPath, 'app/dist/needle')
   threlteAppPath = path.join(resourcesPath, 'app/dist/threlte')
+  renjsAppPath = path.join(resourcesPath, 'app/dist/renjs')
   
   console.log('Vue app path:', vueAppPath)
   console.log('React app path:', reactAppPath)
   console.log('Needle app path:', needleAppPath)
   console.log('Threlte app path:', threlteAppPath)
+  console.log('RenJS app path:', renjsAppPath)
 }
 
 async function createWindow() {
   // Initialize the HTTP server if it's not already running
   if (!appServer) {
-    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, serverPort);
+    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, renjsAppPath, serverPort);
     try {
       serverPort = await appServer.start();
       console.log(`HTTP server started on port ${serverPort}`);
@@ -195,7 +200,7 @@ async function createReactWindow() {
 
   // Initialize the HTTP server if it's not already running
   if (!appServer) {
-    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, serverPort)
+    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, renjsAppPath, serverPort)
     try {
       serverPort = await appServer.start()
       console.log(`HTTP server started on port ${serverPort}`)
@@ -260,7 +265,7 @@ async function createNeedleWindow() {
 
   // Initialize the HTTP server if it's not already running
   if (!appServer) {
-    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, serverPort)
+    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, renjsAppPath, serverPort)
     try {
       serverPort = await appServer.start()
       console.log(`HTTP server started on port ${serverPort}`)
@@ -319,7 +324,7 @@ async function createThrelteWindow() {
 
   // Initialize the HTTP server if it's not already running
   if (!appServer) {
-    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, serverPort)
+    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, renjsAppPath, serverPort)
     try {
       serverPort = await appServer.start()
       console.log(`HTTP server started on port ${serverPort}`)
@@ -362,6 +367,65 @@ async function createThrelteWindow() {
   threlteWin.on('closed', () => {
     threlteWin = null
     win?.webContents.send('threlte-window-status', 'Threlte window was closed')
+  })
+}
+
+/**
+ * Create a new window for the RenJS demo
+ */
+async function createRenjsWindow() {
+  // If RenJS window already exists, focus it and return
+  if (renjsWin && !renjsWin.isDestroyed()) {
+    renjsWin.focus()
+    win?.webContents.send('renjs-window-status', 'RenJS window is already open')
+    return
+  }
+
+  // Initialize the HTTP server if it's not already running
+  if (!appServer) {
+    appServer = new AppServer(vueAppPath, reactAppPath, needleAppPath, threlteAppPath, renjsAppPath, serverPort)
+    try {
+      serverPort = await appServer.start()
+      console.log(`HTTP server started on port ${serverPort}`)
+    } catch (err) {
+      console.error('Failed to start HTTP server:', err)
+      win?.webContents.send('renjs-window-status', 'Failed to start HTTP server')
+      return
+    }
+  }
+
+  // Create a new browser window for the RenJS demo
+  renjsWin = new BrowserWindow({
+    title: 'RenJS Demo',
+    width: 1200,
+    height: 800,
+    webPreferences: {
+      preload,
+      // For security in production, avoid nodeIntegration
+      nodeIntegration: false,
+      contextIsolation: true,
+      // Enable webSecurity in production
+      webSecurity: app.isPackaged,
+      // Allow scripts to access remote content
+      allowRunningInsecureContent: !app.isPackaged,
+    },
+  })
+
+  // Load the RenJS demo
+  await renjsWin.loadURL(appServer.getAppUrl('renjs'))
+
+  // Open DevTools in development mode
+  if (process.env.NODE_ENV === 'development') {
+    renjsWin.webContents.openDevTools()
+  }
+
+  // Notify the main window that the RenJS window is ready
+  win?.webContents.send('renjs-window-status', 'RenJS window opened successfully')
+
+  // Handle window close event
+  renjsWin.on('closed', () => {
+    renjsWin = null
+    win?.webContents.send('renjs-window-status', 'RenJS window was closed')
   })
 }
 
@@ -471,4 +535,9 @@ ipcMain.handle('open-needle-window', () => {
 // Handle opening the Threlte window
 ipcMain.handle('open-threlte-window', () => {
   createThrelteWindow()
+})
+
+// Handle opening the RenJS window
+ipcMain.handle('open-renjs-window', () => {
+  createRenjsWindow()
 })

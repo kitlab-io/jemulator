@@ -1,0 +1,354 @@
+
+start:
+  - choice:
+    - test images:
+      - scene: testimages
+    - test choices:
+      - scene: testLogic
+    - test text:
+      - scene: testtext
+    - test ambients and effects:
+      - scene: testAaE
+    - test logic:
+      - scene: testLogic
+    - test sound:
+      - scene: testSound
+    - test animations:
+      - scene: testAnim
+    - test end game:
+      - scene: endgame
+
+
+testSound:
+  - text: Play midi
+  - call MidiPlayer: clairdelune
+  - text: Stop midi
+  - call MidiPlayer: stop
+  - text: Play normal once
+  - play music1:
+  - text: Play looped bgs
+  - play ambientBGS: LOOPED
+  - text: Change for music 1
+  - play music1:
+  - text: What happened?
+  - text: play music once
+  - play helloBGS: 
+  - text: normal loop
+  - play helloBGS: LOOPED FORCE
+  - text: looped from 0.5
+  - play helloBGS: LOOPED FROM 0.5 FORCE
+  - text: stop sound
+  - stop bgm:
+  - scene: start
+
+endgame:
+  - choice:
+    - text: What kind of ending?
+    - End immediately:
+      - endgame:
+    - End after credits:
+      - effect ROLLINGCREDITS:
+        endGame: true
+        text:
+          - asdf
+          - qwer
+          - null
+          - asdf
+          - qwer
+          - null
+          - null
+          - asdf
+          - qwer
+          - null
+          - characters by
+          - Shida
+          - null
+          - music by
+          - Evan Schaeffer
+
+testAnim:
+  - show room_night: WITH FADE2 CONTINUE
+  - show deuzi: AT CENTER WITH FADE
+  - deuzi says: Let me introduce you to...
+  - show horse: AT 180,350
+  - deuzi says happy: The horse of spring!
+  - text: Non looped animation, normal way
+  - animate horse:
+    spritesheet: head
+  - deuzi says normal: The animations can be player normally or backwards
+  - animate horse:
+    spritesheet: head BACKWARDS
+  - deuzi says: Animation can also be looped
+  - text: Looped animation with timer
+  - animate horse:
+    spritesheet: run LOOPED
+    time: 1500
+  - deuzi says: When the animation stops, the image will freeze in whatever frame it gets to
+  - deuzi says: If you want to reset it to the normal view, call animation stop
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says: While the horse runs looped, other stuff can happen too, if you skip the time parameter
+  - text: Looped animation without timer
+  - animate horse:
+    spritesheet: run LOOPED
+  - text: Stop looped animation
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says: And animation modes can be combined.
+  - text: Animate spritesheet and tween position
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 650
+      y: 350
+    time: 2000
+  - animate horse:
+    spritesheet: STOP
+  - text: Flip horse and make it run and disappear
+  - show horse: FLIP WITH CUT
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 180
+      y: 350
+    alpha: 0
+    time: 1500
+  - hide horse: WITH CUT
+  - deuzi says: Cgs can now also be placed behind characters
+  - show horse: AT 180,350 BEHIND
+  - deuzi says: Check how the horse runs behind me
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 650
+      y: 350
+    time: 2000
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says happy: And that's all about the animations!
+  - hide ALL: WITH FADE
+  - scene: start
+
+
+testimages:
+  - show room_night: WITH FADE2 CONTINUE
+  - show deuzi: happyC AT CENTER WITH FADE
+  - jair says: asdf qwer 
+  - show deuzi: AT RIGHT
+  - deuzi says: asdf qwer sadf as
+  - text: deuzi moves
+  - call helloWorld:
+    param1: 'hello'
+    param2: 'world'
+  - show deuzi: AT LEFT WITH MOVE
+  - show deuzi: normal WITH CUT
+  - text: jair appears
+  - show jair: AT OUTRIGHT WITH CUT
+  - show jair: AT RIGHT WITH MOVE
+  - text: phone appears 
+  - show phone1: AT 400,200 WITH FADE2
+  - text: deuzi leaves
+  - hide deuzi: WITH FADE
+  - text: liz appears from left
+  - show liz: AT OUTLEFT WITH CUT
+    flipped: true
+  - show liz: AT LEFT WITH MOVE
+  - text: hide characters
+  - hide CHARS: WITH FADE
+  - text: phone moves
+  - animate phone1:
+    time: 500
+    position: 
+      x: 400
+      y: 300
+  - text: show jair again
+  - show jair: happy AT RIGHT WITH FADE
+  - text: hide jair and phone
+  - hide jair: WITH FADE CONTINUE
+  - hide phone1: WITH FADE
+  - text: change room
+  - show room_night_light: WITH FUSION
+  - text: show deuzi and phone
+  - show deuzi: AT RIGHT WITH FADE CONTINUE
+  - show phone2: AT 400,200 WITH FADE
+  - text: hide all and return to start
+  - hide ALL: WITH FADE
+  - scene: start
+
+testtext:
+  # - play morningBGM:
+  - show bus_station: CONTINUE
+  - show deuzi: happy
+  - deuzi says angry: "Lorem ipsum dolor sit amet,(pause: click) consectetur adipiscing elit... Aasdf qwer! asdfasdf."
+  - choice:
+    - deuzi says: Choose a partner!
+    - Deuzilene:
+      - text: You chose Deuzilene!
+    - Liz:
+      - text: You chose Liz!
+    - Deuzilene and (italic)Liz(end):
+      - text: You chose both!
+  - show liz: AT LEFT angry
+  - deuzi says angry: "Lorem ipsum dolor sit amet,(pause: click) consectetur adipiscing elit... Aasdf qwer! asdfasdf."
+  - liz says happy: asdf qwer asdf 
+  - text:  Text with styles
+  - text: This is (italic)italic(end), this is (bold)bold(end). This is (italic)italic (bold)and(end) bold(end).
+  - text: Text can have (color:red)color(end) too. With hex (color:#f593e6)this is pink(end). This is (italic)italic (color:red)and(end) red(end).
+  - deuzi says normal: Praesent finibus nunc id mauris ullamcorper fermentum. Mauris faucibus eu sem in aliquet. 
+  - show liz: AT OUTLEFT WITH CUT
+    flipped: true
+  - show liz: AT LEFT WITH MOVE
+  - liz says: Mauris pretium ligula nec metus placerat, nec imperdiet magna dictum. 
+  - text: In hac habitasse platea dictumst. Vestibulum iaculis lorem eget augue tristique, ac egestas mauris bibendum. Integer aliquet sit amet dolor in vulputate. 
+  - deuzi says: 1
+  - liz says: 2
+  - deuzi says: 3
+  - deuzi says: asdf
+  - choice:
+    - text: choose a number!
+    - "4":
+      - var chosenNumber: 4
+    - "5":
+      - var chosenNumber: 5
+      - text: asdssssssssssss 1 
+      - text: asdssssssssssss 2
+      - interrupt:
+        - "WAIT":
+          - text: qwerrrrrrr 1
+          - text: qwerrrrrrr 2
+          - text: qwerrrrrrr 3
+      - text: asdssssssssssss 3
+      - text: asdssssssssssss 4
+  - liz says: You chose {chosenNumber}
+  - hide ALL:
+  - scene: start
+
+testAaE:
+  - show store:
+  - show marco: 
+  - marco says: It looks like there's going to be a storm.
+  - effect FLASHIMAGE:
+    screenShake: true
+    sfx: thunderSFX
+    image: thunder
+  - marco says happy: Here it is!
+  - ambient RAIN:
+  - text: It will get worse in 3...
+  - text: 2...
+  - text: 1...
+  - text: Now
+  - ambient CLEAR:
+  - ambient HEAVYRAIN:
+  - marco says: The storm is getting worse, I should go back.
+  - text: Rain will stop in 3...
+  - text: 2...
+  - text: 1...
+  - text: Now
+  - ambient CLEAR:
+  - marco says: That's much better
+  - ambient SNOW:
+  - marco says worry: Oh no
+  - show jair: angry AT RIGHT
+  - jair says: Not so fast! Let's battle!
+  - marco says: You leave me no choice.
+  - marco says angry: Take this!
+  - effect ATTACK:
+  - hide jair:
+  - ambient CLEAR:
+  - marco says: It's time to go home.
+  - hide ALL:
+  - show street_morning:
+  - show liz: 
+  - ambient SAKURA:
+  - liz says happy: What a beautiful morning.
+  - liz says: There are cherry blossoms everywhere!
+  - ambient CLEAR:
+  - hide ALL:
+  - effect ROLLINGCREDITS:
+    endGame: false
+    text:
+      - asdf
+      - qwer
+      - null
+      - asdf
+      - qwer
+      - null
+      - null
+      - asdf
+      - qwer
+      - null
+      - characters by
+      - Shida
+      - null
+      - music by
+      - Evan Schaeffer
+  - scene: start
+
+testLogic:
+  - show school_morning: CONTINUE
+  - choice:
+    - "A":
+      - var firstChoice: A
+    - "B":
+      - var firstChoice: B
+  - text: second choice
+  - visualchoice:
+    - text: This is a visual choice
+    - phone1 AT 620,300:
+      - play ringtoneSFX:
+      - text: Tururu Ruru Ruru Ruruuuu
+      - show liz: angry
+      - liz says: That's mine!
+    - phone2 AT 180,300:
+      - play ringtoneSFX2:
+      - text: Pi Pi Ri Pi Ripi Pi Ri
+      - show deuzi: angry
+      - deuzi says: That's mine!
+  - choice:
+    - C:
+      - var secondChoice: C
+    - D:
+      - var secondChoice: D
+    - E !if ({firstChoice}=="B"):
+      - var secondChoice: E
+  - if ({firstChoice}=="B" && {secondChoice}=="E"):
+    - text: BE is special
+  - else:
+    - text: "{firstChoice}{secondChoice} is normal"
+  - text: third choice
+  - choice:
+    - "0":
+      - choice:
+        - "00":
+          - var binary: 0
+        - "01":
+          - var binary: 1
+    - "1":
+      - choice:
+        - "10":
+          - var binary: 2
+        - "11":
+          - choice:
+            - "11":
+              - var binary: 3
+            - "110":
+              - text: Overflow!
+  - if ({binary} >= 2):
+    - text: "Your magic number is {binary}"
+  - text: Choose a phone
+  - visualchoice:
+    - phone1 AT 620,300:
+      - play ringtoneSFX:
+      - text: Tururu Ruru Ruru Ruruuuu
+      - show liz: angry
+      - liz says: That's mine!
+    - phone2 AT 180,300:
+      - play ringtoneSFX2:
+      - text: Pi Pi Ri Pi Ripi Pi Ri
+      - show deuzi: angry
+      - deuzi says: That's mine!
+  - hide ALL:
+  - scene: start
+
+
+

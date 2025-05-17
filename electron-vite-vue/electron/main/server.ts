@@ -21,12 +21,14 @@ export class AppServer {
   private reactDir: string;
   private needleDir: string;
   private threlteDir: string;
+  private renjsDir: string;
 
-  constructor(rootDir: string, reactDir: string, needleDir: string, threlteDir: string, port: number = DEFAULT_PORT) {
+  constructor(rootDir: string, reactDir: string, needleDir: string, threlteDir: string, renjsDir: string, port: number = DEFAULT_PORT) {
     this.rootDir = rootDir;
     this.reactDir = reactDir;
     this.needleDir = needleDir;
     this.threlteDir = threlteDir;
+    this.renjsDir = renjsDir;
     this.port = port;
   }
 
@@ -63,6 +65,10 @@ export class AppServer {
             // Threlte app request
             const relativePath = pathname.substring('/threlte/'.length) || 'index.html';
             filePath = path.join(this.threlteDir, relativePath);
+          } else if (pathname.startsWith('/renjs/')) {
+            // RenJS app request
+            const relativePath = pathname.substring('/renjs/'.length) || 'index.html';
+            filePath = path.join(this.renjsDir, relativePath);
           } else {
             // Vue app request (default)
             const relativePath = pathname === '/' ? 'index.html' : pathname;
@@ -139,16 +145,18 @@ export class AppServer {
 
   /**
    * Get the URL for a specific app
-   * @param {string} app - The app to get the URL for ('vue', 'react', 'needle', or 'threlte')
+   * @param {string} app - The app to get the URL for ('vue', 'react', 'needle', 'threlte', or 'renjs')
    * @returns {string} The URL for the app
    */
-  getAppUrl(app: 'vue' | 'react' | 'needle' | 'threlte'): string {
+  getAppUrl(app: 'vue' | 'react' | 'needle' | 'threlte' | 'renjs'): string {
     if (app === 'react') {
       return `http://localhost:${this.port}/react/`;
     } else if (app === 'needle') {
       return `http://localhost:${this.port}/needle/`;
     } else if (app === 'threlte') {
       return `http://localhost:${this.port}/threlte/`;
+    } else if (app === 'renjs') {
+      return `http://localhost:${this.port}/renjs/`;
     }
     return `http://localhost:${this.port}/`;
   }
