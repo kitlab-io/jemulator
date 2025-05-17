@@ -32,3 +32,31 @@ update main.js to forward websocket messages with type 'component-event' to the 
 }
 when receiving a 'motor_update' event, call the corresponding method on the gameobject registered in the renderer process using the appropriate arguments derived from the payload. for example:
 window.RCCarController.setConstantMotorSpeed(event.data.speed * event.data.direction)
+
+#
+using the LED circuit implementation in @App.tsx as reference, add a simulation to @App.tsx  for a toy electic vehicle with the following components:
+- a battery
+- a motor for drive train
+- a motor for steering
+- a fuel gauge sensor
+- a momentary switch for braking
+- a potentiometer for steering
+- a potentiometer for throttle
+- a rocker switch for the direction of the throttle
+- a rocker switch for system power cutoff 
+- a microcontroller connected all the components
+
+on the microcontroller, implement the following features:
+- an input socket for receiving events from the components
+- a socket for common electrical ground for the components and battery
+- an input socket for receiving power to the battery
+
+create new node types and node source files as needed in @react-flow/src 
+
+create circuit validation for this toy vehicle similar to the LED circuit
+
+#
+design a system and modules for launching one or more Electron renderer processes with each potentially having their own web app. For example, one renderer process could run a Vue app, another a Three.JS app, and another a svelte app. All the renderer processes must be able to read and write persistent state to a local sqlite database via a websocket service exposed by the main electron process. the user can launch any number and type of renderer process/view to observe or manipulate a part of persistent state in the best way that view provides.  
+
+##
+with each web app potentially having its own vite build process, how can we organize the build scripts to launch electron app and building each web app for development environment from a single npm run command?

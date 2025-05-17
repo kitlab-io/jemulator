@@ -1,72 +1,77 @@
-// const { FusesPlugin } = require('@electron-forge/plugin-fuses');
-// const { FuseV1Options, FuseVersion } = require('@electron/fuses');
-import { FusesPlugin } from '@electron-forge/plugin-fuses';
-import { FuseV1Options, FuseVersion } from '@electron/fuses';
-import type { ForgeConfig } from '@electron-forge/shared-types';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
-const config: ForgeConfig = {
+// Get __dirname equivalent in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default {
   packagerConfig: {
     asar: true,
+    executableName: 'jemulator',
+    appCopyright: `Copyright © ${new Date().getFullYear()}`,
+    icon: resolve(__dirname, 'assets/icon'),
+    extraResource: [
+      // Add any extra resources here
+    ],
+    // Include all renderer builds
+    ignore: [
+      /^\/(?!dist)/,
+      /\/build-config\//,
+      /\.git/,
+      /\.vscode/,
+      /node_modules\/(?!better-sqlite3|ws|uuid|svelte|vue|three)/
+    ]
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      platforms: ['win32'],
       config: {
-        authors: "Electron contributors"
+        name: 'jemulator'
       }
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
-      config: {}
+      platforms: ['darwin', 'linux']
     },
     {
       name: '@electron-forge/maker-deb',
-      platforms: ['linux'],
       config: {}
     },
+    {
+      name: '@electron-forge/maker-rpm',
+      config: {}
+    }
   ],
   plugins: [
     {
-      name: '@electron-forge/plugin-vite',
-      config: {
-        // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
-        // If you are familiar with Vite configuration, it will look really familiar.
-        build: [
-          {
-            // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
-            entry: 'src/main.js',
-            config: 'vite.main.config.mjs',
-            target: 'main',
-          },
-          {
-            entry: 'src/preload.js',
-            config: 'vite.preload.config.mjs',
-            target: 'preload',
-          },
-        ],
-        renderer: [
-          {
-            name: 'main_window',
-            config: 'vite.renderer.config.mjs',
-          },
-        ],
-      },
+      name: '@electron-forge/plugin-auto-unpack-natives',
+      config: {}
     },
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
-    new FusesPlugin({
-      version: FuseVersion.V1,
-      [FuseV1Options.RunAsNode]: false,
-      [FuseV1Options.EnableCookieEncryption]: true,
-      [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
-      [FuseV1Options.EnableNodeCliInspectArguments]: false,
-      [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
-      [FuseV1Options.OnlyLoadAppFromAsar]: true,
-    }),
+    {
+      name: '@electron-forge/plugin-fuses',
+      config: {
+        version: 1,
+        fuses: {
+          // Disable node integration in renderer processes for security
+          nativeNodeModulesInRenderer: false,
+          // Enable context isolation for security
+          contextIsolation: true,
+          // Disable remote module
+          enableRemoteModule: false
+        }
+      }
+    }
   ],
+  // Use our custom build process instead of the default Vite plugin
+  buildIdentifier: 'custom',
+  hooks: {
+    // Use our custom build script before packaging
+    generateAssets: async () => {
+      console.log('Running custom build process...');
+      execSync('npm run build', { stdio: 'inherit' });
+    }
+  }
 };
-
-export default config;
