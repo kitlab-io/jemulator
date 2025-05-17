@@ -60,3 +60,6 @@ design a system and modules for launching one or more Electron renderer processe
 
 ##
 with each web app potentially having its own vite build process, how can we organize the build scripts to launch electron app and building each web app for development environment from a single npm run command?
+
+#
+let's implement a persistent data store as sqlite db saved in the application support directory via Electron. the main electron process connects to this db and exposes a real-time proxy db connection over websocket server. any of the browser windows' web apps can connect to this websocket server via shared websocket client implementation. create a sample sqlite db and all necessary files to implement this across the electron app, vue app in main window, and react and needle apps in seccondary windows.
