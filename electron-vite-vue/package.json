@@ -1,0 +1,71 @@
+{
+  "name": "electron-vue-vite",
+  "version": "28.1.0",
+  "main": "dist-electron/main/index.js",
+  "description": "Really simple Electron + Vue + Vite boilerplate.",
+  "author": "草鞋没号 <308487730@qq.com>",
+  "license": "MIT",
+  "private": true,
+  "keywords": [
+    "electron",
+    "rollup",
+    "vite",
+    "vue3",
+    "vue"
+  ],
+  "debug": {
+    "env": {
+      "VITE_DEV_SERVER_URL": "http://127.0.0.1:3344/"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:launcher": "vite --config vite.config.ts",
+    "build:launcher": "vue-tsc --noEmit && vite build --config vite.config.ts",
+    "build": "vue-tsc --noEmit && vite build --emptyOutDir false && electron-builder",
+    "preview": "vite preview",
+    "dev:react": "node scripts/dev-react-electron.js",
+    "build:react": "node scripts/build-react.js",
+    "restore-react-build": "node scripts/restore-react-build.js",
+    "build:needle": "node scripts/build-needle.js",
+    "restore-needle-build": "node scripts/restore-needle-build.js",
+    "copy-shared": "node scripts/copy-shared-modules.js",
+    "rebuild:sqlite": "electron-rebuild -f -w better-sqlite3",
+    "postinstall": "npm run rebuild:sqlite",
+    "dev:db": "node scripts/dev-database.js",
+    "dev:all": "npm run copy-shared && concurrently \"npm run dev\" \"npm run dev:react\" \"npm run dev:db\"",
+    "build:with-react": "npm run copy-shared && npm run build:react && vue-tsc --noEmit && vite build --emptyOutDir false && electron-builder",
+    "build:with-needle": "npm run copy-shared && npm run build:needle && vue-tsc --noEmit && vite build --emptyOutDir false && electron-builder",
+    "build:with-all": "npm run copy-shared && npm run build:react && npm run build:needle && vue-tsc --noEmit && vite build --emptyOutDir false && electron-builder"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.0.1",
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/fs-extra": "^11.0.4",
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^20.11.24",
+    "@types/socket.io": "^3.0.2",
+    "@types/ws": "^8.5.10",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "concurrently": "^8.2.2",
+    "electron": "^29.1.1",
+    "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9",
+    "fs-extra": "^11.3.0",
+    "mime-types": "^3.0.1",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.5",
+    "vite-plugin-electron": "^0.28.4",
+    "vite-plugin-electron-renderer": "^0.14.5",
+    "vue": "^3.4.21",
+    "vue-tsc": "^2.0.6"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.160.0"
+  }
+}
