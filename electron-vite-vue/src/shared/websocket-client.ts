@@ -8,7 +8,7 @@
 // Define message types
 export type WebSocketMessage = {
   type: string;
-  payload: any;
+  payload?: any;
   requestId?: string;
 };
 

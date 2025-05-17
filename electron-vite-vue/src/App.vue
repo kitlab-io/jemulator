@@ -144,11 +144,11 @@ const vehicleControllerContext = {
       Launch Threlte App Window
     </button>
     <div class="variant-buttons">
-      <button @click="openThrelteVariant('vehicle-controller', vehicleControllerContext)" class="variant-button">
-        Launch Vehicle Controller
+      <button @click="openThrelteVariant('basic')" class="variant-button">
+        Launch Basic Demo
       </button>
-      <button @click="openThrelteVariant('physics-demo')" class="variant-button">
-        Launch Physics Demo
+      <button @click="openThrelteVariant('studio')" class="variant-button">
+        Launch Studio Demo
       </button>
     </div>
     <p v-if="threlteWindowStatus" class="status-message">{{ threlteWindowStatus }}</p>
@@ -174,16 +174,16 @@ const vehicleControllerContext = {
   <!-- RenJS Window Button Section -->
   <div class="renjs-window-section">
     <h2>Open RenJS Demo Window</h2>
-    <button @click="openRenjsWindow" class="open-renjs-button">
+    <!-- <button @click="openRenjsWindow" class="open-renjs-button">
       Launch RenJS Demo Window
-    </button>
+    </button> -->
     <div class="variant-buttons">
-      <button @click="openRenjsVariant('visual-novel')" class="variant-button">
+      <button @click="openRenjsVariant('demo')" class="variant-button">
         Launch Visual Novel Demo
       </button>
-      <button @click="openRenjsVariant('adventure-game')" class="variant-button">
+      <!-- <button @click="openRenjsVariant('adventure-game')" class="variant-button">
         Launch Adventure Game Demo
-      </button>
+      </button> -->
     </div>
     <p v-if="renjsWindowStatus" class="status-message">{{ renjsWindowStatus }}</p>
   </div>

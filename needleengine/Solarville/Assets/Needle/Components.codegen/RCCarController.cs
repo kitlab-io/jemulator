@@ -15,6 +15,7 @@ namespace Needle.Typescript.GeneratedComponents
 		// public any @actionInterval; → Could not resolve C# type
 		public void start(){}
 		public void register(){}
+		public void setSteering(float @angle){}
 		public void setConstantMotorSpeed(float @speed){}
 		public void stopConstantMotorSpeed(){}
 		public void setMotorSpeed(float @speed){}

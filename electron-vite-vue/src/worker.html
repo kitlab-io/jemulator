@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IoT Device Simulator</title>
+</head>
+<body>
+  <div id="status" style="display: none;">Device Simulator</div>
+
+  <script type="module">
+    // Import Pyodide from CDN
+    import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.mjs';
+
+    // Device state
+    let pyodide = null;
+    let deviceId = null;
+    let deviceState = { status: 'initializing' };
+
+    // Custom console for Pyodide output
+    const pyodideConsole = {
+      write: (text) => {
+        console.log(text); // Log to browser console for debugging
+        window.electronAPI.sendToMain({
+          type: 'console-output',
+          text
+        });
+      },
+      writeln: (text) => {
+        pyodideConsole.write(text + '\n');
+      },
+      writeError: (text) => {
+        console.error(text); // Log to browser console for debugging
+        window.electronAPI.sendToMain({
+          type: 'console-error',
+          text
+        });
+      }
+    };
+
+    // Initialize Pyodide
+    async function initializePyodide() {
+      try {
+        console.log('Initializing Pyodide...');
+        updateStatus('Loading Pyodide...');
+        
+        // Load Pyodide
+        pyodide = await loadPyodide({
+          indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/'
+        });
+        
+        // Set up stdout/stderr
+        pyodide.setStdout(pyodideConsole.write);
+        pyodide.setStderr(pyodideConsole.writeError);
+        
+        // Configure Pyodide for MicroPython compatibility
+        updateStatus('Setting up MicroPython environment...');
+        await pyodide.runPythonAsync(`
+          import sys
+          sys.path.append('/lib')
+          
+          # Create MicroPython simulation environment
+          class Pin:
+              IN = 0
+              OUT = 1
+              PULL_UP = 2
+              PULL_DOWN = 3
+              
+              def __init__(self, pin, mode=None, pull=None):
+                  self.pin = pin
+                  self.mode = mode
+                  self.pull = pull
+                  self._value = 0
+              
+              def on(self):
+                  self._value = 1
+                  print(f"PIN {self.pin} set to ON")
+              
+              def off(self):
+                  self._value = 0
+                  print(f"PIN {self.pin} set to OFF")
+              
+              def value(self, val=None):
+                  if val is not None:
+                      self._value = 1 if val else 0
+                      print(f"PIN {self.pin} set to {self._value}")
+                  return self._value
+          
+          class ADC:
+              def __init__(self, pin):
+                  self.pin = pin
+                  
+              def read(self):
+                  # Simulate a random analog reading
+                  import random
+                  return random.randint(0, 4095)
+          
+          class UART:
+              def __init__(self, id, baudrate=9600, tx=None, rx=None):
+                  self.id = id
+                  self.baudrate = baudrate
+                  self.tx = tx
+                  self.rx = rx
+                  self.buffer = bytearray()
+                  print(f"UART{id} initialized with baudrate {baudrate}")
+              
+              def write(self, data):
+                  if isinstance(data, str):
+                      data = data.encode('utf-8')
+                  print(f"UART{self.id} write: {data}")
+                  return len(data)
+              
+              def read(self, nbytes=None):
+                  # Simulate reading data
+                  import random
+                  if nbytes is None:
+                      nbytes = len(self.buffer)
+                  if not self.buffer:
+                      return b''
+                  data = self.buffer[:nbytes]
+                  self.buffer = self.buffer[nbytes:]
+                  return data
+              
+              def any(self):
+                  return len(self.buffer)
+          
+          class I2C:
+              def __init__(self, id, scl=None, sda=None, freq=400000):
+                  self.id = id
+                  self.scl = scl
+                  self.sda = sda
+                  self.freq = freq
+                  print(f"I2C{id} initialized with freq {freq}")
+              
+              def scan(self):
+                  # Simulate finding some I2C devices
+                  return [0x3C, 0x68]  # Example: OLED display and RTC
+              
+              def readfrom_mem(self, addr, memaddr, nbytes, addrsize=8):
+                  # Simulate reading from I2C device memory
+                  import random
+                  return bytes([random.randint(0, 255) for _ in range(nbytes)])
+              
+              def writeto_mem(self, addr, memaddr, buf, addrsize=8):
+                  # Simulate writing to I2C device memory
+                  print(f"I2C write to device 0x{addr:02X}, addr 0x{memaddr:02X}, data: {buf}")
+                  return len(buf)
+          
+          class SPI:
+              def __init__(self, id, baudrate=1000000, polarity=0, phase=0):
+                  self.id = id
+                  self.baudrate = baudrate
+                  print(f"SPI{id} initialized with baudrate {baudrate}")
+              
+              def write(self, buf):
+                  print(f"SPI write: {buf}")
+                  return None
+              
+              def read(self, nbytes, write=0x00):
+                  import random
+                  return bytes([random.randint(0, 255) for _ in range(nbytes)])
+          
+          # Network simulation
+          class WLAN:
+              STA_IF = 0
+              AP_IF = 1
+              
+              def __init__(self, interface_id):
+                  self.interface_id = interface_id
+                  self._active = False
+                  self._connected = False
+                  self._ssid = None
+                  self._password = None
+                  self._ip = None
+                  
+              def active(self, is_active=None):
+                  if is_active is not None:
+                      self._active = is_active
+                      print(f"WLAN {'activated' if is_active else 'deactivated'}")
+                  return self._active
+              
+              def connect(self, ssid, password):
+                  if not self._active:
+                      print("Cannot connect: WLAN not active")
+                      return
+                  self._ssid = ssid
+                  self._password = password
+                  self._connected = True
+                  self._ip = "192.168.1.100"
+                  print(f"Connected to WiFi network '{ssid}'")
+              
+              def disconnect(self):
+                  self._connected = False
+                  print("Disconnected from WiFi network")
+              
+              def isconnected(self):
+                  return self._connected
+              
+              def ifconfig(self):
+                  return (self._ip, "255.255.255.0", "192.168.1.1", "8.8.8.8")
+          
+          # Time functions
+          def sleep(seconds):
+              import time
+              print(f"Sleeping for {seconds} seconds")
+              time.sleep(seconds)
+          
+          def sleep_ms(ms):
+              import time
+              print(f"Sleeping for {ms} milliseconds")
+              time.sleep(ms/1000)
+          
+          def ticks_ms():
+              import time
+              return int(time.time() * 1000)
+          
+          def ticks_diff(ticks1, ticks2):
+              return ticks1 - ticks2
+          
+          # Add to global namespace
+          import builtins
+          builtins.Pin = Pin
+          builtins.ADC = ADC
+          builtins.UART = UART
+          builtins.I2C = I2C
+          builtins.SPI = SPI
+          builtins.WLAN = WLAN
+          
+          # Create machine module
+          class MachineModule:
+              def __init__(self):
+                  self.Pin = Pin
+                  self.ADC = ADC
+                  self.UART = UART
+                  self.I2C = I2C
+                  self.SPI = SPI
+                  
+              def reset(self):
+                  print("Machine reset simulated")
+                  
+              def freq(self, freq=None):
+                  if freq is not None:
+                      print(f"CPU frequency set to {freq} Hz")
+                  return 240000000  # ESP32 default frequency
+          
+          machine = MachineModule()
+          sys.modules['machine'] = machine
+          
+          # Create network module
+          class NetworkModule:
+              def __init__(self):
+                  self.WLAN = WLAN
+                  self.STA_IF = WLAN.STA_IF
+                  self.AP_IF = WLAN.AP_IF
+          
+          network = NetworkModule()
+          sys.modules['network'] = network
+          
+          # Create time module
+          class TimeModule:
+              def __init__(self):
+                  pass
+                  
+              def sleep(self, seconds):
+                  return sleep(seconds)
+                  
+              def sleep_ms(self, ms):
+                  return sleep_ms(ms)
+                  
+              def ticks_ms(self):
+                  return ticks_ms()
+                  
+              def ticks_diff(self, ticks1, ticks2):
+                  return ticks_diff(ticks1, ticks2)
+          
+          time_module = TimeModule()
+          sys.modules['time'] = time_module
+          
+          print("MicroPython environment initialized")
+        `);
+        
+        // Initialize REPL
+        updateStatus('Initializing REPL...');
+        pyodide.globals.set('repl', pyodide.PyProxy.repl());
+        
+        // Update device state
+        deviceState = { status: 'ready', deviceId };
+        updateStatus('Ready');
+        
+        // Notify main process
+        window.electronAPI.sendToMain({
+          type: 'device-state',
+          state: deviceState
+        });
+        
+        console.log('Pyodide initialized successfully');
+      } catch (error) {
+        console.error('Error initializing Pyodide:', error);
+        updateStatus('Error: ' + error.message);
+        window.electronAPI.sendToMain({
+          type: 'error',
+          message: error.message,
+          stack: error.stack
+        });
+      }
+    }
+
+    // Handle messages from main process
+    window.electronAPI.onMessage(async (message) => {
+      console.log('Received message from main:', message);
+      try {
+        switch (message.type) {
+          case 'init':
+            deviceId = message.deviceId;
+            updateStatus('Initializing device ' + deviceId);
+            await initializePyodide();
+            break;
+            
+          case 'load-code':
+            updateStatus('Loading code...');
+            await loadCode(message.code);
+            break;
+            
+          case 'execute-code':
+            updateStatus('Executing code...');
+            await executeCode(message.code);
+            break;
+            
+          case 'repl-input':
+            updateStatus('Processing REPL input...');
+            await handleReplInput(message.input);
+            break;
+            
+          default:
+            console.warn(`Unknown message type: ${message.type}`);
+        }
+      } catch (error) {
+        console.error('Error handling message:', error);
+        updateStatus('Error: ' + error.message);
+        window.electronAPI.sendToMain({
+          type: 'error',
+          message: error.message,
+          stack: error.stack
+        });
+      }
+    });
+
+    // Load Python code
+    async function loadCode(code) {
+      if (!pyodide) await initializePyodide();
+      
+      try {
+        await pyodide.runPythonAsync(code);
+        updateStatus('Code loaded successfully');
+        window.electronAPI.sendToMain({
+          type: 'code-loaded',
+          success: true
+        });
+      } catch (error) {
+        updateStatus('Error loading code: ' + error.message);
+        window.electronAPI.sendToMain({
+          type: 'error',
+          message: error.message,
+          stack: error.stack
+        });
+        throw error;
+      }
+    }
+
+    // Execute Python code
+    async function executeCode(code) {
+      if (!pyodide) await initializePyodide();
+      
+      try {
+        const result = await pyodide.runPythonAsync(code);
+        updateStatus('Code executed successfully');
+        window.electronAPI.sendToMain({
+          type: 'code-executed',
+          result: result ? result.toString() : 'None'
+        });
+      } catch (error) {
+        updateStatus('Error executing code: ' + error.message);
+        window.electronAPI.sendToMain({
+          type: 'error',
+          message: error.message,
+          stack: error.stack
+        });
+        throw error;
+      }
+    }
+
+    // Handle REPL input
+    async function handleReplInput(input) {
+      if (!pyodide) await initializePyodide();
+      
+      try {
+        const result = await pyodide.globals.get('repl').execute(input);
+        updateStatus('REPL command executed');
+        window.electronAPI.sendToMain({
+          type: 'repl-output',
+          result: result ? result.toString() : 'None'
+        });
+      } catch (error) {
+        updateStatus('Error in REPL: ' + error.message);
+        window.electronAPI.sendToMain({
+          type: 'error',
+          message: error.message,
+          stack: error.stack
+        });
+        throw error;
+      }
+    }
+
+    // Update status display
+    function updateStatus(status) {
+      const statusElement = document.getElementById('status');
+      statusElement.textContent = `Device ${deviceId || 'Unknown'}: ${status}`;
+      console.log(`[${deviceId || 'Unknown'}] ${status}`);
+    }
+
+    // Initialize
+    console.log('Device simulator loaded');
+    updateStatus('Waiting for initialization...');
+  </script>
+</body>
+</html>
