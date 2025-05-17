@@ -157,15 +157,18 @@ const vehicleControllerContext = {
   <!-- Needle Window Button Section -->
   <div class="needle-window-section">
     <h2>Open Needle JS App Window</h2>
-    <button @click="openNeedleWindow" class="open-needle-button">
+    <!-- <button @click="openNeedleWindow" class="open-needle-button">
       Launch Needle JS App Window
-    </button>
+    </button> -->
     <div class="variant-buttons">
       <button @click="openNeedleVariant('carphysics', vehicleControllerContext)" class="variant-button">
         Launch Car Physics Demo
       </button>
       <button @click="openNeedleVariant('sidescroller')" class="variant-button">
         Launch Side Scroller Demo
+      </button>
+      <button @click="openNeedleVariant('navmesh')" class="variant-button">
+        Launch Navmesh Demo
       </button>
     </div>
     <p v-if="needleWindowStatus" class="status-message">{{ needleWindowStatus }}</p>
