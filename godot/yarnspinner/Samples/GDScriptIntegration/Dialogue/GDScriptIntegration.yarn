@@ -1,7 +1,7 @@
 ﻿title: GDScriptIntegration
 tags:
 ---
-<<declare $myVariableSetFromGDScript to "" as string>>
+<<declare $myVariableSetFromGDScript to "Avatar" as string>>
 <<log "Starting GDScriptIntegration sample!">>
 Gary: So, can I use [fx type="wave"]GDScript with YarnSpinner?!!!![/fx]  #my_metadata #line:02fa0cd 
 Derrick: Many features can be used with GDScript. For example, you can make a custom presenter like the one in this scene. #line:09c1c2c 

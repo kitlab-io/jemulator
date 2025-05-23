@@ -76,7 +76,7 @@ spread_distance = 4.0
 spread_cone_degrees = 360.0
 spread_angle_degrees = 0.0
 
-[sub_resource type="Resource" id="Resource_88cyk"]
+[sub_resource type="Resource" id="Resource_3f7yy"]
 resource_local_to_scene = true
 resource_name = "GridInventory"
 script = ExtResource("25_n2pp2")
@@ -96,7 +96,7 @@ spread_distance = 32.0
 spread_cone_degrees = 360.0
 spread_angle_degrees = 0.0
 
-[sub_resource type="Resource" id="Resource_c08fp"]
+[sub_resource type="Resource" id="Resource_6y1yv"]
 resource_local_to_scene = true
 resource_name = "GridInventory"
 script = ExtResource("25_n2pp2")
@@ -182,6 +182,17 @@ visible = false
 script = ExtResource("3_bh6u6")
 dialogue_runner = NodePath("GDScriptYarnSpinnerCanvasLayer/DialogueRunner")
 dialogue_canvas = NodePath("GDScriptYarnSpinnerCanvasLayer")
+dialogue_start = "Tutorial"
+
+[node name="CrossLanguageScriptingExample" type="Control" parent="DialogueManager" node_paths=PackedStringArray("dialogue_runner", "logo")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_r10lh")
+dialogue_runner = NodePath("../GDScriptYarnSpinnerCanvasLayer/DialogueRunner")
+logo = NodePath("../GDScriptYarnSpinnerCanvasLayer/Logo")
+yarn_project = ExtResource("4_vfwc8")
 
 [node name="GDScriptYarnSpinnerCanvasLayer" type="CanvasLayer" parent="DialogueManager"]
 
@@ -198,18 +209,7 @@ yarnProject = ExtResource("4_vfwc8")
 variableStorage = NodePath("../InMemoryVariableStorage")
 lineProvider = NodePath("../TextLineProvider")
 dialoguePresenters = [NodePath("../LinePresenter"), NodePath("../OptionsPresenter")]
-autoStart = true
 startNode = "GDScriptIntegration"
-
-[node name="CrossLanguageScriptingExample" type="Control" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer" node_paths=PackedStringArray("dialogue_runner", "logo")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("5_r10lh")
-dialogue_runner = NodePath("../DialogueRunner")
-logo = NodePath("../Logo")
-yarn_project = ExtResource("4_vfwc8")
 
 [node name="VariableDebugText" type="RichTextLabel" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]
 
@@ -599,7 +599,7 @@ offset_left = -313.0
 offset_top = -39.0
 offset_right = -201.0
 offset_bottom = 129.0
-inventory = SubResource("Resource_88cyk")
+inventory = SubResource("Resource_3f7yy")
 contents = SubResource("12")
 interaction_mode = 5
 autosave_file_path = "items/world/chest1.dat"
@@ -628,7 +628,7 @@ offset_left = -201.0
 offset_top = 20.0
 offset_right = -89.0
 offset_bottom = 188.0
-inventory = SubResource("Resource_c08fp")
+inventory = SubResource("Resource_6y1yv")
 contents = SubResource("12")
 interaction_mode = 5
 autosave_file_path = "items/world/chest2.dat"

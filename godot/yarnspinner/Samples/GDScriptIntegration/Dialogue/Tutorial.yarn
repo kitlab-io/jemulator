@@ -1,0 +1,10 @@
+﻿title: Tutorial
+tags:
+---
+Guide: Hello, {$myVariableSetFromGDScript}!
+You: Choice?
+-> Yes 
+	Guide: That's cool.  
+-> No 
+	Guide: That's NOT cool. 
+===
