@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://hvtydqjfdlf5"]
+
+[ext_resource type="PackedScene" uid="uid://dw1ktteelig5g" path="res://assets/yarnspinner/gd_script_yarn_spinner_canvas_layer.tscn" id="1_aoujg"]
+[ext_resource type="Script" path="res://Samples/ReturnOnComplete.cs" id="4_6b5el"]
+
+[node name="GDScriptIntegrationSample" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="BackgroundColor" type="ColorRect" parent="CanvasLayer"]
+z_index = -7
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.00260118, 0.121715, 0.193433, 1)
+
+[node name="GDScriptYarnSpinnerCanvasLayer" parent="." instance=ExtResource("1_aoujg")]
+
+[node name="ReturnOnComplete" type="Node2D" parent="."]
+script = ExtResource("4_6b5el")

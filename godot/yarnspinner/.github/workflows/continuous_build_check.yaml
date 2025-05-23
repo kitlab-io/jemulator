@@ -1,0 +1,64 @@
+name: Continuous Build and Test
+
+on:
+  push:
+    branches:
+      - 'develop'
+    paths-ignore:
+      # don't need to re-run the build for now if only markdown changes
+      - '**/*.md'
+      - 'docs/**'
+  pull_request: 
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true
+  
+defaults:
+  run:
+    shell: bash
+
+jobs:
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        godotVersion: ["4.4.0"]
+        targetFramework: ["net8.0"]
+        nullable: ["enable", "disable"]
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          clean: false # we clean what we want to clean ourselves above, and try to keep some cache
+          submodules: recursive
+
+      - name: Set Target Framework ${{ matrix.targetFramework }}
+        run: |
+          sed -i 's|<TargetFramework>.*<|<TargetFramework>'${{ matrix.targetFramework }}'<|g' YarnSpinner-Godot.csproj
+      - name: Set Nullable ${{ matrix.nullable }}
+        run: |
+          sed -i 's|<Nullable>.*<|<Nullable>'${{ matrix.nullable }}'<|g' YarnSpinner-Godot.csproj
+
+      - uses: chickensoft-games/setup-godot@v1
+        name: 🤖 Setup Godot
+        with:
+          version: ${{ matrix.godotVersion}}
+          # Use .NET-enabled version of Godot (the default is also true).
+          use-dotnet: true
+
+      - name: 🔬 Verify Setup
+        run: |
+          dotnet --version
+          godot --version
+          
+      - name: Build solution
+        id: buildSolution
+        run: |
+          godot --headless --path . --verbose -e --build-solutions --quit 
+          dotnet build
+        timeout-minutes: 3

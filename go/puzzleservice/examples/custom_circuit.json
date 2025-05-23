@@ -1,0 +1,28 @@
+{
+  "id": "custom_circuit1",
+  "type": "circuit",
+  "name": "Custom LED Circuit",
+  "description": "Create a custom circuit with multiple LEDs and switches",
+  "difficulty": "Medium",
+  "solution": {
+    "connections": [
+      {"from": "battery", "to": "switch1"},
+      {"from": "switch1", "to": "led1"},
+      {"from": "led1", "to": "resistor1"},
+      {"from": "resistor1", "to": "battery"},
+      {"from": "battery", "to": "switch2"},
+      {"from": "switch2", "to": "led2"},
+      {"from": "led2", "to": "resistor2"},
+      {"from": "resistor2", "to": "battery"}
+    ],
+    "powerState": [
+      {"componentId": "battery", "powered": true},
+      {"componentId": "switch1", "powered": true},
+      {"componentId": "led1", "powered": true},
+      {"componentId": "resistor1", "powered": true},
+      {"componentId": "switch2", "powered": true},
+      {"componentId": "led2", "powered": true},
+      {"componentId": "resistor2", "powered": true}
+    ]
+  }
+}

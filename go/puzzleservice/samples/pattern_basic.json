@@ -1,0 +1,10 @@
+{
+  "id": "pattern_basic",
+  "type": "pattern",
+  "name": "Simple Number Sequence",
+  "description": "Identify the pattern in the sequence: 1, 3, 5, 7, ...",
+  "difficulty": "Easy",
+  "solution": {
+    "sequence": [1, 3, 5, 7, 9]
+  }
+}

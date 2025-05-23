@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bqeogw6sy8vml"
+path="res://.godot/imported/Lilypad.obj-a90f19aa37279aa5767a0266325c113d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Lilypad.obj-a90f19aa37279aa5767a0266325c113d.mesh"]
+
+source_file="res://solarville/assets/Ultimate Nature Pack by Quaternius/OBJ/Lilypad.obj"
+dest_files=["res://.godot/imported/Lilypad.obj-a90f19aa37279aa5767a0266325c113d.mesh", "res://.godot/imported/Lilypad.obj-a90f19aa37279aa5767a0266325c113d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

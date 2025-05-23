@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c8647imvq4r85"
+path="res://.godot/imported/Grass_Short.obj-72ed40373c23d2542ce87df4b956597d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Grass_Short.obj-72ed40373c23d2542ce87df4b956597d.mesh"]
+
+source_file="res://solarville/assets/Ultimate Nature Pack by Quaternius/OBJ/Grass_Short.obj"
+dest_files=["res://.godot/imported/Grass_Short.obj-72ed40373c23d2542ce87df4b956597d.mesh", "res://.godot/imported/Grass_Short.obj-72ed40373c23d2542ce87df4b956597d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

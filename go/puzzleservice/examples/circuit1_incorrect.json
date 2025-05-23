@@ -1,0 +1,16 @@
+{
+  "puzzleId": "circuit1",
+  "type": "circuit",
+  "solution": {
+    "connections": [
+      {"from": "battery", "to": "led"},
+      {"from": "led", "to": "battery"}
+    ],
+    "powerState": [
+      {"componentId": "battery", "powered": true},
+      {"componentId": "led", "powered": true},
+      {"componentId": "switch", "powered": false},
+      {"componentId": "resistor", "powered": false}
+    ]
+  }
+}

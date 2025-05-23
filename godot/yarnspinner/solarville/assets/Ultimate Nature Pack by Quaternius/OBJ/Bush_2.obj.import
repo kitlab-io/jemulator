@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bvkbx1ntfcxws"
+path="res://.godot/imported/Bush_2.obj-559d1df213b215f80170c588da681a6b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Bush_2.obj-559d1df213b215f80170c588da681a6b.mesh"]
+
+source_file="res://solarville/assets/Ultimate Nature Pack by Quaternius/OBJ/Bush_2.obj"
+dest_files=["res://.godot/imported/Bush_2.obj-559d1df213b215f80170c588da681a6b.mesh", "res://.godot/imported/Bush_2.obj-559d1df213b215f80170c588da681a6b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

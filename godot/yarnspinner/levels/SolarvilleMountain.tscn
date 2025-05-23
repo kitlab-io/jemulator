@@ -1,0 +1,707 @@
+[gd_scene load_steps=60 format=3 uid="uid://x34e4v60vdmy"]
+
+[ext_resource type="Script" path="res://demo/src/DemoScene.gd" id="1_po4vw"]
+[ext_resource type="PackedScene" uid="uid://bb2lp50sjndus" path="res://demo/components/Environment.tscn" id="2_i74wg"]
+[ext_resource type="PackedScene" uid="uid://dwnhqfjq7v1pq" path="res://demo/components/Borders.tscn" id="3_3upu0"]
+[ext_resource type="Script" path="res://scripts/dialogue_manager.gd" id="3_bh6u6"]
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/DialogueRunner.cs" id="3_ka10j"]
+[ext_resource type="Resource" uid="uid://c0qdj0h48fu6a" path="res://Samples/GDScriptIntegration/Dialogue/GDScriptIntegration.yarnproject" id="4_vfwc8"]
+[ext_resource type="PackedScene" uid="uid://djhl3foqkj4e2" path="res://demo/components/Tunnel.tscn" id="5_2lvlr"]
+[ext_resource type="Script" path="res://Samples/GDScriptIntegration/CrossLanguageScriptingExample.gd" id="5_r10lh"]
+[ext_resource type="PackedScene" uid="uid://d2jihfohphuue" path="res://demo/components/UI.tscn" id="5_rc7e2"]
+[ext_resource type="Script" path="res://Samples/GDScriptIntegration/SimpleGDScriptLinePresenter.gd" id="6_sjtc5"]
+[ext_resource type="Script" path="res://Samples/GDScriptIntegration/SimpleGDScriptOptionsPresenter.gd" id="7_heqlq"]
+[ext_resource type="NavigationMesh" uid="uid://yf3fu23666k8" path="res://demo/data/nav_mesh.res" id="8_6jfdr"]
+[ext_resource type="PackedScene" uid="uid://dhl2p7qest5lu" path="res://solarville/assets/sloyd/earthship-1.glb" id="8_8jbje"]
+[ext_resource type="PackedScene" uid="uid://dsoiq0u4jfsqb" path="res://example/src/inventory_menu.tscn" id="8_a87lv"]
+[ext_resource type="PackedScene" uid="uid://bwrwry811vrgh" path="res://Samples/GDScriptIntegration/SimpleGDScriptOptionItem.tscn" id="8_gngqk"]
+[ext_resource type="Texture2D" uid="uid://bvbb1qle7nca3" path="res://solarville/assets/Plants pack/Plants pack/Bushes/Bushes with branches/sprite - 01.png" id="8_l8w60"]
+[ext_resource type="PackedScene" uid="uid://benb4nmqkcr0q" path="res://solarville/assets/sloyd/yurt-dome.glb" id="9_4v38y"]
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/InMemoryVariableStorage.cs" id="9_5yxhb"]
+[ext_resource type="PackedScene" uid="uid://qbxkry8p0278" path="res://assets/characters/terra_character_body_3d.tscn" id="9_8ic1a"]
+[ext_resource type="PackedScene" uid="uid://ddsipx6arvtr6" path="res://solarville/assets/sloyd/earthship-2.glb" id="9_rh2jr"]
+[ext_resource type="PackedScene" uid="uid://boij7wcxmvnq7" path="res://addons/wyvernbox_prefabs/grabbed_item_stack_view.tscn" id="9_ursvt"]
+[ext_resource type="PackedScene" uid="uid://cqa45c6lfsffv" path="res://addons/wyvernbox_prefabs/tooltip.tscn" id="10_4qowe"]
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/LineProviders/TextLineProvider.cs" id="10_egb1e"]
+[ext_resource type="PackedScene" uid="uid://p4citqcljj36" path="res://solarville/assets/sloyd/yurt-red.glb" id="10_lt4tm"]
+[ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://demo/data/assets.tres" id="10_qmhh8"]
+[ext_resource type="PackedScene" uid="uid://dis6lk5rorpd4" path="res://solarville/assets/Ultimate Nature Pack by Quaternius/FBX/BirchTree_1.fbx" id="11_5gnb2"]
+[ext_resource type="Theme" uid="uid://75b71yv7xu1e" path="res://example/theme/default.tres" id="11_edsvq"]
+[ext_resource type="PackedScene" uid="uid://kagbka7g4dqa" path="res://solarville/assets/sloyd/barn-all-wood.glb" id="11_mhn3d"]
+[ext_resource type="PackedScene" uid="uid://di5fovhcyd7re" path="res://demo/components/Enemy.tscn" id="12_b2xl8"]
+[ext_resource type="PackedScene" uid="uid://blxuc11ggg72u" path="res://solarville/assets/Ultimate Nature Pack by Quaternius/FBX/BirchTree_4.fbx" id="12_ihdwp"]
+[ext_resource type="PackedScene" uid="uid://basbyrgfpudru" path="res://solarville/assets/Free_Forest_Kit_AssetQuest/Meshes/Brown_Mushrooms_Cluster_2.fbx" id="13_12nf0"]
+[ext_resource type="Texture2D" uid="uid://b0hv86xai8fjm" path="res://solarville/assets/Plants pack/Plants pack/Bushes/Bushes with branches/sprite - 01 bright .png" id="14_jhh88"]
+[ext_resource type="Resource" uid="uid://wvo0i5tdhbvl" path="res://example/wyvernbox/item_generators/basic_loot.tres" id="15_c84k1"]
+[ext_resource type="PackedScene" uid="uid://dhfh7ppr31gx0" path="res://solarville/assets/sloyd/gazebo.glb" id="15_kagkb"]
+[ext_resource type="Script" path="res://addons/wyvernbox/ground/ground_items_manager.gd" id="16_npap2"]
+[ext_resource type="PackedScene" uid="uid://cesxtk10fira3" path="res://addons/wyvernbox_prefabs/ground_item_stack_view_3d.tscn" id="17_ffnr1"]
+[ext_resource type="Script" path="res://example/src/world/touch_dropper.gd" id="18_pta5y"]
+[ext_resource type="Script" path="res://addons/wyvernbox/crafting/item_like.gd" id="19_xnvc6"]
+[ext_resource type="Resource" uid="uid://ba1ie6jofkmu8" path="res://example/wyvernbox/item_types/consumable/coin_gold.tres" id="20_k2of7"]
+[ext_resource type="Resource" uid="uid://bdo8mj57sn4es" path="res://example/wyvernbox/item_types/consumable/coin_purple.tres" id="21_d38u1"]
+[ext_resource type="Script" path="res://addons/wyvernbox/item_instantiator.gd" id="22_75oqd"]
+[ext_resource type="PackedScene" uid="uid://e8rkhrvavj7l" path="res://example/src/world/inworld_container.tscn" id="23_vbggu"]
+[ext_resource type="PackedScene" uid="uid://dk2b3ordhblc2" path="res://addons/wyvernbox_prefabs/inventories/grid_inventory.tscn" id="24_3ayv6"]
+[ext_resource type="Script" path="res://addons/wyvernbox/inventories/grid_inventory.gd" id="25_n2pp2"]
+[ext_resource type="Resource" uid="uid://bc5mn5etsfr76" path="res://example/wyvernbox/item_generators/random_enchanted_equip.tres" id="26_1co30"]
+
+[sub_resource type="Resource" id="22"]
+resource_name = "Drop Chaotically"
+script = ExtResource("22_75oqd")
+items_to_add = Array[ExtResource("19_xnvc6")]([ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("20_k2of7"), ExtResource("21_d38u1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1")])
+item_repeat_ranges = Array[Vector2]([Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(5, 100), Vector2(5, 100), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)])
+item_chances = Array[float]([100.0, 50.0, 50.0, 50.0, 100.0, 20.0, 50.0, 50.0, 50.0, 50.0, 50.0])
+repeat_post_chance = true
+randomize_locations = true
+delay_between_items = 0.1
+spread_distance = 4.0
+spread_cone_degrees = 360.0
+spread_angle_degrees = 0.0
+
+[sub_resource type="SphereShape3D" id="14"]
+
+[sub_resource type="SphereMesh" id="15"]
+
+[sub_resource type="Resource" id="21"]
+resource_name = "Drop In Circle"
+script = ExtResource("22_75oqd")
+items_to_add = Array[ExtResource("19_xnvc6")]([ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("20_k2of7"), ExtResource("21_d38u1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1"), ExtResource("15_c84k1")])
+item_repeat_ranges = Array[Vector2]([Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(5, 100), Vector2(5, 100), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)])
+item_chances = Array[float]([100.0, 50.0, 50.0, 50.0, 100.0, 20.0, 50.0, 50.0, 50.0, 50.0, 50.0])
+repeat_post_chance = true
+randomize_locations = false
+delay_between_items = 0.1
+spread_distance = 4.0
+spread_cone_degrees = 360.0
+spread_angle_degrees = 0.0
+
+[sub_resource type="Resource" id="Resource_88cyk"]
+resource_local_to_scene = true
+resource_name = "GridInventory"
+script = ExtResource("25_n2pp2")
+height = 12
+width = 8
+
+[sub_resource type="Resource" id="12"]
+resource_name = "Random Equips"
+script = ExtResource("22_75oqd")
+items_to_add = Array[ExtResource("19_xnvc6")]([ExtResource("26_1co30"), ExtResource("21_d38u1"), ExtResource("21_d38u1"), ExtResource("20_k2of7"), ExtResource("20_k2of7"), ExtResource("20_k2of7"), ExtResource("20_k2of7")])
+item_repeat_ranges = Array[Vector2]([Vector2(8, 8), Vector2(5, 100), Vector2(5, 100), Vector2(5, 100), Vector2(5, 100), Vector2(5, 100), Vector2(5, 100)])
+item_chances = Array[float]([100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0])
+repeat_post_chance = true
+randomize_locations = true
+delay_between_items = 0.0
+spread_distance = 32.0
+spread_cone_degrees = 360.0
+spread_angle_degrees = 0.0
+
+[sub_resource type="Resource" id="Resource_c08fp"]
+resource_local_to_scene = true
+resource_name = "GridInventory"
+script = ExtResource("25_n2pp2")
+height = 12
+width = 8
+
+[sub_resource type="Sky" id="6"]
+
+[sub_resource type="Environment" id="5"]
+background_mode = 2
+sky = SubResource("6")
+ambient_light_sky_contribution = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_b53cq"]
+resource_local_to_scene = true
+height = 9.653
+radius = 1.0
+
+[sub_resource type="Gradient" id="Gradient_vr1m7"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d8lcj"]
+noise_type = 2
+frequency = 0.03
+cellular_jitter = 3.0
+cellular_return_type = 0
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 50.0
+domain_warp_fractal_type = 2
+domain_warp_fractal_lacunarity = 1.5
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bov7h"]
+seamless = true
+color_ramp = SubResource("Gradient_vr1m7")
+noise = SubResource("FastNoiseLite_d8lcj")
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_s5mq5"]
+_shader_parameters = {
+"_mouse_layer": 2147483648,
+"auto_base_texture": 0,
+"auto_height_reduction": 0.1,
+"auto_overlay_texture": 1,
+"auto_slope": 1.0,
+"bias_distance": 512.0,
+"blend_sharpness": 0.87,
+"depth_blur": 0.0,
+"dual_scale_far": 170.0,
+"dual_scale_near": 100.0,
+"dual_scale_reduction": 0.3,
+"dual_scale_texture": 0,
+"enable_macro_variation": true,
+"enable_projection": true,
+"height_blending": true,
+"macro_variation1": Color(0.878431, 0.862745, 0.901961, 1),
+"macro_variation2": Color(0.898039, 0.898039, 0.803922, 1),
+"macro_variation_slope": 0.333,
+"mipmap_bias": 1.0,
+"noise1_angle": 0.1,
+"noise1_offset": Vector2(0.5, 0.5),
+"noise1_scale": 0.04,
+"noise2_scale": 0.076,
+"noise3_scale": 0.225,
+"noise_texture": SubResource("NoiseTexture2D_bov7h"),
+"projection_angular_division": 1.436,
+"projection_threshold": 0.8,
+"tri_scale_reduction": 0.3,
+"world_space_normal_blend": true
+}
+world_background = 0
+auto_shader = true
+dual_scaling = true
+
+[node name="Demo" type="Node"]
+script = ExtResource("1_po4vw")
+
+[node name="UI" parent="." instance=ExtResource("5_rc7e2")]
+visible = false
+
+[node name="DialogueManager" type="Node" parent="." node_paths=PackedStringArray("dialogue_runner", "dialogue_canvas")]
+script = ExtResource("3_bh6u6")
+dialogue_runner = NodePath("GDScriptYarnSpinnerCanvasLayer/DialogueRunner")
+dialogue_canvas = NodePath("GDScriptYarnSpinnerCanvasLayer")
+
+[node name="GDScriptYarnSpinnerCanvasLayer" type="CanvasLayer" parent="DialogueManager"]
+
+[node name="DialogueRunner" type="Control" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer" node_paths=PackedStringArray("variableStorage", "lineProvider", "dialoguePresenters")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_ka10j")
+yarnProject = ExtResource("4_vfwc8")
+variableStorage = NodePath("../InMemoryVariableStorage")
+lineProvider = NodePath("../TextLineProvider")
+dialoguePresenters = [NodePath("../LinePresenter"), NodePath("../OptionsPresenter")]
+autoStart = true
+startNode = "GDScriptIntegration"
+
+[node name="CrossLanguageScriptingExample" type="Control" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer" node_paths=PackedStringArray("dialogue_runner", "logo")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_r10lh")
+dialogue_runner = NodePath("../DialogueRunner")
+logo = NodePath("../Logo")
+yarn_project = ExtResource("4_vfwc8")
+
+[node name="VariableDebugText" type="RichTextLabel" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]
+
+[node name="LinePresenter" type="Control" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer" node_paths=PackedStringArray("continue_button", "character_name_label", "line_text_label", "presenter_control")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("6_sjtc5")
+continue_button = NodePath("PresenterControl/ContinueButton")
+character_name_label = NodePath("PresenterControl/CharacterNameText")
+line_text_label = NodePath("PresenterControl/LineText")
+presenter_control = NodePath("PresenterControl")
+
+[node name="PresenterControl" type="Control" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer/LinePresenter"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LineText" type="RichTextLabel" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer/LinePresenter/PresenterControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -610.0
+offset_top = -352.0
+offset_right = 640.0
+offset_bottom = 193.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/bold_italics_font_size = 36
+theme_override_font_sizes/italics_font_size = 36
+theme_override_font_sizes/mono_font_size = 36
+theme_override_font_sizes/normal_font_size = 36
+theme_override_font_sizes/bold_font_size = 36
+bbcode_enabled = true
+text = "The dialogue text should appear here!"
+
+[node name="ColorRect" type="ColorRect" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer/LinePresenter/PresenterControl/LineText"]
+modulate = Color(0.203922, 0.192157, 0.192157, 0.458824)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -12.0
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterNameText" type="RichTextLabel" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer/LinePresenter/PresenterControl"]
+self_modulate = Color(0.321569, 0.87451, 0.254902, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -607.0
+offset_top = -415.0
+offset_right = 279.0
+offset_bottom = -362.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/bold_italics_font_size = 36
+theme_override_font_sizes/italics_font_size = 36
+theme_override_font_sizes/mono_font_size = 36
+theme_override_font_sizes/normal_font_size = 36
+theme_override_font_sizes/bold_font_size = 36
+bbcode_enabled = true
+text = "Character Name"
+
+[node name="ColorRect" type="ColorRect" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer/LinePresenter/PresenterControl/CharacterNameText"]
+modulate = Color(0.203922, 0.192157, 0.192157, 0.458824)
+show_behind_parent = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ContinueButton" type="Button" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer/LinePresenter/PresenterControl"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 337.0
+offset_top = -463.0
+offset_right = 569.0
+offset_bottom = -363.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 36
+text = "Continue"
+
+[node name="OptionsPresenter" type="Control" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer" node_paths=PackedStringArray("options_container", "presenter_control")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_heqlq")
+option_item_prefab = ExtResource("8_gngqk")
+options_container = NodePath("PresenterControl/VBoxContainer")
+presenter_control = NodePath("PresenterControl")
+
+[node name="PresenterControl" type="Control" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer/OptionsPresenter"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer/OptionsPresenter/PresenterControl"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -547.0
+offset_top = -213.0
+offset_right = 547.0
+offset_bottom = 287.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InMemoryVariableStorage" type="Node" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]
+script = ExtResource("9_5yxhb")
+
+[node name="TextLineProvider" type="Node2D" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]
+script = ExtResource("10_egb1e")
+YarnProject = ExtResource("4_vfwc8")
+
+[node name="Logo" type="TextureRect" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]
+visible = false
+offset_left = 554.0
+offset_top = 358.0
+offset_right = 1066.0
+offset_bottom = 870.0
+
+[node name="InventorySystem" type="Node" parent="."]
+
+[node name="Inventory" type="CanvasLayer" parent="InventorySystem"]
+
+[node name="Generator" type="Button" parent="InventorySystem/Inventory"]
+offset_left = 286.0
+offset_top = 290.0
+offset_right = 342.0
+offset_bottom = 310.0
+focus_mode = 0
+
+[node name="Label" type="Label" parent="InventorySystem/Inventory/Generator"]
+layout_mode = 0
+offset_left = -78.0
+offset_top = 25.0
+offset_right = 134.0
+offset_bottom = 39.0
+text = "(Press Tab or I to open inventory)"
+
+[node name="Label2" type="Label" parent="InventorySystem/Inventory/Generator"]
+layout_mode = 0
+offset_left = -78.0
+offset_top = 40.0
+offset_right = 136.0
+offset_bottom = 54.0
+text = "(Hold Alt to highlight items)"
+
+[node name="InventoryMenu" parent="InventorySystem/Inventory" instance=ExtResource("8_a87lv")]
+
+[node name="GrabbedItem" parent="InventorySystem/Inventory/InventoryMenu" instance=ExtResource("9_ursvt")]
+drop_at_node = NodePath("../../../../MapOrigin/Player")
+drop_ground_item_manager = NodePath("../../../../MapOrigin/Inventory/Items")
+double_click_time_msec = 200
+
+[node name="InworlnventoriesTutorial" type="AcceptDialog" parent="InventorySystem/Inventory/InventoryMenu"]
+dialog_text = "This inventory has random stuff! An ItemInstantiator put them here.
+These can also drop items to the ground.
+
+The chest's contents are displayed here by just duplicating the chest's
+InventoryView. Not just the Inventory resource - that way custom
+inventory layouts and extra nodes (like this ? button) can be used!"
+
+[node name="Tooltip" parent="InventorySystem/Inventory" instance=ExtResource("10_4qowe")]
+visible = false
+offset_left = 198.0
+offset_top = -23.0
+offset_right = 358.0
+offset_bottom = 52.0
+theme = ExtResource("11_edsvq")
+compare_to_inventory = NodePath("../InventoryMenu/CenterContainer/TabContainer/Equip/Control/Equip")
+color_neutral = Color(0.376471, 0.376471, 0.376471, 1)
+
+[node name="Environment" parent="." instance=ExtResource("2_i74wg")]
+
+[node name="Borders" parent="." instance=ExtResource("3_3upu0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 509.83, 10.2256, 517.532)
+
+[node name="Tunnel" parent="." instance=ExtResource("5_2lvlr")]
+
+[node name="MapOrigin" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 204.682, 104.956, -1838.16)
+
+[node name="Environment" type="Node3D" parent="MapOrigin"]
+
+[node name="yurt-dome" parent="MapOrigin/Environment" instance=ExtResource("9_4v38y")]
+transform = Transform3D(0.297708, 0, 0.954657, 0, 1, 0, -0.954657, 0, 0.297708, 34.3309, -0.625511, -52.408)
+
+[node name="yurt-red" parent="MapOrigin/Environment" instance=ExtResource("10_lt4tm")]
+transform = Transform3D(-0.860306, 0, -0.509777, 0, 1, 0, 0.509777, 0, -0.860306, 13.7558, -0.0416718, -34.3859)
+
+[node name="yurt-red2" parent="MapOrigin/Environment" instance=ExtResource("10_lt4tm")]
+transform = Transform3D(-0.904686, 0, -0.426079, 0, 1, 0, 0.426079, 0, -0.904686, 21.9584, 0, -44.2196)
+
+[node name="5a2b-" parent="MapOrigin/Environment" instance=ExtResource("11_mhn3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5131, 26.8826)
+
+[node name="earthship-1" parent="MapOrigin/Environment" instance=ExtResource("8_8jbje")]
+transform = Transform3D(0.995172, -6.48569e-05, -0.0981488, 5.42064e-05, 1, -0.000111023, 0.0981488, 0.000105157, 0.995172, 10.9484, -0.441818, -9.34802)
+
+[node name="earthship-2" parent="MapOrigin/Environment" instance=ExtResource("9_rh2jr")]
+transform = Transform3D(-0.138017, 0, 0.81618, 0, 0.827768, 0, -0.81618, 0, -0.138017, 3.65007, 0, -15.6044)
+
+[node name="BirchTree_1" parent="MapOrigin/Environment" instance=ExtResource("11_5gnb2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.66887, 0, -1.62)
+
+[node name="BirchTree_4" parent="MapOrigin/Environment" instance=ExtResource("12_ihdwp")]
+transform = Transform3D(0.894646, 0, -0.446776, 0, 1, 0, 0.446776, 0, 0.894646, -6.77144, 0, 0)
+
+[node name="Brown_Mushrooms_Cluster_2" parent="MapOrigin/Environment" instance=ExtResource("13_12nf0")]
+transform = Transform3D(5.039, 0, 0, 0, 5.039, 0, 0, 0, 5.039, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="MapOrigin/Environment"]
+transform = Transform3D(4.76, 0, 0, 0, 4.76, 0, 0, 0, 4.76, -2.6167, 0.52977, 0.161865)
+billboard = 2
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("14_jhh88")
+
+[node name="gazebo" parent="MapOrigin/Environment" instance=ExtResource("15_kagkb")]
+transform = Transform3D(-0.385867, 0, 0.521831, 0, 0.649, 0, -0.521831, 0, -0.385867, 0, 0, 2.86255)
+
+[node name="PlantBillboard" type="Node" parent="MapOrigin/Environment"]
+
+[node name="Sprite2D" type="Sprite2D" parent="MapOrigin/Environment/PlantBillboard"]
+texture = ExtResource("8_l8w60")
+
+[node name="Inventory" type="Node3D" parent="MapOrigin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.33722, 0)
+
+[node name="Items" type="Node3D" parent="MapOrigin/Inventory"]
+script = ExtResource("16_npap2")
+autosave_file_path = "items/ground/area2.dat"
+item_scene = ExtResource("17_ffnr1")
+spawn_jump_length_range = Vector2(2, 3)
+
+[node name="Loot" type="Node3D" parent="MapOrigin/Inventory"]
+
+[node name="Area3D" type="Area3D" parent="MapOrigin/Inventory/Loot"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -8.01845, 1.79794, -1.61708)
+script = ExtResource("18_pta5y")
+ground_item_manager = NodePath("../../Items")
+collide_with_group = &"hero"
+loot_table = SubResource("22")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapOrigin/Inventory/Loot/Area3D"]
+shape = SubResource("14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MapOrigin/Inventory/Loot/Area3D"]
+mesh = SubResource("15")
+
+[node name="Area2" type="Area3D" parent="MapOrigin/Inventory/Loot"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -5.04234, 1.79794, 1.98245)
+script = ExtResource("18_pta5y")
+ground_item_manager = NodePath("../../Items")
+collide_with_group = &"hero"
+loot_table = SubResource("22")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapOrigin/Inventory/Loot/Area2"]
+shape = SubResource("14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MapOrigin/Inventory/Loot/Area2"]
+mesh = SubResource("15")
+
+[node name="Area3" type="Area3D" parent="MapOrigin/Inventory/Loot"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -12.0175, 1.79794, 1.15324)
+script = ExtResource("18_pta5y")
+ground_item_manager = NodePath("../../Items")
+collide_with_group = &"hero"
+loot_table = SubResource("22")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapOrigin/Inventory/Loot/Area3"]
+shape = SubResource("14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MapOrigin/Inventory/Loot/Area3"]
+mesh = SubResource("15")
+
+[node name="Area4" type="Area3D" parent="MapOrigin/Inventory/Loot"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -8.97924, 1.79794, 4.98049)
+script = ExtResource("18_pta5y")
+ground_item_manager = NodePath("../../Items")
+collide_with_group = &"hero"
+loot_table = SubResource("22")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapOrigin/Inventory/Loot/Area4"]
+shape = SubResource("14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MapOrigin/Inventory/Loot/Area4"]
+mesh = SubResource("15")
+
+[node name="Area5" type="Area3D" parent="MapOrigin/Inventory/Loot"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 10.0848, 1.79794, -0.164448)
+script = ExtResource("18_pta5y")
+ground_item_manager = NodePath("../../Items")
+collide_with_group = &"hero"
+loot_table = SubResource("21")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapOrigin/Inventory/Loot/Area5"]
+shape = SubResource("14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MapOrigin/Inventory/Loot/Area5"]
+mesh = SubResource("15")
+
+[node name="Area6" type="Area3D" parent="MapOrigin/Inventory/Loot"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 5.96548, 1.79794, 2.08864)
+script = ExtResource("18_pta5y")
+ground_item_manager = NodePath("../../Items")
+collide_with_group = &"hero"
+loot_table = SubResource("21")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapOrigin/Inventory/Loot/Area6"]
+shape = SubResource("14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MapOrigin/Inventory/Loot/Area6"]
+mesh = SubResource("15")
+
+[node name="Area7" type="Area3D" parent="MapOrigin/Inventory/Loot"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 8.21325, 1.79794, 5.13328)
+script = ExtResource("18_pta5y")
+ground_item_manager = NodePath("../../Items")
+collide_with_group = &"hero"
+loot_table = SubResource("21")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapOrigin/Inventory/Loot/Area7"]
+shape = SubResource("14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MapOrigin/Inventory/Loot/Area7"]
+mesh = SubResource("15")
+
+[node name="Area8" type="Area3D" parent="MapOrigin/Inventory/Loot"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 12.5391, 1.79794, 2.88898)
+script = ExtResource("18_pta5y")
+ground_item_manager = NodePath("../../Items")
+collide_with_group = &"hero"
+loot_table = SubResource("21")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MapOrigin/Inventory/Loot/Area8"]
+shape = SubResource("14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MapOrigin/Inventory/Loot/Area8"]
+mesh = SubResource("15")
+
+[node name="Openable" type="Node3D" parent="MapOrigin/Inventory"]
+
+[node name="Chest" parent="MapOrigin/Inventory/Openable" instance=ExtResource("23_vbggu")]
+transform = Transform3D(0.413263, 0, -0.910612, 0, 1, 0, 0.910612, 0, 0.413263, -2.5152, 1.34766, -4.27634)
+
+[node name="Inventory" parent="MapOrigin/Inventory/Openable/Chest" instance=ExtResource("24_3ayv6")]
+visible = false
+custom_minimum_size = Vector2(112, 168)
+offset_left = -313.0
+offset_top = -39.0
+offset_right = -201.0
+offset_bottom = 129.0
+inventory = SubResource("Resource_88cyk")
+contents = SubResource("12")
+interaction_mode = 5
+autosave_file_path = "items/world/chest1.dat"
+
+[node name="Control2" type="Control" parent="MapOrigin/Inventory/Openable/Chest/Inventory"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 10
+
+[node name="Button" type="Button" parent="MapOrigin/Inventory/Openable/Chest/Inventory/Control2"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -20.0
+offset_right = 21.0
+size_flags_horizontal = 10
+size_flags_vertical = 10
+text = "?"
+
+[node name="Chest2" parent="MapOrigin/Inventory/Openable" instance=ExtResource("23_vbggu")]
+transform = Transform3D(-0.645324, 0, -0.763909, 0, 1, 0, 0.763909, 0, -0.645324, 4.40275, 1.34766, -3.99078)
+
+[node name="Inventory" parent="MapOrigin/Inventory/Openable/Chest2" instance=ExtResource("24_3ayv6")]
+visible = false
+custom_minimum_size = Vector2(112, 168)
+offset_left = -201.0
+offset_top = 20.0
+offset_right = -89.0
+offset_bottom = 188.0
+inventory = SubResource("Resource_c08fp")
+contents = SubResource("12")
+interaction_mode = 5
+autosave_file_path = "items/world/chest2.dat"
+
+[node name="Control" type="Control" parent="MapOrigin/Inventory/Openable/Chest2/Inventory"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 10
+
+[node name="Button" type="Button" parent="MapOrigin/Inventory/Openable/Chest2/Inventory/Control"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -20.0
+offset_right = 21.0
+size_flags_horizontal = 10
+size_flags_vertical = 10
+text = "?"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="MapOrigin/Inventory"]
+environment = SubResource("5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="MapOrigin/Inventory"]
+transform = Transform3D(1.91069e-15, -1, -4.37114e-08, -0.522647, -3.72661e-08, 0.852549, -0.852549, 2.28456e-08, -0.522647, -9.53674e-07, 10.1265, -8.46388)
+directional_shadow_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="MapOrigin/Inventory"]
+transform = Transform3D(1, 0, 0, 0, 0.584391, 0.811472, 0, -0.811472, 0.584391, -0.0395966, 14.83, 12.56)
+
+[node name="Player" parent="MapOrigin" groups=["hero"] instance=ExtResource("9_8ic1a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00806332, 1.08353, -2.28762)
+generator = ExtResource("15_c84k1")
+inventory_menu = NodePath("../../InventorySystem/Inventory/InventoryMenu")
+inventory_tooltip = NodePath("../../InventorySystem/Inventory/Tooltip")
+ground_items = NodePath("../Inventory/Items")
+
+[node name="Camera3D" parent="MapOrigin/Player/SpringArm3D" index="0"]
+current = true
+
+[node name="Area3D" type="Area3D" parent="MapOrigin/Player"]
+input_ray_pickable = false
+
+[node name="Shape3D" type="CollisionShape3D" parent="MapOrigin/Player/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("CylinderShape3D_b53cq")
+
+[node name="Enemy" parent="." node_paths=PackedStringArray("target") instance=ExtResource("12_b2xl8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 192.727, 105.171, -1787.81)
+target = NodePath("../MapOrigin/Player")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = ExtResource("8_6jfdr")
+
+[node name="Terrain3D" type="Terrain3D" parent="NavigationRegion3D"]
+data_directory = "res://demo/data"
+material = SubResource("Terrain3DMaterial_s5mq5")
+assets = ExtResource("10_qmhh8")
+collision_mask = 3
+mesh_size = 64
+top_level = true
+metadata/_edit_lock_ = true
+
+[connection signal="item_clicked" from="MapOrigin/Inventory/Items" to="MapOrigin/Player" method="_on_items_item_clicked"]
+[connection signal="body_entered" from="MapOrigin/Player/Area3D" to="MapOrigin/Player" method="_on_ItemPickup_body_entered"]
+
+[editable path="InventorySystem/Inventory/InventoryMenu"]
+[editable path="InventorySystem/Inventory/InventoryMenu/CenterContainer/TabContainer/Shop"]
+[editable path="Environment"]
+[editable path="Borders"]
+[editable path="Tunnel"]
+[editable path="Tunnel/CrystalGroup2/CrystalC"]
+[editable path="Tunnel/CrystalGroup2/CrystalC3"]
+[editable path="Tunnel/CrystalGroup2/CrystalC2"]
+[editable path="Tunnel/CrystalGroup3/CrystalC"]
+[editable path="Tunnel/CrystalGroup3/CrystalC3"]
+[editable path="Tunnel/CrystalGroup3/CrystalC2"]
+[editable path="MapOrigin/Player"]

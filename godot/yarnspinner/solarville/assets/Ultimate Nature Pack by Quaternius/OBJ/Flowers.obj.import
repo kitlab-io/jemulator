@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dsia0ohowykh3"
+path="res://.godot/imported/Flowers.obj-2994a5b74a6cab5fbae5b71eff51d4da.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Flowers.obj-2994a5b74a6cab5fbae5b71eff51d4da.mesh"]
+
+source_file="res://solarville/assets/Ultimate Nature Pack by Quaternius/OBJ/Flowers.obj"
+dest_files=["res://.godot/imported/Flowers.obj-2994a5b74a6cab5fbae5b71eff51d4da.mesh", "res://.godot/imported/Flowers.obj-2994a5b74a6cab5fbae5b71eff51d4da.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

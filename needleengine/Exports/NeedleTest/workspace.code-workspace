@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "name": "Needle Engine",
+      "path": "./node_modules/@needle-tools/engine"
+    },
+    {
+      "name": "needle.samples.carphysics",
+      "path": "node_modules/needle.samples.carphysics",
+      "@needle:managed": true
+    }
+  ],
+  "settings": {
+    "window.title": "Template - ${rootName}${separator}${activeEditorShort}",
+    "files.exclude": {
+      "package-lock.json": true,
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "**/node_modules": true,
+      "**/*.meta": true
+    }
+  }
+}

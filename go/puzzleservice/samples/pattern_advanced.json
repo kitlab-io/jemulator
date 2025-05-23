@@ -1,0 +1,10 @@
+{
+  "id": "pattern_advanced",
+  "type": "pattern",
+  "name": "Fibonacci Sequence",
+  "description": "Identify the next numbers in the Fibonacci sequence: 1, 1, 2, 3, 5, ...",
+  "difficulty": "Medium",
+  "solution": {
+    "sequence": [1, 1, 2, 3, 5, 8, 13]
+  }
+}

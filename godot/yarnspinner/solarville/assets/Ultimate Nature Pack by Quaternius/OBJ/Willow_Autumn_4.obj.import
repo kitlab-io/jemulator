@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c0wp44t6h31la"
+path="res://.godot/imported/Willow_Autumn_4.obj-69da1f8e7a54d7ca482b0deb4c7b3622.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Willow_Autumn_4.obj-69da1f8e7a54d7ca482b0deb4c7b3622.mesh"]
+
+source_file="res://solarville/assets/Ultimate Nature Pack by Quaternius/OBJ/Willow_Autumn_4.obj"
+dest_files=["res://.godot/imported/Willow_Autumn_4.obj-69da1f8e7a54d7ca482b0deb4c7b3622.mesh", "res://.godot/imported/Willow_Autumn_4.obj-69da1f8e7a54d7ca482b0deb4c7b3622.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

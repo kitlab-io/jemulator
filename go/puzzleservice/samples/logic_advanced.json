@@ -1,0 +1,16 @@
+{
+  "id": "logic_advanced",
+  "type": "logic",
+  "name": "Advanced Logic Circuit",
+  "description": "Set the values to satisfy the condition: (A OR B) AND (C XOR D) AND (NOT E)",
+  "difficulty": "Hard",
+  "solution": {
+    "values": {
+      "A": true,
+      "B": false,
+      "C": true,
+      "D": false,
+      "E": false
+    }
+  }
+}

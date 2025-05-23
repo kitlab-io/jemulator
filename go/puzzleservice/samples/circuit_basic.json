@@ -1,0 +1,21 @@
+{
+  "id": "circuit_basic",
+  "type": "circuit",
+  "name": "Basic LED Circuit",
+  "description": "Create a simple circuit with a battery, switch, LED, and resistor",
+  "difficulty": "Easy",
+  "solution": {
+    "connections": [
+      {"from": "battery", "to": "switch"},
+      {"from": "switch", "to": "led"},
+      {"from": "led", "to": "resistor"},
+      {"from": "resistor", "to": "battery"}
+    ],
+    "powerState": [
+      {"componentId": "battery", "powered": true},
+      {"componentId": "switch", "powered": true},
+      {"componentId": "led", "powered": true},
+      {"componentId": "resistor", "powered": true}
+    ]
+  }
+}

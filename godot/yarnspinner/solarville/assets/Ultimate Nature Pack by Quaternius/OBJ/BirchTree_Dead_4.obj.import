@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://oefgm5tfxrh1"
+path="res://.godot/imported/BirchTree_Dead_4.obj-9b7dbd3ac5d4d7df449da72f068dd512.mesh"
+
+[deps]
+
+files=["res://.godot/imported/BirchTree_Dead_4.obj-9b7dbd3ac5d4d7df449da72f068dd512.mesh"]
+
+source_file="res://solarville/assets/Ultimate Nature Pack by Quaternius/OBJ/BirchTree_Dead_4.obj"
+dest_files=["res://.godot/imported/BirchTree_Dead_4.obj-9b7dbd3ac5d4d7df449da72f068dd512.mesh", "res://.godot/imported/BirchTree_Dead_4.obj-9b7dbd3ac5d4d7df449da72f068dd512.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

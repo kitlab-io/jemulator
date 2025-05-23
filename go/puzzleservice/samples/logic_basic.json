@@ -1,0 +1,14 @@
+{
+  "id": "logic_basic",
+  "type": "logic",
+  "name": "Basic Logic Gates",
+  "description": "Set the values to satisfy the condition: (A AND B) AND (NOT C)",
+  "difficulty": "Easy",
+  "solution": {
+    "values": {
+      "A": true,
+      "B": true,
+      "C": false
+    }
+  }
+}
