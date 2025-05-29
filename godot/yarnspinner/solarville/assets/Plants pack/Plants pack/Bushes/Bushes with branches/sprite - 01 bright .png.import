@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b0hv86xai8fjm"
 path.s3tc="res://.godot/imported/sprite - 01 bright .png-4e4dbec4356e260c78a451b6a27a3a15.s3tc.ctex"
+path.etc2="res://.godot/imported/sprite - 01 bright .png-4e4dbec4356e260c78a451b6a27a3a15.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://solarville/assets/Plants pack/Plants pack/Bushes/Bushes with branches/sprite - 01 bright .png"
-dest_files=["res://.godot/imported/sprite - 01 bright .png-4e4dbec4356e260c78a451b6a27a3a15.s3tc.ctex"]
+dest_files=["res://.godot/imported/sprite - 01 bright .png-4e4dbec4356e260c78a451b6a27a3a15.s3tc.ctex", "res://.godot/imported/sprite - 01 bright .png-4e4dbec4356e260c78a451b6a27a3a15.etc2.ctex"]
 
 [params]
 

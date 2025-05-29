@@ -209,7 +209,9 @@ yarnProject = ExtResource("4_vfwc8")
 variableStorage = NodePath("../InMemoryVariableStorage")
 lineProvider = NodePath("../TextLineProvider")
 dialoguePresenters = [NodePath("../LinePresenter"), NodePath("../OptionsPresenter")]
+autoStart = null
 startNode = "GDScriptIntegration"
+runSelectedOptionAsLine = null
 
 [node name="VariableDebugText" type="RichTextLabel" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]
 
@@ -353,9 +355,11 @@ grow_vertical = 2
 
 [node name="InMemoryVariableStorage" type="Node" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]
 script = ExtResource("9_5yxhb")
+showDebug = null
 
 [node name="TextLineProvider" type="Node2D" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]
 script = ExtResource("10_egb1e")
+textLanguageCode = null
 YarnProject = ExtResource("4_vfwc8")
 
 [node name="Logo" type="TextureRect" parent="DialogueManager/GDScriptYarnSpinnerCanvasLayer"]

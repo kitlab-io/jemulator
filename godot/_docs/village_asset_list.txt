@@ -1,0 +1,217 @@
+filename,filetype,asset_purpose,asset_type,usage_context,reuse_notes
+# CHARACTER SPRITES
+elowen_idle.png,PNG,Elowen base idle pose,2D Sprite,story_scenes|overworld,Base sprite for all Elowen variations
+elowen_talking.png,PNG,Elowen talking animation,2D Sprite,story_scenes,Reused in all dialogue scenes
+elowen_working.png,PNG,Elowen working on electronics,2D Sprite,story_scenes|workshop_scenes,Workshop and repair contexts
+elowen_pointing.png,PNG,Elowen explaining/teaching,2D Sprite,story_scenes|tutorial,Tutorial and explanation scenes
+elowen_concerned.png,PNG,Elowen worried expression,2D Sprite,story_scenes,Crisis and problem discussion scenes
+elowen_confident.png,PNG,Elowen confident/pleased,2D Sprite,story_scenes|council_scene,Success moments and council scene
+kai_idle.png,PNG,Kai base idle pose,2D Sprite,story_scenes|overworld,Base sprite for all Kai variations
+kai_excited.png,PNG,Kai enthusiastic expression,2D Sprite,story_scenes,Learning moments and discoveries
+kai_confused.png,PNG,Kai puzzled/thinking,2D Sprite,story_scenes|tutorial,Learning difficulty moments
+kai_working.png,PNG,Kai hands-on learning,2D Sprite,story_scenes|workshop_scenes,Workshop collaboration scenes
+kai_proud.png,PNG,Kai accomplished/confident,2D Sprite,story_scenes|council_scene,Achievement moments
+nima_idle.png,PNG,Nima base idle pose,2D Sprite,story_scenes|overworld,Base sprite for all Nima variations
+nima_explaining.png,PNG,Nima teaching ecology,2D Sprite,story_scenes|greenhouse_scenes,Environmental education scenes
+nima_observing.png,PNG,Nima studying systems,2D Sprite,story_scenes|overworld,System observation contexts
+nima_concerned.png,PNG,Nima environmental worry,2D Sprite,story_scenes,Sustainability concern scenes
+nima_thoughtful.png,PNG,Nima contemplative pose,2D Sprite,story_scenes|council_scene,Deep thinking moments
+soren_idle.png,PNG,Soren base idle pose,2D Sprite,story_scenes|overworld,Base sprite for all Soren variations
+soren_observing.png,PNG,Soren watching/listening,2D Sprite,story_scenes,Background observation scenes
+soren_working.png,PNG,Soren technical work,2D Sprite,story_scenes|comm_center,Communication system work
+soren_speaking.png,PNG,Soren rare speaking moment,2D Sprite,story_scenes|council_scene,Important dialogue moments
+juniper_idle.png,PNG,Juniper base idle pose,2D Sprite,story_scenes|overworld,Base sprite for all Juniper variations
+juniper_guarded.png,PNG,Juniper cautious expression,2D Sprite,story_scenes,Early relationship scenes
+juniper_racing_focus.png,PNG,Juniper in racing mode,2D Sprite,story_scenes|racing_prep,Racing expertise scenes
+juniper_teaching.png,PNG,Juniper sharing knowledge,2D Sprite,story_scenes|racing_prep,Coaching and instruction
+juniper_determined.png,PNG,Juniper resolved expression,2D Sprite,story_scenes|council_scene,Decision and commitment moments
+rowan_idle.png,PNG,Rowan base idle pose,2D Sprite,story_scenes|overworld,Base sprite for all Rowan variations
+rowan_excited.png,PNG,Rowan enthusiastic about tech,2D Sprite,story_scenes|workshop_scenes,Technical excitement moments
+rowan_working.png,PNG,Rowan hands-on building,2D Sprite,story_scenes|workshop_scenes|minigames,Mechanical work contexts
+rowan_teaching.png,PNG,Rowan explaining mechanics,2D Sprite,story_scenes|tutorial,Mechanical education scenes
+zephyr_idle.png,PNG,Zephyr base idle pose,2D Sprite,story_scenes|overworld,Base sprite for all Zephyr variations
+zephyr_addressing.png,PNG,Zephyr speaking to group,2D Sprite,story_scenes|council_scene,Leadership and meeting contexts
+zephyr_concerned.png,PNG,Zephyr worried about village,2D Sprite,story_scenes,Problem discussion scenes
+zephyr_wise.png,PNG,Zephyr contemplative/sage,2D Sprite,story_scenes,Wisdom sharing moments
+player_idle.png,PNG,Player character base pose,2D Sprite,story_scenes|overworld,Player avatar for all contexts
+player_working.png,PNG,Player working on tech,2D Sprite,story_scenes|workshop_scenes|minigames,Technical work contexts
+player_explaining.png,PNG,Player teaching/presenting,2D Sprite,story_scenes|council_scene,Explanation and presentation scenes
+villager_01.png,PNG,Generic villager type 1,2D Sprite,story_scenes|council_scene|overworld,Background population
+villager_02.png,PNG,Generic villager type 2,2D Sprite,story_scenes|council_scene|overworld,Background population
+villager_03.png,PNG,Generic villager type 3,2D Sprite,story_scenes|council_scene|overworld,Background population
+villager_04.png,PNG,Generic villager type 4,2D Sprite,story_scenes|council_scene|overworld,Background population
+
+# LOCATION BACKGROUNDS
+village_square.png,PNG,Main village gathering area,2D Background,story_scenes|overworld,Central hub location
+community_hall_interior.png,PNG,Council meeting space,2D Background,story_scenes|council_scene,Key story location
+workshop_interior.png,PNG,Technical workspace,2D Background,story_scenes|workshop_scenes|minigames,Primary learning location
+power_station_interior.png,PNG,Electrical systems hub,2D Background,story_scenes|minigames,Power system focus
+greenhouse_interior.png,PNG,Agricultural center,2D Background,story_scenes,Environmental system focus
+communications_center.png,PNG,Comms equipment room,2D Background,story_scenes,Communication system focus
+village_overview.png,PNG,Wide village view,2D Background,overworld|story_scenes,Establishing shots
+workshop_exterior.png,PNG,Outside workshop building,2D Background,overworld,Navigation reference
+power_station_exterior.png,PNG,Outside power station,2D Background,overworld,Navigation reference
+greenhouse_exterior.png,PNG,Outside greenhouse,2D Background,overworld,Navigation reference
+village_square_evening.png,PNG,Village square at dusk,2D Background,story_scenes|council_scene,Time-specific variant
+village_paths.png,PNG,Connecting walkways,2D Background,overworld,Navigation between locations
+
+# BUILDING AND STRUCTURE 3D MODELS
+community_hall.fbx,FBX,Village meeting hall,3D Model,overworld,Primary community structure
+workshop_building.fbx,FBX,Technical workspace building,3D Model,overworld,Key story location
+power_station_building.fbx,FBX,Electrical systems building,3D Model,overworld,Infrastructure focus
+greenhouse_structure.fbx,FBX,Agricultural building,3D Model,overworld,Environmental systems
+comm_tower.fbx,FBX,Communications antenna,3D Model,overworld,Communication infrastructure
+wind_turbine.fbx,FBX,Power generation turbine,3D Model,overworld|story_scenes,Key village infrastructure
+storage_shed.fbx,FBX,General storage building,3D Model,overworld,Background structure
+solar_panel_array.fbx,FBX,Salvaged solar panels,3D Model,overworld|power_station,Renewable energy infrastructure
+
+# VEHICLES AND RACING EQUIPMENT 3D MODELS
+maintenance_drone.fbx,FBX,Village utility drone,3D Model,story_scenes|racing_prep|minigames,Key story prop
+utility_vehicle.fbx,FBX,Electric village transport,3D Model,story_scenes|racing_prep|minigames,Key story prop
+drone_racing_mod.fbx,FBX,Modified racing drone,3D Model,racing_prep|minigames,Upgraded version of maintenance drone
+vehicle_racing_mod.fbx,FBX,Modified racing vehicle,3D Model,racing_prep|minigames,Upgraded utility vehicle
+drone_propeller.fbx,FBX,Individual drone rotor,3D Model,minigames|racing_prep,Component for modifications
+vehicle_wheel.fbx,FBX,Vehicle wheel assembly,3D Model,minigames|racing_prep,Component for modifications
+battery_pack.fbx,FBX,Power storage unit,3D Model,minigames|story_scenes,Reused across multiple contexts
+motor_assembly.fbx,FBX,Electric motor unit,3D Model,minigames|story_scenes,Reused across multiple systems
+
+# ELECTRONIC COMPONENTS (2D SPRITES)
+resistor_basic.png,PNG,Basic resistor component,2D Sprite,minigames|story_scenes,Circuit building fundamental
+capacitor_basic.png,PNG,Basic capacitor component,2D Sprite,minigames|story_scenes,Circuit building fundamental
+transistor_npn.png,PNG,NPN transistor component,2D Sprite,minigames|story_scenes,Advanced circuit building
+transistor_pnp.png,PNG,PNP transistor component,2D Sprite,minigames|story_scenes,Advanced circuit building
+ic_regulator.png,PNG,Voltage regulator IC,2D Sprite,minigames|story_scenes,Key story component
+microcontroller.png,PNG,Programmable microcontroller,2D Sprite,minigames|story_scenes,Systems integration
+led_basic.png,PNG,Light emitting diode,2D Sprite,minigames|story_scenes,Output component
+sensor_temperature.png,PNG,Temperature sensor,2D Sprite,minigames|story_scenes,Environmental monitoring
+sensor_moisture.png,PNG,Soil moisture sensor,2D Sprite,minigames|story_scenes,Agricultural systems
+sensor_light.png,PNG,Light level sensor,2D Sprite,minigames|story_scenes,Environmental monitoring
+wire_red.png,PNG,Red electrical wire,2D Sprite,minigames,Circuit connection
+wire_black.png,PNG,Black electrical wire,2D Sprite,minigames,Circuit connection
+wire_blue.png,PNG,Blue electrical wire,2D Sprite,minigames,Circuit connection
+wire_green.png,PNG,Green electrical wire,2D Sprite,minigames,Circuit connection
+breadboard.png,PNG,Circuit prototyping board,2D Sprite,minigames,Circuit building platform
+pcb_blank.png,PNG,Blank circuit board,2D Sprite,minigames,Advanced circuit building
+component_burned.png,PNG,Damaged/failed component,2D Sprite,story_scenes|minigames,Failure state indicator
+
+# MECHANICAL COMPONENTS (3D MODELS)
+gear_small.fbx,FBX,Small mechanical gear,3D Model,minigames,Mechanical assembly fundamental
+gear_medium.fbx,FBX,Medium mechanical gear,3D Model,minigames,Mechanical assembly fundamental
+gear_large.fbx,FBX,Large mechanical gear,3D Model,minigames,Mechanical assembly fundamental
+shaft_short.fbx,FBX,Short drive shaft,3D Model,minigames,Mechanical connection
+shaft_long.fbx,FBX,Long drive shaft,3D Model,minigames,Mechanical connection
+bearing_basic.fbx,FBX,Basic bearing assembly,3D Model,minigames,Mechanical support
+spring_compression.fbx,FBX,Compression spring,3D Model,minigames,Mechanical suspension
+bracket_l_shape.fbx,FBX,L-shaped mounting bracket,3D Model,minigames,Structural support
+bolt_hex.fbx,FBX,Hexagonal bolt,3D Model,minigames,Fastening hardware
+nut_hex.fbx,FBX,Hexagonal nut,3D Model,minigames,Fastening hardware
+washer_flat.fbx,FBX,Flat washer,3D Model,minigames,Hardware detail
+pulley_small.fbx,FBX,Small pulley wheel,3D Model,minigames,Power transmission
+belt_drive.fbx,FBX,Drive belt,3D Model,minigames,Power transmission
+chain_drive.fbx,FBX,Drive chain,3D Model,minigames,Power transmission
+
+# TOOLS AND EQUIPMENT (2D SPRITES)
+multimeter.png,PNG,Electronic measurement tool,2D Sprite,story_scenes|minigames,Diagnostic equipment
+oscilloscope.png,PNG,Signal analysis equipment,2D Sprite,story_scenes|minigames,Advanced diagnostic
+soldering_iron.png,PNG,Circuit assembly tool,2D Sprite,story_scenes|minigames,Construction tool
+wire_cutters.png,PNG,Wire cutting tool,2D Sprite,story_scenes|minigames,Construction tool
+screwdriver_flat.png,PNG,Flathead screwdriver,2D Sprite,story_scenes|minigames,Basic tool
+screwdriver_phillips.png,PNG,Phillips screwdriver,2D Sprite,story_scenes|minigames,Basic tool
+wrench_adjustable.png,PNG,Adjustable wrench,2D Sprite,story_scenes|minigames,Mechanical tool
+pliers_needle.png,PNG,Needle-nose pliers,2D Sprite,story_scenes|minigames,Precision tool
+drill_hand.png,PNG,Hand-operated drill,2D Sprite,story_scenes|minigames,Fabrication tool
+file_metal.png,PNG,Metal file,2D Sprite,story_scenes|minigames,Finishing tool
+diagnostic_tablet.png,PNG,Village diagnostic device,2D Sprite,story_scenes|overworld,Key story prop
+toolbox_open.png,PNG,Open toolbox,2D Sprite,story_scenes|minigames,Tool organization
+toolbox_closed.png,PNG,Closed toolbox,2D Sprite,overworld|story_scenes,Tool storage
+workbench.png,PNG,Workshop table surface,2D Sprite,minigames|workshop_scenes,Work surface
+vise_small.png,PNG,Small bench vise,2D Sprite,minigames|workshop_scenes,Work holding
+
+# SYSTEM INDICATORS AND UI ELEMENTS
+power_indicator_green.png,PNG,System healthy status,2D Sprite,story_scenes|overworld|minigames,Status indicator reused across systems
+power_indicator_yellow.png,PNG,System warning status,2D Sprite,story_scenes|overworld|minigames,Status indicator reused across systems
+power_indicator_red.png,PNG,System failure status,2D Sprite,story_scenes|overworld|minigames,Status indicator reused across systems
+voltage_meter.png,PNG,Voltage measurement display,2D Sprite,story_scenes|minigames,Diagnostic display
+current_meter.png,PNG,Current measurement display,2D Sprite,story_scenes|minigames,Diagnostic display
+power_meter.png,PNG,Power measurement display,2D Sprite,story_scenes|minigames,Diagnostic display
+efficiency_gauge.png,PNG,Efficiency measurement,2D Sprite,story_scenes|minigames,Performance indicator
+warning_icon.png,PNG,General warning symbol,2D Sprite,story_scenes|minigames,Alert indicator
+error_icon.png,PNG,Error/failure symbol,2D Sprite,story_scenes|minigames,Failure indicator
+success_icon.png,PNG,Success/completion symbol,2D Sprite,story_scenes|minigames,Achievement indicator
+progress_bar_empty.png,PNG,Empty progress indicator,2D Sprite,minigames,Progress tracking
+progress_bar_full.png,PNG,Full progress indicator,2D Sprite,minigames,Progress tracking
+circuit_schematic_bg.png,PNG,Schematic diagram background,2D Sprite,minigames,Circuit design interface
+grid_background.png,PNG,Grid pattern for alignment,2D Sprite,minigames,Design aid
+
+# ENVIRONMENTAL ELEMENTS
+tree_medium.fbx,FBX,Medium deciduous tree,3D Model,overworld,Natural environment
+tree_small.fbx,FBX,Small tree/large bush,3D Model,overworld,Natural environment
+grass_patch.fbx,FBX,Ground vegetation patch,3D Model,overworld,Ground cover
+rock_small.fbx,FBX,Small landscape rock,3D Model,overworld,Natural decoration
+rock_medium.fbx,FBX,Medium landscape rock,3D Model,overworld,Natural decoration
+fence_post.fbx,FBX,Simple fence post,3D Model,overworld,Boundary marking
+fence_section.fbx,FBX,Fence panel section,3D Model,overworld,Boundary marking
+path_stone.fbx,FBX,Stone pathway section,3D Model,overworld,Village navigation
+lamp_post.fbx,FBX,Village lighting post,3D Model,overworld,Infrastructure
+bench_simple.fbx,FBX,Simple seating bench,3D Model,overworld,Village furniture
+sign_post.fbx,FBX,Information sign post,3D Model,overworld,Navigation aid
+flower_small.png,PNG,Small decorative flower,2D Sprite,story_scenes|overworld,Natural decoration
+plant_crop.png,PNG,Agricultural crop plant,2D Sprite,story_scenes|greenhouse_scenes,Agricultural context
+plant_sapling.png,PNG,Young tree sapling,2D Sprite,story_scenes|greenhouse_scenes,Growth representation
+
+# PARTICLE EFFECTS AND VISUAL EFFECTS
+spark_small.png,PNG,Small electrical spark,2D Sprite,story_scenes|minigames,Electrical activity
+spark_large.png,PNG,Large electrical spark,2D Sprite,story_scenes|minigames,Electrical failure
+smoke_puff.png,PNG,Small smoke cloud,2D Sprite,story_scenes|minigames,Overheating/failure
+glow_blue.png,PNG,Blue electrical glow,2D Sprite,story_scenes|minigames,Electrical activity
+glow_green.png,PNG,Green status glow,2D Sprite,story_scenes|minigames,Success indicator
+glow_red.png,PNG,Red warning glow,2D Sprite,story_scenes|minigames,Failure indicator
+dust_mote.png,PNG,Floating dust particle,2D Sprite,workshop_scenes,Atmospheric detail
+light_beam.png,PNG,Light ray effect,2D Sprite,story_scenes,Lighting atmosphere
+energy_flow.png,PNG,Energy transfer effect,2D Sprite,minigames|story_scenes,Power visualization
+
+# CONTAINERS AND STORAGE
+component_bin.fbx,FBX,Parts storage bin,3D Model,workshop_scenes|minigames,Component organization
+shelf_wall.fbx,FBX,Wall-mounted shelf,3D Model,workshop_scenes|story_scenes,Storage furniture
+cabinet_tall.fbx,FBX,Tall storage cabinet,3D Model,workshop_scenes|story_scenes,Storage furniture
+drawer_unit.fbx,FBX,Small drawer unit,3D Model,workshop_scenes,Tool storage
+crate_wooden.fbx,FBX,Wooden storage crate,3D Model,overworld|story_scenes,General storage
+barrel_metal.fbx,FBX,Metal storage barrel,3D Model,overworld|story_scenes,Bulk storage
+box_cardboard.png,PNG,Cardboard box,2D Sprite,story_scenes|workshop_scenes,Temporary storage
+bag_component.png,PNG,Component parts bag,2D Sprite,story_scenes|minigames,Small parts storage
+
+# LIGHTING AND ATMOSPHERE
+bioluminescent_lamp.fbx,FBX,Village bio-light,3D Model,story_scenes|overworld,Atmospheric lighting
+led_strip.fbx,FBX,LED strip lighting,3D Model,workshop_scenes|story_scenes,Technical lighting
+ceiling_light.fbx,FBX,Overhead room lighting,3D Model,story_scenes,Interior lighting
+window_frame.fbx,FBX,Window with frame,3D Model,story_scenes,Natural lighting source
+skylight_frame.fbx,FBX,Ceiling window frame,3D Model,story_scenes,Natural lighting
+light_cone.png,PNG,Cone of light effect,2D Sprite,story_scenes,Lighting visualization
+shadow_soft.png,PNG,Soft shadow effect,2D Sprite,story_scenes,Depth enhancement
+ambient_particles.png,PNG,Atmospheric particles,2D Sprite,story_scenes,Atmosphere enhancement
+
+# AUDIO VISUAL CUES
+sound_wave.png,PNG,Audio visualization,2D Sprite,story_scenes,Communication representation
+signal_strong.png,PNG,Strong signal indicator,2D Sprite,story_scenes|minigames,Communication quality
+signal_weak.png,PNG,Weak signal indicator,2D Sprite,story_scenes|minigames,Communication issues
+frequency_display.png,PNG,Frequency spectrum,2D Sprite,story_scenes|minigames,Technical visualization
+data_stream.png,PNG,Data flow visualization,2D Sprite,story_scenes|minigames,Information transfer
+
+# WEATHER AND SKY ELEMENTS
+cloud_light.png,PNG,Light cloud formation,2D Sprite,overworld|story_scenes,Weather atmosphere
+cloud_heavy.png,PNG,Heavy cloud formation,2D Sprite,overworld|story_scenes,Weather atmosphere
+sun_rays.png,PNG,Sunlight beam effects,2D Sprite,overworld|story_scenes,Natural lighting
+wind_effect.png,PNG,Wind motion lines,2D Sprite,overworld|story_scenes,Wind visualization
+rain_light.png,PNG,Light rainfall effect,2D Sprite,overworld|story_scenes,Weather effect
+
+# INTERFACE ELEMENTS
+button_large.png,PNG,Large interface button,2D Sprite,minigames,UI interaction
+button_small.png,PNG,Small interface button,2D Sprite,minigames,UI interaction
+slider_track.png,PNG,Slider control track,2D Sprite,minigames,Parameter adjustment
+slider_handle.png,PNG,Slider control handle,2D Sprite,minigames,Parameter adjustment
+checkbox_empty.png,PNG,Empty checkbox,2D Sprite,minigames,Option selection
+checkbox_checked.png,PNG,Checked checkbox,2D Sprite,minigames,Option selection
+dropdown_arrow.png,PNG,Dropdown menu arrow,2D Sprite,minigames,Menu navigation
+text_field.png,PNG,Text input field,2D Sprite,minigames,Data entry
+icon_help.png,PNG,Help/information icon,2D Sprite,minigames|story_scenes,Assistance indicator
+icon_settings.png,PNG,Settings/configuration icon,2D Sprite,minigames,Configuration access

@@ -1,0 +1,286 @@
+# YarnSpinner Variable System Design
+# Complete progression and relationship tracking for village narrative
+
+# =============================================================================
+# CORE PROGRESSION VARIABLES
+# =============================================================================
+
+# Chapter Progress (0-4, tracks major story beats)
+chapter_progress: 0
+current_scene: "arrival"
+time_of_day: "evening"  # morning, afternoon, evening, night
+day_counter: 1
+
+# Tutorial and Learning Progress
+tutorial_completed: false
+diagnostic_tablet_unlocked: false
+workshop_access_unlocked: false
+advanced_tools_unlocked: false
+
+# =============================================================================
+# TECHNICAL SKILL PROGRESSION (0-100 each)
+# =============================================================================
+
+# Circuit Knowledge & Skills
+circuit_basics: 0          # Components, symbols, basic laws
+circuit_analysis: 0        # Voltage/current calculations, troubleshooting
+circuit_design: 0          # Creating functional circuits
+circuit_advanced: 0        # Complex systems, optimization
+
+# Mechanical Engineering Skills  
+mechanical_basics: 0       # Simple machines, forces, materials
+mechanical_assembly: 0     # Putting parts together, tolerances
+mechanical_design: 0       # Creating mechanisms, gear systems
+mechanical_advanced: 0     # Complex assemblies, optimization
+
+# Systems Integration Skills
+systems_thinking: 0        # Understanding interconnections
+embedded_systems: 0       # Microcontrollers, sensors, actuators  
+communication_systems: 0   # Networks, protocols, telemetry
+systems_optimization: 0    # Performance tuning, efficiency
+
+# Specialized Knowledge
+aerodynamics: 0           # Flight dynamics, drag, lift
+power_management: 0       # Batteries, charging, efficiency
+environmental_systems: 0  # Ecology integration, sustainability
+crisis_management: 0      # Emergency response, triage
+
+# =============================================================================
+# CHARACTER RELATIONSHIPS (0-100 each)
+# =============================================================================
+
+# Elowen Thorne - Village Techsmith
+elowen_technical_respect: 0      # Earned through engineering competence
+elowen_trust: 0                  # Personal trust and friendship
+elowen_collaboration: 0          # Working together effectively
+elowen_mentorship: 0            # Learning from her expertise
+
+# Kai Reeves - Young Inventor  
+kai_mentorship_bond: 0          # Teaching and guiding relationship
+kai_confidence: 0               # Kai's self-assurance in abilities
+kai_creativity: 0               # Encouraging innovative thinking
+kai_technical_growth: 0         # Kai's actual skill development
+
+# Nima Okafor - Agricultural Systems Specialist
+nima_environmental_trust: 0      # Sustainable/ecological choices
+nima_systems_understanding: 0    # Grasping interconnected systems
+nima_collaboration: 0           # Working on village projects
+nima_wisdom_sharing: 0          # Learning from experience
+
+# Soren Wu - Communications Expert
+soren_intellectual_connection: 0  # Deep technical discussions
+soren_observation_skills: 0      # Noticing and learning together
+soren_trust: 0                  # Personal connection beyond work
+soren_system_integration: 0      # Collaborative technical work
+
+# Zephyr Malik - Village Elder
+zephyr_leadership_respect: 0     # Demonstrating responsible leadership
+zephyr_community_integration: 0  # Fitting into village culture
+zephyr_wisdom_appreciation: 0    # Understanding village history/values
+zephyr_decision_trust: 0        # Trust in player's judgment
+
+# Juniper Lee - Former Drone Racer
+juniper_trust: 0                # Overcoming initial guardedness
+juniper_respect: 0              # Proving competence and ethics
+juniper_racing_knowledge: 0     # Learning racing techniques
+juniper_past_understanding: 0    # Understanding her background
+
+# Rowan Chen - Young Mechanic
+rowan_mechanical_camaraderie: 0  # Hands-on collaboration
+rowan_creativity_bond: 0        # Sharing innovative solutions
+rowan_tool_sharing: 0           # Practical cooperation
+rowan_mentorship: 0             # Learning from each other
+
+# =============================================================================
+# VILLAGE SYSTEMS STATUS (0-100, representing system health)
+# =============================================================================
+
+# Power Systems
+power_grid_health: 25           # Overall electrical system condition
+voltage_regulation: 15          # Specific regulator problems
+battery_storage: 30            # Energy storage efficiency
+wind_turbine_1: 60             # Individual turbine status
+wind_turbine_2: 45
+wind_turbine_3: 70
+
+# Agricultural Systems
+irrigation_system: 20          # Automated watering system
+crop_monitoring: 40           # Sensor network for plants
+greenhouse_climate: 55        # Temperature/humidity control
+soil_sensors: 35              # Ground condition monitoring
+
+# Communication Systems
+village_network: 50           # Internal communication
+external_comms: 10           # Contact with outside world
+emergency_broadcast: 75      # Crisis communication system
+sensor_telemetry: 30         # Data collection network
+
+# Infrastructure
+water_pumps: 45              # Clean water distribution
+waste_processing: 65         # Recycling and waste management
+workshop_tools: 80           # Fabrication capabilities
+transportation: 55           # Village vehicles
+
+# =============================================================================
+# PUZZLE COMPLETION TRACKING
+# =============================================================================
+
+# Chapter 1 Puzzles
+puzzle_system_health_check: false
+puzzle_component_identification: false
+puzzle_water_flow_logic: false
+puzzle_signal_tracing: false
+
+# Chapter 2 Puzzles
+puzzle_voltage_regulator_repair: false
+puzzle_motor_controller_assembly: false
+puzzle_smart_irrigation_node: false
+puzzle_explain_like_five: false
+puzzle_signal_optimization: false
+
+# Chapter 3 Puzzles
+puzzle_emergency_shutdown: false
+puzzle_triage_assessment: false
+puzzle_jury_rigged_solution: false
+puzzle_great_fix_stage1: false
+puzzle_great_fix_stage2: false
+puzzle_great_fix_stage3: false
+puzzle_great_fix_stage4: false
+
+# Chapter 4 Puzzles
+puzzle_aerodynamic_efficiency: false
+puzzle_power_management_overhaul: false
+
+# Puzzle Quality Scores (0-100)
+voltage_regulator_quality: 0
+motor_controller_quality: 0
+irrigation_node_quality: 0
+emergency_response_quality: 0
+drone_modification_quality: 0
+vehicle_enhancement_quality: 0
+
+# =============================================================================
+# INVENTORY AND RESOURCES
+# =============================================================================
+
+# Available Components
+resistors_available: 15
+capacitors_available: 8
+transistors_available: 5
+microcontrollers_available: 3
+sensors_basic: 12
+sensors_advanced: 2
+actuators_small: 6
+actuators_large: 1
+wire_copper: 50    # meters
+wire_fiber: 10     # meters
+batteries_small: 8
+batteries_large: 2
+
+# Fabricated Items
+custom_circuits_made: 0
+mechanical_parts_made: 0
+integrated_systems_made: 0
+
+# Special Items
+navigation_device_received: false
+elowen_city_contacts: false
+village_blessing_item: false
+
+# =============================================================================
+# STORY FLAGS AND CHOICES
+# =============================================================================
+
+# Major Story Decisions
+player_introduction_style: "humble"  # humble, confident, mysterious
+crisis_response_approach: "methodical"  # methodical, urgent, collaborative
+resource_allocation_choice: "conservative"  # conservative, balanced, aggressive
+council_presentation_style: "technical"  # technical, collaborative, inspirational
+
+# Character Interaction Flags
+elowen_shared_personal_story: false
+kai_confidence_boosted: false
+nima_ecological_discussion: false
+soren_drawn_out_expertise: false
+juniper_racing_past_revealed: false
+rowan_creative_collaboration: false
+zephyr_village_history_learned: false
+
+# Relationship Milestones
+elowen_trusts_with_contacts: false
+kai_ready_for_expedition: false
+nima_supports_racing_plan: false
+soren_offers_advanced_comms: false
+juniper_agrees_to_coach: false
+rowan_commits_to_modifications: false
+
+# Village Politics
+conservative_faction_support: 50
+progressive_faction_support: 50
+pragmatic_faction_support: 50
+
+# Crisis Response Performance
+crisis_leadership_shown: false
+emergency_repairs_successful: false
+team_coordination_excellent: false
+resource_management_wise: false
+
+# =============================================================================
+# EXPEDITION TEAM SELECTION VARIABLES
+# =============================================================================
+
+# Core Team (always included)
+expedition_player: true
+expedition_kai: true
+
+# Variable Team Members (based on relationships and choices)
+expedition_elowen_available: false
+expedition_nima_available: false
+expedition_soren_available: false
+expedition_juniper_available: false
+expedition_rowan_available: false
+
+# Final Team Composition
+expedition_elowen: false
+expedition_nima: false
+expedition_soren: false
+expedition_juniper: false
+expedition_rowan: false
+
+# Team Capabilities (calculated from final composition)
+expedition_technical_strength: 0
+expedition_racing_expertise: 0
+expedition_mechanical_skill: 0
+expedition_systems_integration: 0
+expedition_city_knowledge: 0
+
+# Ending Variant (determined by team composition and story choices)
+ending_variant: "undetermined"  # technical_dream_team, balanced_expedition, underdog_alliance
+
+# =============================================================================
+# WORLD STATE AND CONTEXT
+# =============================================================================
+
+# Environmental Conditions
+weather_condition: "clear"      # clear, cloudy, windy, stormy
+wind_speed: 15                 # km/h, affects turbine performance
+temperature: 22                # celsius
+season: "late_spring"          # affects agricultural timing
+
+# Village Mood and Morale
+village_morale: 50            # Overall community confidence
+technical_optimism: 30        # Belief in technological solutions
+expedition_support: 40        # Community backing for the plan
+resource_anxiety: 70          # Worry about component scarcity
+
+# Economic Status
+village_trade_goods: 100      # Available items for bartering
+food_security: 60            # Harvest and preservation status
+energy_reserves: 25          # Stored power availability
+tool_condition: 75           # Workshop and equipment status
+
+# Knowledge State
+city_information: 20          # What village knows about forge city
+racing_circuit_knowledge: 0   # Understanding of competition scene
+component_market_intel: 10    # Knowledge of what's available to trade
+historical_context: 30        # Understanding of pre-collapse world

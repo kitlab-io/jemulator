@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dcobc3lqeutok"
 path.s3tc="res://.godot/imported/barn-all-wood_4.png-18d88ab2beb3f6dd4b7788e5403c7ded.s3tc.ctex"
+path.etc2="res://.godot/imported/barn-all-wood_4.png-18d88ab2beb3f6dd4b7788e5403c7ded.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://solarville/assets/sloyd/barn-all-wood_4.png"
-dest_files=["res://.godot/imported/barn-all-wood_4.png-18d88ab2beb3f6dd4b7788e5403c7ded.s3tc.ctex"]
+dest_files=["res://.godot/imported/barn-all-wood_4.png-18d88ab2beb3f6dd4b7788e5403c7ded.s3tc.ctex", "res://.godot/imported/barn-all-wood_4.png-18d88ab2beb3f6dd4b7788e5403c7ded.etc2.ctex"]
 
 [params]
 

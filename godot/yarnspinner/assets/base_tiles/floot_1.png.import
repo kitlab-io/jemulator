@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0h3srb6ticcg"
 path.s3tc="res://.godot/imported/floot_1.png-62fff6c5a3b919a2800f9ca4c71c6f53.s3tc.ctex"
+path.etc2="res://.godot/imported/floot_1.png-62fff6c5a3b919a2800f9ca4c71c6f53.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/base_tiles/floot_1.png"
-dest_files=["res://.godot/imported/floot_1.png-62fff6c5a3b919a2800f9ca4c71c6f53.s3tc.ctex"]
+dest_files=["res://.godot/imported/floot_1.png-62fff6c5a3b919a2800f9ca4c71c6f53.s3tc.ctex", "res://.godot/imported/floot_1.png-62fff6c5a3b919a2800f9ca4c71c6f53.etc2.ctex"]
 
 [params]
 

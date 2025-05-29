@@ -1,0 +1,1222 @@
+# YarnSpinner File Structure and Story Node Architecture
+# Complete directory structure and node organization
+
+# =============================================================================
+# FILE STRUCTURE
+# =============================================================================
+
+# /narrative/
+#   ├── main/
+#   │   ├── 01_arrival.yarn          # Chapter 1: Opening and introductions
+#   │   ├── 02_exploration.yarn      # Chapter 1: Village tour and systems
+#   │   ├── 03_workshops.yarn        # Chapter 2: Learning sessions
+#   │   ├── 04_relationships.yarn    # Chapter 2: Character development
+#   │   ├── 05_crisis.yarn          # Chapter 3: Emergency response
+#   │   ├── 06_repairs.yarn         # Chapter 3: Collaborative fixing
+#   │   ├── 07_preparation.yarn     # Chapter 4: Racing vehicle mods
+#   │   ├── 08_politics.yarn        # Chapter 4: Village dynamics
+#   │   └── 09_council.yarn         # Final council scene
+#   │
+#   ├── characters/
+#   │   ├── elowen_thorne.yarn      # All Elowen interactions and arcs
+#   │   ├── kai_reeves.yarn         # All Kai interactions and mentorship
+#   │   ├── nima_okafor.yarn        # All Nima interactions and ecology
+#   │   ├── soren_wu.yarn           # All Soren interactions and tech
+#   │   ├── juniper_lee.yarn        # All Juniper interactions and racing
+#   │   ├── rowan_chen.yarn         # All Rowan interactions and mechanics
+#   │   └── zephyr_malik.yarn       # All Zephyr interactions and leadership
+#   │
+#   ├── puzzles/
+#   │   ├── circuit_puzzles.yarn    # Circuit building minigame integration
+#   │   ├── mechanical_puzzles.yarn # Mechanical assembly integration
+#   │   ├── systems_puzzles.yarn    # Systems integration challenges
+#   │   └── emergency_puzzles.yarn  # Crisis response scenarios
+#   │
+#   ├── locations/
+#   │   ├── village_square.yarn     # Central meeting area
+#   │   ├── workshop.yarn           # Technical workspace
+#   │   ├── power_station.yarn      # Electrical systems hub
+#   │   ├── greenhouse.yarn         # Agricultural center
+#   │   ├── communications.yarn     # Comms center
+#   │   └── council_hall.yarn       # Meeting space
+#   │
+#   ├── systems/
+#   │   ├── relationship_manager.yarn   # Relationship calculation logic
+#   │   ├── skill_progression.yarn     # Technical skill tracking
+#   │   ├── village_status.yarn        # System health management
+#   │   └── expedition_selection.yarn  # Team selection logic
+#   │
+#   └── utilities/
+#       ├── variable_init.yarn      # Initialize all variables
+#       ├── debug_commands.yarn     # Development tools
+#       └── save_load.yarn         # Save state management
+
+# =============================================================================
+# MAIN STORY NODE STRUCTURE
+# =============================================================================
+
+# 01_arrival.yarn
+# ===============
+
+title: GameStart
+tags: chapter1 opening
+---
+<<set $chapter_progress to 1>>
+<<set $current_scene to "arrival">>
+<<set $time_of_day to "evening">>
+
+The wind turbines turn slowly against the amber sky as you approach the village. 
+Your reputation as a traveling engineer has preceded you, and the community's 
+call for help was urgent enough to pull you from your last assignment.
+
+Zephyr Malik waits by the village entrance, weathered hands clasped behind their back.
+
+Zephyr: Welcome to our community. I'm Zephyr Malik, the village elder. 
+Thank you for answering our call.
+
+-> I'm here to help however I can. [set $player_introduction_style to "humble"]
+-> I've dealt with failing infrastructure before. Show me the problems. [set $player_introduction_style to "confident"]  
+-> Tell me about your systems. I'll need to understand everything. [set $player_introduction_style to "methodical"]
+
+===
+
+title: VillageIntroduction
+tags: chapter1 tutorial
+---
+Zephyr leads you through the village, pointing out the key systems as you walk.
+
+Zephyr: Our power grid runs on those three wind turbines, feeding into a 
+distributed battery system. The irrigation network keeps our crops alive, 
+and our workshop is where we maintain everything.
+
+<<trigger_minigame "system_health_check">>
+
+But lately, we've been having... problems.
+
+The diagnostic tablet in your hands shows red warning indicators across 
+multiple systems. Something is seriously wrong here.
+
+-> Let's start with the power systems. [jump PowerStationTour]
+-> The agricultural systems seem critical. [jump GreenhouseTour]
+-> I should meet your technical team first. [jump WorkshopIntroduction]
+
+===
+
+title: PowerStationTour
+tags: chapter1 location
+---
+<<set $elowen_technical_respect += 5>>
+
+The power station hums with the sound of struggling electronics. 
+Elowen Thorne looks up from a disassembled voltage regulator, 
+tools scattered around her workspace.
+
+Elowen: You must be the engineer Zephyr mentioned. I'm Elowen, 
+the village techsmith. This regulator failed three days ago, 
+and I can't find replacement components.
+
+She holds up a burned-out transistor, its case cracked and blackened.
+
+Elowen: The voltage spikes are getting worse. If we lose another 
+regulator, half the village will be without power.
+
+-> Can I examine the failure pattern? [set $elowen_collaboration += 10]
+-> What diagnostic tools do you have available? [set $elowen_technical_respect += 5]
+-> Have you tried building a temporary bypass? [set $elowen_trust += 5]
+
+===
+
+# =============================================================================
+# CHARACTER INTERACTION NODE EXAMPLES
+# =============================================================================
+
+# elowen_thorne.yarn
+# ==================
+
+title: ElowenWorkshopSession
+tags: chapter2 elowen technical
+---
+<<if $circuit_basics < 30>>
+    Elowen notices your uncertain expression as you examine the circuit diagram.
+    
+    Elowen: Let's start with the fundamentals. This is a voltage divider - 
+    see how the resistors create a specific output voltage from the input?
+    
+    She traces the circuit with her finger, explaining each connection.
+    
+    -> I think I understand. The ratio determines the output. [set $circuit_basics += 15]
+    -> Can you show me how to calculate the exact values? [set $elowen_mentorship += 10]
+    -> What happens if one resistor fails? [set $circuit_analysis += 10]
+<<else>>
+    Elowen: You've got a good grasp of the basics. Let's work on something 
+    more challenging - this switching regulator design.
+    
+    <<trigger_minigame "voltage_regulator_repair">>
+    
+    -> I'll need to consider the feedback loop stability. [set $circuit_advanced += 20]
+    -> The switching frequency will affect efficiency. [set $elowen_technical_respect += 15]
+    -> Let me simulate this before we build it. [set $elowen_collaboration += 10]
+<<endif>>
+
+===
+
+title: ElowenPersonalMoment
+tags: chapter2 elowen relationship
+---
+<<if $elowen_trust > 60>>
+    As you work together in comfortable silence, Elowen suddenly speaks quietly.
+    
+    Elowen: You know, I haven't worked with someone who really understands 
+    the technical side in... years. It's refreshing.
+    
+    She pauses, considering her next words carefully.
+    
+    Elowen: I have contacts in the forge city. Engineers from before the 
+    collapse. If you prove the village can handle this expedition...
+    
+    -> I appreciate your trust in me. [set $elowen_trust += 15]
+    -> Those contacts could be invaluable for the mission. [set $elowen_city_contacts to true]
+    -> What made you decide to tell me this? [set $elowen_personal_sharing to true]
+<<else>>
+    Elowen works methodically, occasionally offering technical corrections 
+    but keeping the conversation focused on the task at hand.
+<<endif>>
+
+===
+
+# =============================================================================
+# PUZZLE INTEGRATION NODES
+# =============================================================================
+
+# circuit_puzzles.yarn
+# ===================
+
+title: VoltageRegulatorPuzzle
+tags: puzzle circuit chapter2
+---
+<<set $puzzle_voltage_regulator_repair to true>>
+
+The burned voltage regulator sits before you, its circuit board scarred 
+but salvageable. Elowen has laid out replacement components and a schematic.
+
+Elowen: The original design was adequate, but we can improve it. 
+Better voltage regulation will protect the entire grid.
+
+<<trigger_minigame "circuit_design" components="resistors,capacitors,transistors,ic_regulator">>
+
+<<if $puzzle_result >= 80>>
+    Your design exceeds the original specifications. The new regulator 
+    should handle voltage spikes much better than before.
+    
+    <<set $voltage_regulator_quality to $puzzle_result>>
+    <<set $elowen_technical_respect += 20>>
+    <<set $power_grid_health += 30>>
+    
+    Elowen: Impressive work. This design is actually better than what 
+    we had before the failures started.
+    
+<<elseif $puzzle_result >= 60>>
+    Your regulator design meets specifications and should restore 
+    stable power to the affected systems.
+    
+    <<set $voltage_regulator_quality to $puzzle_result>>
+    <<set $elowen_technical_respect += 10>>
+    <<set $power_grid_health += 20>>
+    
+<<else>>
+    The regulator will work, but it's not as robust as it could be. 
+    It should buy you time, but might need attention again soon.
+    
+    <<set $voltage_regulator_quality to $puzzle_result>>
+    <<set $power_grid_health += 10>>
+<<endif>>
+
+===
+
+# =============================================================================
+# RELATIONSHIP PROGRESSION SYSTEM
+# =============================================================================
+
+# relationship_manager.yarn
+# =========================
+
+title: UpdateElowenRelationship
+tags: system relationship
+---
+<<if $elowen_technical_respect >= 80 and $elowen_trust >= 60>>
+    <<set $elowen_trusts_with_contacts to true>>
+    <<set $elowen_available_for_expedition to true>>
+<<elseif $elowen_technical_respect >= 60 and $elowen_collaboration >= 50>>
+    <<set $elowen_supports_expedition to true>>
+<<endif>>
+
+<<if $elowen_mentorship >= 70>>
+    <<set $elowen_teaching_unlocked to true>>
+<<endif>>
+
+===
+
+title: UpdateKaiRelationship  
+tags: system relationship
+---
+<<if $kai_mentorship_bond >= 70>>
+    <<set $kai_confidence += 20>>
+    <<set $kai_ready_for_expedition to true>>
+<<endif>>
+
+<<if $kai_creativity >= 60 and $kai_technical_growth >= 50>>
+    <<set $kai_innovation_unlocked to true>>
+<<endif>>
+
+===
+
+# =============================================================================
+# CRISIS RESPONSE SYSTEM
+# =============================================================================
+
+# 05_crisis.yarn
+# ==============
+
+title: PowerSurgeEmergency
+tags: chapter3 crisis emergency
+---
+<<set $current_scene to "power_surge_crisis">>
+<<set $crisis_management += 20>>
+
+Alarms shriek across the village as electrical systems overload. 
+Sparks fly from distribution panels, and the lights flicker wildly 
+before plunging sections of the village into darkness.
+
+Elowen's voice cuts through the chaos over the comm system: 
+"Emergency shutdown protocols! We're losing containment on the main bus!"
+
+You have seconds to act before the surge damages more systems.
+
+-> Rush to the main disconnect and shut down power grid [set $crisis_response_approach to "urgent"]
+-> Systematically isolate each affected circuit [set $crisis_response_approach to "methodical"] 
+-> Call for help and coordinate team response [set $crisis_response_approach to "collaborative"]
+
+===
+
+title: EmergencyShutdownPuzzle
+tags: puzzle emergency timed
+---
+<<trigger_minigame "emergency_shutdown" time_limit=120>>
+
+The main electrical panel flashes red warnings as you trace the 
+power surge through the distribution system. You need to isolate 
+the fault before it cascades to the battery storage.
+
+<<if $puzzle_result >= 90>>
+    Perfect execution! You've isolated the surge with minimal 
+    system damage. Only the original fault needs repair.
+    
+    <<set $emergency_response_quality to 95>>
+    <<set $crisis_leadership_shown to true>>
+    <<set $power_grid_health += 10>>
+    
+<<elseif $puzzle_result >= 70>>
+    Good work under pressure. The surge is contained, though 
+    a few additional systems will need attention.
+    
+    <<set $emergency_response_quality to 80>>
+    <<set $power_grid_health -= 5>>
+    
+<<else>>
+    You've stopped the immediate crisis, but significant damage 
+    has occurred across multiple systems.
+    
+    <<set $emergency_response_quality to 60>>
+    <<set $power_grid_health -= 15>>
+    <<set $battery_storage -= 20>>
+<<endif>>
+
+===
+
+# =============================================================================
+# COUNCIL SCENE AND ENDING DETERMINATION
+# =============================================================================
+
+# 09_council.yarn
+# ===============
+
+title: CouncilMeeting
+tags: chapter4 council climax
+---
+<<set $chapter_progress to 4>>
+<<set $current_scene to "village_council">>
+
+The community hall fills with villagers as evening approaches. 
+Handmade bioluminescent lamps cast their soft glow over concerned faces. 
+The weight of the village's future hangs in the air.
+
+Zephyr Malik calls for order, their voice carrying the authority of years.
+
+Zephyr: We've all seen the reports. Our systems are failing faster 
+than we can repair them. Tonight, we decide whether to risk everything 
+on an expedition to the forge city.
+
+The room murmurs with tension. You notice the factional divisions 
+clearly - conservatives clustered near the back, progressives 
+eager and forward-leaning, pragmatists scattered throughout.
+
+-> Stand and present the technical case for the expedition
+-> Wait for others to speak first and gauge the room
+-> Address the community's concerns before proposing solutions
+
+===
+
+title: TechnicalPresentation
+tags: council presentation
+---
+<<set $council_presentation_style to "technical">>
+
+You stand, the diagnostic tablet in your hands displaying the 
+village's failing systems in stark detail.
+
+Player: The data is clear. Our voltage regulators are operating 
+at 15% of specification. Battery storage efficiency has dropped 
+to dangerous levels. Without replacement components, we'll lose 
+critical systems within weeks.
+
+<<if $voltage_regulator_quality >= 80>>
+    You hold up the regulator you repaired with Elowen.
+    
+    Player: We've proven we can work with advanced components. 
+    This repair exceeds original specifications, but we need 
+    proper parts to scale the solution.
+    
+    <<set $technical_credibility += 30>>
+<<endif>>
+
+<<if $emergency_response_quality >= 85>>
+    Murmurs of approval ripple through the crowd as villagers 
+    remember your performance during the crisis.
+    
+    Villager: They kept the lights on when everything was failing!
+    
+    <<set $crisis_leadership_support += 25>>
+<<endif>>
+
+===
+
+title: ExpeditionTeamSelection
+tags: council decision
+---
+<<call UpdateAllRelationships>>
+<<call CalculateExpeditionEligibility>>
+
+Zephyr: The question now is who will undertake this journey. 
+The risks are real, but so is the potential.
+
+<<if $elowen_trusts_with_contacts and $elowen_technical_respect >= 80>>
+    Elowen steps forward, her voice steady and confident.
+    
+    Elowen: I volunteer for the expedition. I have contacts in 
+    the city who might help, and our engineer has proven they 
+    can work with advanced systems.
+    
+    <<set $expedition_elowen to true>>
+    <<set $expedition_technical_strength += 30>>
+<<endif>>
+
+<<if $nima_supports_racing_plan and $nima_environmental_trust >= 70>>
+    Nima rises from her seat, addressing the environmental concerns.
+    
+    Nima: Our biomimetic designs could give us advantages in the 
+    racing circuits. I want to ensure we compete sustainably.
+    
+    <<set $expedition_nima to true>>
+    <<set $expedition_systems_integration += 25>>
+<<endif>>
+
+<<if $juniper_agrees_to_coach and $juniper_trust >= 60>>
+    All eyes turn to Juniper as she finally speaks about her past.
+    
+    Juniper: I know the racing circuits. I know the people. 
+    And I know how to win. I'll guide this team.
+    
+    <<set $expedition_juniper to true>>
+    <<set $expedition_racing_expertise += 40>>
+    <<set $expedition_city_knowledge += 35>>
+<<endif>>
+
+<<if $soren_offers_advanced_comms and $soren_intellectual_connection >= 65>>
+    Soren's quiet voice carries clearly in the hushed hall.
+    
+    Soren: Communication will be critical. I can provide telemetry 
+    and navigation support that could mean the difference between 
+    success and failure.
+    
+    <<set $expedition_soren to true>>
+    <<set $expedition_systems_integration += 20>>
+<<endif>>
+
+<<if $rowan_commits_to_modifications and $rowan_mechanical_camaraderie >= 60>>
+    Rowan stands enthusiastically, tools already in hand.
+    
+    Rowan: Someone needs to keep those racing machines running. 
+    I can modify and maintain whatever we build.
+    
+    <<set $expedition_rowan to true>>
+    <<set $expedition_mechanical_skill += 30>>
+<<endif>>
+
+===
+
+title: DetermineEndingVariant
+tags: system ending
+---
+<<set $total_team_strength to $expedition_technical_strength + $expedition_racing_expertise + $expedition_mechanical_skill + $expedition_systems_integration + $expedition_city_knowledge>>
+
+<<if $expedition_elowen and $expedition_soren and $expedition_nima and $total_team_strength >= 100>>
+    <<set $ending_variant to "technical_dream_team">>
+    <<jump TechnicalDreamTeamEnding>>
+    
+<<elseif $expedition_juniper and $expedition_rowan and $expedition_soren and $expedition_racing_expertise >= 40>>
+    <<set $ending_variant to "balanced_expedition">>
+    <<jump BalancedExpeditionEnding>>
+    
+<<else>>
+    <<set $ending_variant to "underdog_alliance">>
+    <<jump UnderdogAllianceEnding>>
+<<endif>>
+
+===
+
+title: TechnicalDreamTeamEnding
+tags: ending variant_a
+---
+The village has assembled its finest technical minds for the expedition. 
+Elowen's engineering expertise, Soren's systems integration knowledge, 
+and Nima's sustainable design principles create a formidable team.
+
+Zephyr: You carry not just our hopes, but our finest minds. 
+May your knowledge and wisdom guide you to success.
+
+The team's advanced technical capabilities suggest they'll approach 
+the forge city's challenges through engineering excellence and 
+innovation, relying on superior design rather than raw performance.
+
+<<set $expedition_approach to "technical_superiority">>
+<<jump ExpeditionDeparture>>
+
+===
+
+title: BalancedExpeditionEnding
+tags: ending variant_b  
+---
+The expedition team balances technical skill with practical experience. 
+Juniper's racing knowledge, Rowan's mechanical expertise, and Soren's 
+systems support create a well-rounded group.
+
+Zephyr: You have the perfect blend of knowledge and experience. 
+Trust in each other, and victory will follow.
+
+This team can adapt to whatever the forge city throws at them, 
+combining racing expertise with solid technical foundations.
+
+<<set $expedition_approach to "balanced_excellence">>
+<<jump ExpeditionDeparture>>
+
+===
+
+title: UnderdogAllianceEnding
+tags: ending variant_c
+---
+The expedition may lack the village's most experienced members, 
+but what they lack in expertise, they make up for in determination 
+and innovative thinking.
+
+Zephyr: Sometimes the unconventional path leads to the greatest 
+victories. Your creativity and persistence will serve you well.
+
+This scrappy team will need to rely on ingenuity and 
+mentor-apprentice collaboration to succeed in the city.
+
+<<set $expedition_approach to "innovative_determination">>
+<<jump ExpeditionDeparture>>
+
+===
+
+# =============================================================================
+# UTILITY AND SYSTEM FUNCTIONS
+# =============================================================================
+
+# systems/relationship_manager.yarn
+# ================================
+
+title: UpdateAllRelationships
+tags: system function
+---
+<<call UpdateElowenRelationship>>
+<<call UpdateKaiRelationship>>
+<<call UpdateNimaRelationship>>
+<<call UpdateSorenRelationship>>
+<<call UpdateJuniperRelationship>>
+<<call UpdateRowanRelationship>>
+<<call UpdateZephyrRelationship>>
+
+===
+
+title: UpdateNimaRelationship
+tags: system relationship
+---
+<<if $nima_environmental_trust >= 80 and $nima_systems_understanding >= 60>>
+    <<set $nima_supports_racing_plan to true>>
+    <<set $nima_available_for_expedition to true>>
+<<endif>>
+
+<<if $nima_collaboration >= 70>>
+    <<set $nima_teaching_unlocked to true>>
+<<endif>>
+
+===
+
+title: UpdateSorenRelationship
+tags: system relationship
+---
+<<if $soren_intellectual_connection >= 65 and $soren_system_integration >= 50>>
+    <<set $soren_offers_advanced_comms to true>>
+    <<set $soren_available_for_expedition to true>>
+<<endif>>
+
+<<if $soren_trust >= 60>>
+    <<set $soren_personal_sharing to true>>
+<<endif>>
+
+===
+
+title: UpdateJuniperRelationship
+tags: system relationship
+---
+<<if $juniper_trust >= 60 and $juniper_respect >= 55>>
+    <<set $juniper_agrees_to_coach to true>>
+    <<set $juniper_racing_knowledge += 20>>
+    <<set $juniper_available_for_expedition to true>>
+<<endif>>
+
+<<if $juniper_past_understanding >= 70>>
+    <<set $juniper_full_backstory_revealed to true>>
+<<endif>>
+
+===
+
+title: UpdateRowanRelationship
+tags: system relationship
+---
+<<if $rowan_mechanical_camaraderie >= 60 and $rowan_creativity_bond >= 50>>
+    <<set $rowan_commits_to_modifications to true>>
+    <<set $rowan_available_for_expedition to true>>
+<<endif>>
+
+<<if $rowan_tool_sharing >= 70>>
+    <<set $rowan_advanced_fabrication_unlocked to true>>
+<<endif>>
+
+===
+
+title: UpdateZephyrRelationship
+tags: system relationship
+---
+<<if $zephyr_leadership_respect >= 70 and $zephyr_decision_trust >= 60>>
+    <<set $zephyr_full_support to true>>
+    <<set $village_blessing_item to true>>
+<<endif>>
+
+<<if $zephyr_community_integration >= 80>>
+    <<set $village_morale += 20>>
+<<endif>>
+
+===
+
+title: CalculateExpeditionEligibility
+tags: system calculation
+---
+# Determine which characters are available for expedition based on relationships
+<<if $elowen_technical_respect >= 70 and $elowen_trust >= 50>>
+    <<set $expedition_elowen_available to true>>
+<<endif>>
+
+<<if $nima_environmental_trust >= 60 and $nima_systems_understanding >= 50>>
+    <<set $expedition_nima_available to true>>
+<<endif>>
+
+<<if $soren_intellectual_connection >= 60 and $soren_system_integration >= 45>>
+    <<set $expedition_soren_available to true>>
+<<endif>>
+
+<<if $juniper_trust >= 55 and $juniper_respect >= 50>>
+    <<set $expedition_juniper_available to true>>
+<<endif>>
+
+<<if $rowan_mechanical_camaraderie >= 55 and $rowan_creativity_bond >= 45>>
+    <<set $expedition_rowan_available to true>>
+<<endif>>
+
+===
+
+# =============================================================================
+# ADDITIONAL CHARACTER FILES
+# =============================================================================
+
+# characters/kai_reeves.yarn
+# ==========================
+
+title: KaiFirstMeeting
+tags: chapter1 kai introduction
+---
+A young person with eager eyes and oil-stained hands hurries over as you 
+examine the irrigation control panel.
+
+Kai: You're the engineer! I'm Kai Reeves. I've been trying to understand 
+these systems, but the theory is so different from hands-on work.
+
+They gesture enthusiastically at the complex wiring.
+
+Kai: I can see what's connected to what, but I don't understand why 
+it's designed this way. Could you... maybe explain it?
+
+-> Of course. Let's start with the basic control loop. [set $kai_mentorship_bond += 15]
+-> What have you observed about the system's behavior? [set $kai_confidence += 10]
+-> Show me what you think each component does. [set $kai_creativity += 10]
+
+===
+
+title: KaiMentorshipMoment
+tags: chapter2 kai relationship
+---
+<<if $kai_mentorship_bond >= 30>>
+    As you work together on the motor controller, Kai's questions become 
+    more sophisticated, showing real understanding.
+    
+    Kai: So the encoder feedback lets the controller know exactly where 
+    the motor is, and the PID loop adjusts to minimize error?
+    
+    You nod, impressed by their grasp of the concept.
+    
+    Player: Exactly. And what happens if the feedback signal is noisy?
+    
+    Kai thinks for a moment, then grins.
+    
+    Kai: The controller would oscillate! That's why we need filtering.
+    
+    <<set $kai_technical_growth += 20>>
+    <<set $kai_confidence += 15>>
+    
+    -> Excellent! You're thinking like a real engineer now. [set $kai_mentorship_bond += 20]
+    -> Let's try designing a filter together. [set $kai_creativity += 15]
+    -> That understanding will serve you well on the expedition. [set $kai_ready_for_expedition to true]
+<<else>>
+    Kai watches you work, asking occasional questions but still seeming 
+    uncertain about the fundamental concepts.
+<<endif>>
+
+===
+
+title: KaiExpeditionReadiness
+tags: chapter4 kai decision
+---
+<<if $kai_confidence >= 60 and $kai_technical_growth >= 50>>
+    Kai approaches you with a determined expression, no longer the 
+    uncertain apprentice from your first meeting.
+    
+    Kai: I want to be more than just along for the ride on this expedition. 
+    I've learned so much working with you - I think I can really contribute.
+    
+    They pull out a small device they've been working on.
+    
+    Kai: I designed this signal analyzer using everything you taught me. 
+    It could help us diagnose racing vehicle performance in real-time.
+    
+    <<set $kai_innovation_unlocked to true>>
+    <<set $expedition_technical_strength += 15>>
+    
+    -> I'm proud of how far you've come. [set $kai_confidence += 20]
+    -> That device could give us a real advantage. [set $kai_technical_growth += 15]
+    -> You've become a true engineer. [set $kai_mentorship_bond += 25]
+<<else>>
+    Kai seems nervous about the upcoming expedition, unsure of their 
+    role beyond basic assistance.
+<<endif>>
+
+===
+
+# characters/nima_okafor.yarn
+# ===========================
+
+title: NimaEnvironmentalDiscussion
+tags: chapter2 nima relationship ecology
+---
+<<if $nima_environmental_trust >= 40>>
+    As you calibrate the soil moisture sensors, Nima shares her perspective 
+    on the village's challenges.
+    
+    Nima: Most people see our failing systems as separate problems - 
+    power here, irrigation there. But everything is connected.
+    
+    She gestures toward the greenhouse where plants respond to the 
+    sensor network's careful monitoring.
+    
+    Nima: When the voltage regulators fail, it's not just about electricity. 
+    It disrupts the pH monitoring, which affects nutrient uptake, which 
+    changes plant stress responses.
+    
+    -> I hadn't considered the cascade effects. [set $nima_systems_understanding += 20]
+    -> How do we design more resilient interconnections? [set $nima_collaboration += 15]
+    -> The racing plan could disrupt these systems further. [set $nima_environmental_trust += 10]
+<<else>>
+    Nima works efficiently but keeps the conversation focused on 
+    immediate technical requirements.
+<<endif>>
+
+===
+
+title: NimaBiomimeticInsight
+tags: chapter3 nima technical racing
+---
+<<if $nima_supports_racing_plan>>
+    As you examine the village's modified maintenance drone, Nima points 
+    out details you might have missed.
+    
+    Nima: The propulsion system mimics the wing-beat patterns of local 
+    hummingbirds. See how the rotors can adjust their angle dynamically?
+    
+    She traces the complex linkage that allows each rotor blade to 
+    change pitch independently.
+    
+    Nima: In nature, efficiency comes from adaptation to environmental 
+    conditions. Our drone can optimize for different flight modes - 
+    speed, endurance, or precision hovering.
+    
+    <<set $drone_modification_quality += 25>>
+    <<set $expedition_racing_expertise += 20>>
+    
+    -> This could give us a significant advantage in aerial races. [set $nima_collaboration += 15]
+    -> How do we tune the adaptation algorithms? [set $nima_systems_understanding += 20]
+    -> The city racers won't expect biomimetic designs. [set $nima_environmental_trust += 10]
+<<endif>>
+
+===
+
+# characters/soren_wu.yarn
+# =========================
+
+title: SorenObservationSkills
+tags: chapter2 soren relationship quiet
+---
+You notice Soren watching quietly from the corner of the workshop, 
+taking notes in a small leather journal.
+
+Player: What are you documenting there?
+
+Soren looks up, slightly surprised to be addressed directly.
+
+Soren: Communication patterns. Signal degradation rates. How information 
+flows through the village systems... and the people.
+
+They show you pages filled with careful diagrams and observations.
+
+Soren: You can learn a lot by watching how signals propagate - whether 
+they're electrical or social.
+
+-> That's remarkably insightful. [set $soren_intellectual_connection += 15]
+-> How do social and technical systems interact? [set $soren_observation_skills += 20]
+-> Your analysis could help us optimize the village network. [set $soren_system_integration += 10]
+
+===
+
+title: SorenCommunicationExpertise
+tags: chapter3 soren technical revelation
+---
+<<if $soren_intellectual_connection >= 50>>
+    When the communications array fails during the crisis, Soren suddenly 
+    takes charge with surprising authority.
+    
+    Soren: The primary antenna is damaged, but I can reroute through the 
+    secondary array if we reconfigure the mesh network topology.
+    
+    Their fingers fly over the communication panel with expert precision.
+    
+    Soren: I've been designing improvements to our network architecture. 
+    More resilient, better coverage, quantum-encrypted channels.
+    
+    <<set $soren_advanced_comms_unlocked to true>>
+    <<set $communication_systems += 30>>
+    
+    -> I had no idea you had this level of expertise. [set $soren_trust += 20]
+    -> Why haven't you shared these improvements before? [set $soren_intellectual_connection += 15]
+    -> The racing vehicles could use this telemetry system. [set $soren_system_integration += 25]
+<<else>>
+    Soren works competently on the communication repairs but doesn't 
+    reveal the full extent of their capabilities.
+<<endif>>
+
+===
+
+# locations/workshop.yarn
+# =======================
+
+title: WorkshopOverview
+tags: location workshop
+---
+<<set $current_location to "workshop">>
+
+The village workshop occupies a converted pre-collapse structure, its walls 
+lined with salvaged tools and carefully organized component bins. Soft LED 
+strips provide even lighting over multiple workbenches.
+
+<<if $workshop_access_unlocked>>
+    You now have full access to the workshop's facilities and tool library.
+    
+    Available workstations:
+    - Electronics bench with oscilloscope and multimeter
+    - Mechanical assembly area with precision tools  
+    - 3D printer using recycled materials
+    - Component testing and characterization station
+    
+    -> Work on circuit designs [jump ElectronicsWorkbench]
+    -> Mechanical assembly and fabrication [jump MechanicalWorkstation]  
+    -> Test and characterize components [jump TestingStation]
+    -> Review project documentation [jump TechnicalLibrary]
+<<else>>
+    Elowen or another villager will need to give you access to the 
+    advanced tools and secure component storage.
+    
+    -> Ask about workshop access [jump WorkshopAccessRequest]
+<<endif>>
+
+-> Leave the workshop [jump VillageSquare]
+
+===
+
+title: ElectronicsWorkbench
+tags: location workshop electronics
+---
+The electronics workbench is equipped with professional-grade test equipment, 
+carefully maintained despite its age. Elowen has organized components by 
+type in anti-static bins.
+
+<<if $elowen_collaboration >= 30>>
+    Elowen has left notes with helpful tips and component specifications 
+    scattered around the workbench.
+<<endif>>
+
+Available projects:
+<<if $puzzle_voltage_regulator_repair == false>>
+    -> Repair the voltage regulator [jump VoltageRegulatorPuzzle]
+<<endif>>
+<<if $puzzle_smart_irrigation_node == false and $nima_collaboration >= 20>>
+    -> Build smart irrigation controller [jump IrrigationNodePuzzle]
+<<endif>>
+<<if $advanced_tools_unlocked>>
+    -> Design custom racing telemetry [jump RacingTelemetryPuzzle]
+<<endif>>
+
+-> Return to workshop overview [jump WorkshopOverview]
+
+===
+
+# =============================================================================
+# PUZZLE INTEGRATION WITH RELATIONSHIP CONSEQUENCES  
+# =============================================================================
+
+# puzzles/systems_puzzles.yarn
+# ============================
+
+title: IrrigationNodePuzzle
+tags: puzzle systems chapter2 nima
+---
+<<set $puzzle_smart_irrigation_node to true>>
+
+Nima guides you through the requirements for an improved irrigation 
+control node that can adapt to changing environmental conditions.
+
+Nima: The plants need different watering schedules based on soil moisture, 
+temperature, humidity, and even growth stage. A smart controller could 
+optimize water usage while improving crop yields.
+
+<<trigger_minigame "systems_integration" components="microcontroller,soil_sensor,temperature_sensor,humidity_sensor,valve_actuator">>
+
+<<if $puzzle_result >= 85>>
+    Your design creates an intelligent system that learns from plant 
+    responses and environmental patterns.
+    
+    <<set $irrigation_node_quality to $puzzle_result>>
+    <<set $nima_environmental_trust += 25>>
+    <<set $nima_systems_understanding += 20>>
+    <<set $irrigation_system += 40>>
+    <<set $environmental_systems += 30>>
+    
+    Nima: This is exactly what we needed. The adaptive algorithms 
+    will make our agriculture much more resilient.
+    
+<<elseif $puzzle_result >= 65>>
+    Your controller provides significant improvements over the old system.
+    
+    <<set $irrigation_node_quality to $puzzle_result>>
+    <<set $nima_environmental_trust += 15>>
+    <<set $irrigation_system += 25>>
+    <<set $environmental_systems += 20>>
+    
+<<else>>
+    The basic functionality works, but the system lacks the sophistication 
+    for true environmental adaptation.
+    
+    <<set $irrigation_node_quality to $puzzle_result>>
+    <<set $irrigation_system += 15>>
+<<endif>>
+
+===
+
+title: RacingTelemetryPuzzle
+tags: puzzle advanced chapter4 soren
+---
+<<if $soren_system_integration >= 40>>
+    <<set $puzzle_racing_telemetry to true>>
+    
+    Soren shares their advanced communication designs for integration 
+    into the racing vehicles.
+    
+    Soren: Real-time telemetry could give us decisive advantages. Engine 
+    performance, aerodynamic efficiency, power consumption, even predictive 
+    maintenance alerts.
+    
+    <<trigger_minigame "communication_design" components="radio_module,antenna_array,signal_processor,data_logger">>
+    
+    <<if $puzzle_result >= 90>>
+        Your telemetry system provides comprehensive real-time monitoring 
+        with predictive analytics capabilities.
+        
+        <<set $racing_telemetry_quality to $puzzle_result>>
+        <<set $soren_intellectual_connection += 30>>
+        <<set $expedition_systems_integration += 35>>
+        <<set $drone_modification_quality += 20>>
+        <<set $vehicle_enhancement_quality += 20>>
+        
+        Soren: This level of data integration will give our racers 
+        unprecedented situational awareness.
+        
+    <<elseif $puzzle_result >= 70>>
+        Your telemetry provides valuable real-time monitoring capabilities.
+        
+        <<set $racing_telemetry_quality to $puzzle_result>>
+        <<set $soren_intellectual_connection += 20>>
+        <<set $expedition_systems_integration += 25>>
+        
+    <<else>>
+        Basic telemetry functionality works but lacks advanced features.
+        
+        <<set $racing_telemetry_quality to $puzzle_result>>
+        <<set $expedition_systems_integration += 10>>
+    <<endif>>
+<<else>>
+    Soren hasn't yet shared their advanced communication expertise.
+    You'll need to build a stronger relationship first.
+<<endif>>
+
+===
+
+# =============================================================================
+# VILLAGE POLITICS AND FACTION DYNAMICS
+# =============================================================================
+
+# 08_politics.yarn
+# ================
+
+title: ConservativeFactionConcerns
+tags: chapter4 politics conservative
+---
+A group of older villagers approaches you near the power station, 
+led by Marcus, one of the village's most experienced craftspeople.
+
+Marcus: We've heard about this racing plan. Risking our last functioning 
+vehicles and equipment on some city spectacle seems... reckless.
+
+The group nods in agreement, their faces showing genuine worry.
+
+Marcus: What if you lose? What if the equipment is damaged or confiscated? 
+We'd be worse off than when we started.
+
+<<if $emergency_response_quality >= 80>>
+    Marcus: Though I'll admit, your handling of the crisis showed good judgment.
+    <<set $conservative_faction_support += 15>>
+<<endif>>
+
+-> You're right to be concerned. Let me explain the safeguards. [set $conservative_faction_support += 10]
+-> The alternative is slow system degradation and eventual failure. [set $conservative_faction_support -= 5]
+-> What would you propose as an alternative? [set $conservative_faction_support += 5]
+
+===
+
+title: ProgressiveFactionEnthusiasm
+tags: chapter4 politics progressive
+---
+A younger group of villagers surrounds you excitedly, led by Jana, 
+who manages the village's recycling systems.
+
+Jana: This racing plan is brilliant! Finally, we're not just reacting 
+to problems - we're taking bold action to solve them.
+
+The group buzzes with energy and possibilities.
+
+Jana: Plus, think about what we could learn from the city's technology. 
+New techniques, materials, maybe even trading partnerships.
+
+<<if $drone_modification_quality >= 75>>
+    Jana: And those vehicle modifications are incredible. We could revolutionize 
+    our transportation systems with those innovations.
+    <<set $progressive_faction_support += 20>>
+<<endif>>
+
+-> I appreciate your enthusiasm. Success will require careful planning. [set $progressive_faction_support += 10]
+-> You're right about the learning opportunities. [set $progressive_faction_support += 15]
+-> We need to balance ambition with prudent risk management. [set $progressive_faction_support += 5]
+
+===
+
+title: PragmaticFactionAnalysis
+tags: chapter4 politics pragmatic
+---
+Dr. Sarah Chen, the village's medical coordinator, represents the pragmatic 
+middle ground with her characteristic analytical approach.
+
+Sarah: I've been reviewing the resource analysis and success probabilities. 
+The racing plan has merit, but the execution details matter enormously.
+
+She pulls out a tablet showing statistical projections.
+
+Sarah: With current team composition and vehicle modifications, 
+I estimate a 60-70% probability of securing necessary components. 
+But that assumes optimal performance across multiple variables.
+
+<<if $total_puzzle_quality >= 400>>
+    Sarah: Your technical work has been consistently excellent, 
+    which improves our confidence in the plan's feasibility.
+    <<set $pragmatic_faction_support += 25>>
+<<endif>>
+
+-> What factors most influence the success probability? [set $pragmatic_faction_support += 15]
+-> How can we improve those odds? [set $pragmatic_faction_support += 10]
+-> What contingency plans should we consider? [set $pragmatic_faction_support += 20]
+
+===
+
+# =============================================================================
+# DEBUGGING AND DEVELOPMENT UTILITIES
+# =============================================================================
+
+# utilities/debug_commands.yarn
+# =============================
+
+title: DebugMenu
+tags: debug development
+---
+<<if $debug_mode_enabled>>
+    DEBUG COMMANDS AVAILABLE:
+    
+    Relationship Manipulation:
+    -> Set all relationships to maximum [call MaxAllRelationships]
+    -> Reset all relationships [call ResetAllRelationships]
+    -> Show current relationship values [call ShowRelationshipStatus]
+    
+    Progress Control:
+    -> Jump to council scene [jump CouncilMeeting]
+    -> Complete all puzzles [call CompleteAllPuzzles]
+    -> Unlock all tools and access [call UnlockAllAccess]
+    
+    System Status:
+    -> Repair all village systems [call RepairAllSystems]
+    -> Trigger crisis scenario [call TriggerCrisis]
+    -> Show all variable values [call ShowAllVariables]
+    
+    Story Testing:
+    -> Test ending variant A [call TestEndingA]
+    -> Test ending variant B [call TestEndingB] 
+    -> Test ending variant C [call TestEndingC]
+<<else>>
+    Debug mode not enabled.
+<<endif>>
+
+===
+
+title: ShowRelationshipStatus
+tags: debug system
+---
+CURRENT RELATIONSHIP VALUES:
+
+Elowen Thorne:
+- Technical Respect: {$elowen_technical_respect}
+- Trust: {$elowen_trust}
+- Collaboration: {$elowen_collaboration}
+- Mentorship: {$elowen_mentorship}
+
+Kai Reeves:
+- Mentorship Bond: {$kai_mentorship_bond}
+- Confidence: {$kai_confidence}
+- Creativity: {$kai_creativity}
+- Technical Growth: {$kai_technical_growth}
+
+Nima Okafor:
+- Environmental Trust: {$nima_environmental_trust}
+- Systems Understanding: {$nima_systems_understanding}
+- Collaboration: {$nima_collaboration}
+- Wisdom Sharing: {$nima_wisdom_sharing}
+
+[Continue for all characters...]
+
+===
+
+title: ShowAllVariables
+tags: debug system
+---
+TECHNICAL SKILLS:
+- Circuit Basics: {$circuit_basics}
+- Circuit Analysis: {$circuit_analysis}
+- Circuit Design: {$circuit_design}
+- Circuit Advanced: {$circuit_advanced}
+
+VILLAGE SYSTEMS:
+- Power Grid Health: {$power_grid_health}
+- Irrigation System: {$irrigation_system}
+- Communication Systems: {$village_network}
+
+EXPEDITION STATUS:
+- Team Technical Strength: {$expedition_technical_strength}
+- Racing Expertise: {$expedition_racing_expertise}
+- Mechanical Skill: {$expedition_mechanical_skill}
+- City Knowledge: {$expedition_city_knowledge}
+
+ENDING: {$ending_variant}
+
+===
+
+# utilities/save_load.yarn
+# ========================
+
+title: SaveGameState
+tags: system save
+---
+<<save_state "player_progress">>
+Game state saved successfully.
+
+Current Chapter: {$chapter_progress}
+Total Play Time: {$total_play_time} minutes
+Puzzles Completed: {$puzzles_completed}/15
+Relationships Developed: {$relationships_maxed}/7
+
+===
+
+title: LoadGameState
+tags: system load
+---
+<<load_state "player_progress">>
+Game state loaded successfully.
+
+Resuming from: {$current_scene}
+Chapter: {$chapter_progress}
+
+-> Continue story [jump $current_scene]
+-> Return to main menu [jump MainMenu]
+
+===
